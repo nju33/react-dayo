@@ -24,7 +24,9 @@ export class DayoProvider extends React.Component<
     };
   }
 
-  show = (message: string) => {
+  show = (message: string) => (ev: React.MouseEvent<unknown>) => {
+    ev.preventDefault();
+
     this.setState({
       message,
       hidden: false,
@@ -36,7 +38,9 @@ export class DayoProvider extends React.Component<
     });
   };
 
-  hide = () => {
+  hide = (ev: React.MouseEvent<unknown>) => {
+    ev.preventDefault();
+
     this.setState({
       message: null,
       hidden: true,

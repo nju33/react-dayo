@@ -11,4 +11,7 @@ export const Alert = styled.div`
     return '#fff';
   }};
   transition: .2s;
+  display: flex;
+  align-items: center;
+  padding: .3em .5em;
 `;

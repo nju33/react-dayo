@@ -15,7 +15,7 @@ render(
           return (
             <>
               {/* tslint:disable-next-line:react-this-binding-issue */}
-              <button onClick={() => show('alksdfasf')}>show</button>
+              <button onClick={show('alksdfasf')}>show</button>
               <Dayo />
             </>
           );

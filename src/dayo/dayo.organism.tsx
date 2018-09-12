@@ -1,8 +1,17 @@
 import React from 'react';
-import {FunctionsContext, StateContext} from './contexts';
+import {FunctionsContext, StateContext, DayoState} from './contexts';
 import {Alert} from './alert.atom';
+import {X} from './x.atom';
 
 export class Dayo extends React.Component {
+  onTransitionEnd = (state: DayoState) => () => {
+    if (state.hidden) {
+      return console.log(123);
+    }
+
+    return console.log(888);
+  };
+
   render() {
     return (
       <FunctionsContext.Consumer>
@@ -10,8 +19,11 @@ export class Dayo extends React.Component {
           <StateContext.Consumer>
             {state => {
               return (
-                <Alert style={state.style}>
-                  {state.message} <button onClick={hide}>x</button>
+                <Alert
+                  onTransitionEnd={this.onTransitionEnd(state)}
+                  style={state.style}
+                >
+                  {state.message} <X onClick={hide} />
                 </Alert>
               );
             }}
