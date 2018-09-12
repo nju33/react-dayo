@@ -46,8 +46,6 @@ export class DayoProvider extends React.Component<
     }
 
     this.setState({
-      message: null,
-      hidden: true,
       style: {
         position: 'absolute',
         left: '10px',
@@ -56,6 +54,13 @@ export class DayoProvider extends React.Component<
     });
   };
 
+  messageClear = () => {
+    this.setState({
+      message: null,
+      hidden: true,
+    })
+  }
+
   render() {
     return (
       <ThemeProvider theme={this.props.theme}>
@@ -63,6 +68,7 @@ export class DayoProvider extends React.Component<
           value={{
             show: this.show,
             hide: this.hide,
+            messageClear: this.messageClear
           }}
         >
           <StateContext.Provider value={this.state}>

@@ -11,7 +11,7 @@ import {X} from './x.atom';
 export class Dayo extends React.Component {
   onTransitionEnd = (functions: DayoFunctions) => (state: DayoState) => () => {
     if (state.hidden) {
-      functions.hide();
+      functions.messageClear();
       return;
     }
   };
