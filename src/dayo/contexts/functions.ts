@@ -1,8 +1,8 @@
 import React from 'react';
 
 export interface DayoFunctions {
-  show(message: string): ((ev: React.MouseEvent<unknown>) => void);
-  hide(ev: React.MouseEvent<unknown>): void;
+  show(message: string): ((ev?: React.MouseEvent<unknown>) => void);
+  hide(ev?: React.MouseEvent<unknown>): void;
 }
 
 export const FunctionsContext = React.createContext<DayoFunctions>({

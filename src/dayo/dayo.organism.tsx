@@ -1,29 +1,33 @@
 import React from 'react';
-import {FunctionsContext, StateContext, DayoState} from './contexts';
+import {
+  FunctionsContext,
+  StateContext,
+  DayoState,
+  DayoFunctions,
+} from './contexts';
 import {Alert} from './alert.atom';
 import {X} from './x.atom';
 
 export class Dayo extends React.Component {
-  onTransitionEnd = (state: DayoState) => () => {
+  onTransitionEnd = (functions: DayoFunctions) => (state: DayoState) => () => {
     if (state.hidden) {
-      return console.log(123);
+      functions.hide();
+      return;
     }
-
-    return console.log(888);
   };
 
   render() {
     return (
       <FunctionsContext.Consumer>
-        {({hide}) => (
+        {functions => (
           <StateContext.Consumer>
             {state => {
               return (
                 <Alert
-                  onTransitionEnd={this.onTransitionEnd(state)}
+                  onTransitionEnd={this.onTransitionEnd(functions)(state)}
                   style={state.style}
                 >
-                  {state.message} <X onClick={hide} />
+                  {state.message} <X onClick={functions.hide} />
                 </Alert>
               );
             }}

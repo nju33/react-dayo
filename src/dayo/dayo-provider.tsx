@@ -24,8 +24,10 @@ export class DayoProvider extends React.Component<
     };
   }
 
-  show = (message: string) => (ev: React.MouseEvent<unknown>) => {
-    ev.preventDefault();
+  show = (message: string) => (ev?: React.MouseEvent<unknown>) => {
+    if (ev !== undefined) {
+      ev.preventDefault();
+    }
 
     this.setState({
       message,
@@ -38,8 +40,10 @@ export class DayoProvider extends React.Component<
     });
   };
 
-  hide = (ev: React.MouseEvent<unknown>) => {
-    ev.preventDefault();
+  hide = (ev?: React.MouseEvent<unknown>) => {
+    if (ev !== undefined) {
+      ev.preventDefault();
+    }
 
     this.setState({
       message: null,
