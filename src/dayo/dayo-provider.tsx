@@ -10,8 +10,6 @@ export class DayoProvider extends React.Component<
   {theme: DayoTheme},
   DayoState
 > {
-  // readonly elements = new WeakMap();
-
   constructor(props: any) {
     super(props);
 
@@ -21,7 +19,7 @@ export class DayoProvider extends React.Component<
       style: {
         position: 'absolute',
         left: '10px',
-        top: '30px',
+        top: '-30px',
       },
     };
   }

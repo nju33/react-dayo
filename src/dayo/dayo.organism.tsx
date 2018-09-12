@@ -8,11 +8,13 @@ export class Dayo extends React.Component {
       <FunctionsContext.Consumer>
         {({hide}) => (
           <StateContext.Consumer>
-            {state => (
-              <Alert style={state.style}>
-                {state.message} <button onClick={hide}>x</button>
-              </Alert>
-            )}
+            {state => {
+              return (
+                <Alert style={state.style}>
+                  {state.message} <button onClick={hide}>x</button>
+                </Alert>
+              );
+            }}
           </StateContext.Consumer>
         )}
       </FunctionsContext.Consumer>
