@@ -1,5 +1,6 @@
 {
   "name": "react-dayo",
+  "description": "A React's notification component",
   "version": "0.1.1",
   "main": "dist/main/index.js",
   "types": "dist/types/index.d.ts",
@@ -10,6 +11,10 @@
   "license": "MIT",
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "react-component",
+    "notification"
   ],
   "scripts": {
     "prepare": "yarn build",
