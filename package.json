@@ -19,7 +19,7 @@
     "build.main": "tsc -P tsconfig.main.json",
     "build.module": "tsc -P tsconfig.module.json",
     "build.types": "tsc -P tsconfig.types.json --emitDeclarationOnly",
-    "build.docs": "yarn docz build -d docs",
+    "build.docs": "yarn docz build -d docs --base /react-dayo/",
     "build": "yarn build.main && yarn build.module && yarn build.types"
   },
   "peerDependencies": {

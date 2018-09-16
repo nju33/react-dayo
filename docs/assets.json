@@ -1,7 +1,7 @@
 {
-  "vendors.js": "/static/js/vendors.b6baec73.js",
-  "app.js": "/static/js/app.882ab969.js",
-  "src-index.js": "/static/js/src-index.32bbe159.js",
-  "runtime~app.js": "/static/js/runtime~app.9745e642dd3b60b6e317.js",
-  "index.html": "/index.html"
+  "vendors.js": "/react-dayo/static/js/vendors.a71b2fe6.js",
+  "app.js": "/react-dayo/static/js/app.171e21de.js",
+  "src-index.js": "/react-dayo/static/js/src-index.32bbe159.js",
+  "runtime~app.js": "/react-dayo/static/js/runtime~app.1fe0c7691dbfae37a680.js",
+  "index.html": "/react-dayo/index.html"
 }
