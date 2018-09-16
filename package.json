@@ -1,20 +1,35 @@
 {
   "name": "react-dayo",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/main/index.js",
+  "types": "dist/types/index.d.ts",
+  "module": "dist/module/index.js",
+  "source": "src/index.ts",
   "repository": "git@github.com:nju33/react-dayo.git",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "parcel demo.html --port 2348",
+    "doc.dev": "docz dev --port 5438",
+    "build.main": "tsc -P tsconfig.main.json",
+    "build.module": "tsc -P tsconfig.module.json",
+    "build.types": "tsc -P tsconfig.types.json --emitDeclarationOnly",
+    "build": "yarn build.main && yarn build.module && yarn build.types "
+  },
   "peerDependencies": {
+    "@types/react": "^16.4.14",
     "react": "^16.5.0",
     "styled-components": "^3.4.6"
   },
   "devDependencies": {
     "@geekcojp/prettier-config": "^0.2.2",
     "@geekcojp/tslint-config": "^0.2.1",
+    "@types/nanoid": "^1.2.0",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "@types/react-icons": "^2.2.6",
     "@types/styled-components": "^3.0.1",
+    "docz": "^0.11.2",
     "parcel-bundler": "^1.9.7",
     "prettier": "^1.14.2",
     "react": "^16.5.0",
@@ -24,6 +39,8 @@
     "typescript": "^3.0.3"
   },
   "dependencies": {
-    "polished": "^2.0.3"
+    "nanoid": "^1.2.3",
+    "polished": "^2.0.3",
+    "react-icons": "^3.0.5"
   }
 }
