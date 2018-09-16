@@ -1,0 +1,19 @@
+export enum DayoType {
+  Log,
+  Success,
+  Warn,
+  Error,
+  Heart,
+  Help,
+  Message,
+  Refresh,
+  Setting,
+  Remove,
+  Star,
+  Upload,
+  User,
+  Play,
+  Mail,
+  Link,
+  Bookmark
+}
