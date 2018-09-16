@@ -1,7 +1,7 @@
 {
   "name": "react-dayo",
   "description": "A React's notification component",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/main/index.js",
   "types": "dist/types/index.d.ts",
   "module": "dist/module/index.js",
