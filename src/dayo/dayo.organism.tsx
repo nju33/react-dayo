@@ -130,6 +130,7 @@ export class Dayo extends React.Component<DayoProps> {
                         key={item.id}
                         data-type={item.type}
                         data-cycle={item.cycle}
+                        data-position={this.props.position}
                         onTransitionEnd={this.onTransitionEnd(
                           functions,
                           item.cycle,
