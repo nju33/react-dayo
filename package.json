@@ -48,7 +48,7 @@
     "renovate-config-nju33": "0.0.1",
     "styled-components": "3.4.10",
     "tslint": "5.11.0",
-    "typescript": "3.2.1"
+    "typescript": "3.2.2"
   },
   "dependencies": {
     "nanoid": "^1.2.3",
