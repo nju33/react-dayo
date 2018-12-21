@@ -51,7 +51,7 @@
     "typescript": "3.2.2"
   },
   "dependencies": {
-    "nanoid": "^1.2.3",
+    "nanoid": "^2.0.0",
     "polished": "^2.0.3",
     "react-icons": "^3.0.5"
   }
