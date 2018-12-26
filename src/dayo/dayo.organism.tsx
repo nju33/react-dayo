@@ -126,7 +126,7 @@ export class Dayo extends React.Component<DayoProps> {
 
                     return (
                       <Alert
-                        innerRef={this.setHeight}
+                        ref={this.setHeight}
                         key={item.id}
                         data-type={item.type}
                         data-cycle={item.cycle}
