@@ -47,7 +47,7 @@
     "react-dom": "16.7.0",
     "renovate-config-nju33": "0.0.1",
     "styled-components": "4.1.3",
-    "tslint": "5.12.0",
+    "tslint": "5.12.1",
     "typescript": "3.2.2"
   },
   "dependencies": {
