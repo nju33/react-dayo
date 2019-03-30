@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "nanoid": "^2.0.0",
-    "polished": "^2.0.3",
+    "polished": "^4.0.0",
     "react-icons": "^3.0.5"
   }
 }
