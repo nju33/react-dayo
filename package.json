@@ -40,7 +40,7 @@
     "@types/react-dom": "16.0.11",
     "@types/react-icons": "2.2.6",
     "@types/styled-components": "4.1.6",
-    "docz": "0.13.7",
+    "docz": "1.2.0",
     "parcel-bundler": "1.11.0",
     "prettier": "1.16.0",
     "react": "16.7.0",
