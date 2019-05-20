@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 // import {DayoProvider, Dayo, DayoFunctionsConsumer} from './src';
-import log from './src/mods/alert/presets/log';
+import log from './src/mods/seed/presets/log';
 import {createDayo} from './src/mods/dayo/dayo';
 
 // const div = document.getElementById('demo');
@@ -10,9 +10,8 @@ const [Dayo, dispatch] = createDayo();
 
 render(
   <div>
-    <Dayo>
-      <button onClick={dispatch(log.message('ログだよ'))}>button</button>
-    </Dayo>
+    <button onClick={dispatch(log.message('ログだよ'))}>button</button>
+    <Dayo />
   </div>,
   document.getElementById('demo'),
 );

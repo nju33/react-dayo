@@ -1,6 +1,8 @@
-export enum DayoPosition {
+export enum Position {
   LeftTop,
+  CenterTop,
   RightTop,
   LeftBottom,
+  CenterBottom,
   RightBottom,
 }

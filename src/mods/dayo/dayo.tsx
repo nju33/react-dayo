@@ -1,22 +1,27 @@
 import React from 'react';
-import {AlertImpl} from '../alert';
+import {SeedImpl} from '../seed';
+import Cycle from '../cycle';
+import Queue from '../components/queue';
 // import {Alert} from './alert';
 
 enum DispatcherEventName {
-  Show,
+  UpdateState,
 }
 
 class Dispatcher {
-  private events = new Map<
-    DispatcherEventName,
-    ((alert: AlertImpl) => void)[]
-  >();
+  private events = new Map<DispatcherEventName, ((state: object) => void)[]>();
 
-  public dispatch = (alert: AlertImpl): (() => void) => (): void => {
-    this.emit(DispatcherEventName.Show, alert);
+  public dispatch = (
+    seed: SeedImpl,
+  ): (() => Promise<void>) => async (): Promise<void> => {
+    for await (const state of seed) {
+      this.emit(DispatcherEventName.UpdateState, state);
+    }
+
+    // this.emit(DispatcherEventName.Show, seed);
   };
 
-  public emit(event: DispatcherEventName, alert: AlertImpl): void {
+  public emit(event: DispatcherEventName, state: object): void {
     const callbacks = this.events.get(event);
     if (callbacks === undefined) {
       return;
@@ -24,7 +29,7 @@ class Dispatcher {
 
     callbacks.forEach(
       (callback): void => {
-        callback(alert);
+        callback(state);
       },
     );
   }
@@ -51,7 +56,11 @@ interface DayoImpl {
   dispatcher: Dispatcher;
 }
 
-interface DayoState {}
+// const Alert: React.FC<{}> = (props): JSX.Element => {
+//   return (
+//     <div></div>
+//   )
+// }
 
 export const createDayo = (): [
   React.ComponentClass,
@@ -63,50 +72,51 @@ export const createDayo = (): [
     public dispatcher = dispatcher;
 
     public state = {
-      queue: [],
+      queue: [] as {id: string; cycle: Cycle}[],
     };
 
     public componentDidMount(): void {
       dispatcher.on(
-        DispatcherEventName.Show,
-        (alert: AlertImpl): void => {
-          this.createAlert(alert);
+        DispatcherEventName.UpdateState,
+        (state: {id: string; cycle: Cycle}): void => {
+          if (state.cycle.isCreating()) {
+            this.addAlert(state);
+            return;
+          }
+
+          if (state.cycle.isCreated()) {
+            console.log(state);
+            console.log(1);
+            return;
+          }
+
+          console.log(9);
         },
       );
     }
 
-    public createAlert(alert: AlertImpl): void {
+    public addAlert(state: {id: string; cycle: Cycle}): void {
       this.setState({
-        queue: [...this.state.queue, alert],
+        queue: [...this.state.queue, state],
       });
     }
+
+    // public createAlert(seed: SeedImpl): void {
+    //   this.setState({
+    //     queue: [...this.state.queue, seed],
+    //   });
+    // }
 
     public render(): JSX.Element {
       // eslint-disable-next-line react/prop-types
       return (
-        <>
-          {this.props.children}
-
-          <ul
-            style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              position: 'flex',
-              left: 10,
-              top: 10,
-              maxWidth: 300,
-            }}
-          >
-            {this.state.queue.map(
-              (item): any => {
-                return <button key={Math.random()}>{item.data.message}</button>;
-              },
-            )}
-          </ul>
-        </>
+        <Queue>
+          {this.state.queue.map(
+            (item): any => {
+              return <div key={Math.random()}>aa</div>;
+            },
+          )}
+        </Queue>
       );
     }
   }
