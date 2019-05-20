@@ -1,6 +1,6 @@
 import React from 'react';
 import {AlertImpl} from '../alert';
-import {Alert} from './alert';
+// import {Alert} from './alert';
 
 enum DispatcherEventName {
   Show,
@@ -51,27 +51,63 @@ interface DayoImpl {
   dispatcher: Dispatcher;
 }
 
+interface DayoState {}
+
 export const createDayo = (): [
   React.ComponentClass,
   Dispatcher['dispatch']
 ] => {
   const dispatcher = new Dispatcher();
 
-  class Dayo extends React.Component implements DayoImpl {
+  class Dayo extends React.Component<{}> implements DayoImpl {
     public dispatcher = dispatcher;
+
+    public state = {
+      queue: [],
+    };
 
     public componentDidMount(): void {
       dispatcher.on(
         DispatcherEventName.Show,
         (alert: AlertImpl): void => {
-          console.log(alert);
+          this.createAlert(alert);
         },
       );
     }
 
+    public createAlert(alert: AlertImpl): void {
+      this.setState({
+        queue: [...this.state.queue, alert],
+      });
+    }
+
     public render(): JSX.Element {
       // eslint-disable-next-line react/prop-types
-      return <>{this.props.children}</>;
+      return (
+        <>
+          {this.props.children}
+
+          <ul
+            style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'flex',
+              left: 10,
+              top: 10,
+              maxWidth: 300,
+            }}
+          >
+            {this.state.queue.map(
+              (item): any => {
+                return <button key={Math.random()}>{item.data.message}</button>;
+              },
+            )}
+          </ul>
+        </>
+      );
     }
   }
 

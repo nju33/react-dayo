@@ -1,16 +1,24 @@
 import React from 'react';
 import styled, {
+  css,
   ThemedBaseStyledInterface,
   StyledComponentBase,
+  BaseThemedCssFunction,
 } from 'styled-components';
 import {darken} from 'polished';
+import {DayoCycle} from '../../dayo/dayo-cycle';
 
 export interface Theme {
   color: string;
+  transition?: string;
+  fontSize?: string;
+  borderRadius?: string;
 }
 
 export interface Props {
   theme: Theme;
+  'data-position': string;
+  'data-cycle': string;
 }
 const alertStyled = styled as ThemedBaseStyledInterface<Theme>;
 
@@ -24,15 +32,24 @@ const getColor = (
   adjustFn: Function = noop,
 ): ((props: Props) => Theme['color']) => (props: Props): Theme['color'] =>
   adjustFn(props.theme.color);
-
 const getRawColor = getColor();
 const getDarkenColor = getColor(
-  (color: Theme['string']): Theme['string'] => darken(0.15, color),
+  (color: Theme['color']): string => darken(0.15, color),
 );
 
+const defaultTransition = '0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+const getTransition = (props: Props): Theme['transition'] =>
+  props.theme.transition || defaultTransition;
+
+const defaultFontSize = '14px';
+const getFontSize = (props: Props): Theme['transition'] =>
+  props.theme.fontSize || defaultFontSize;
+
+const defaultBorderRadius = '0';
+const getBorderRadius = (props: Props): Theme['borderRadius'] =>
+  props.theme.borderRadius || defaultBorderRadius;
+
 aside.alert = alertStyled.aside`
-  font-size: ${props => props.theme.fontSize || '14px'};
-  border-radius: ${props => props.theme.borderRadius || 0};
   display: inline-flex;
   align-items: center;
   padding: 0.1em 0.4em;
@@ -40,27 +57,27 @@ aside.alert = alertStyled.aside`
   position: relative;
   user-select: none;
   color: transparent;
-
   margin-bottom: 4px;
-
-  background-color: ${getRawColor};
   border: 1px solid;
+  font-size: ${getFontSize};
+  border-radius: ${getBorderRadius};
+  background-color: ${getRawColor};
   border-color: ${getDarkenColor};
 
-  ${(attrs: any) => {
-    const color = getColorByType()(attrs);
-    const position = attrs['data-position'];
-    const cycle = attrs['data-cycle'];
+  ${(props: Props): BaseThemedCssFunction<any> => {
+    // const color = getColor()(props);
+    const position = props['data-position'];
+    const cycle = props['data-cycle'];
 
     switch (cycle) {
       case DayoCycle.Creating: {
         return css`
           transition: 0.4s
-              ${(props: any) =>
+              ${(props: any): any =>
                 props.theme.transition ||
                 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'},
             color 0.3s 0.2s;
-          right: ${(() => {
+          right: ${((): string => {
             if (
               [DayoPosition.LeftTop, DayoPosition.LeftBottom].indexOf(
                 position,
@@ -76,46 +93,46 @@ aside.alert = alertStyled.aside`
         `;
       }
 
-      case DayoCycle.Created: {
-        return css`
-          transition: 0.4s
-              ${(props: any) =>
-                props.theme.transition ||
-                'cubic-bezier(0.68, -0.55, 0.265, 1.55)'},
-            color 0.3s 0.2s;
-          right: 0%;
-          opacity: 1;
-          transform: scale(1);
-          color: ${() => {
-            if (getLuminance(color) > 0.5) {
-              return getColorByType(darken.bind(null, 0.5));
-            }
+      // case DayoCycle.Created: {
+      //   return css`
+      //     transition: 0.4s
+      //         ${(props: any): any =>
+      //           props.theme.transition ||
+      //           'cubic-bezier(0.68, -0.55, 0.265, 1.55)'},
+      //       color 0.3s 0.2s;
+      //     right: 0%;
+      //     opacity: 1;
+      //     transform: scale(1);
+      //     color: ${() => {
+      //       if (getLuminance(color) > 0.5) {
+      //         return getColor(darken.bind(null, 0.5));
+      //       }
 
-            return getColorByType(lighten.bind(null, 0.5));
-          }};
-        `;
-      }
+      //       return getColor(lighten.bind(null, 0.5));
+      //     }};
+      //   `;
+      // }
 
-      case DayoCycle.Deleting: {
-        return css`
-          transition: 0.4s
-              ${props =>
-                props.theme.transition ||
-                'cubic-bezier(0.68, -0.55, 0.265, 1.55)'}
-              0.1s,
-            color 0.2s;
-          right: 0%;
-          padding: 0;
-          margin-top: 0;
-          margin-bottom: 0;
-          border: none;
-          height: 0px !important;
-          overflow: hidden;
-          opacity: 0;
-          transform: scale(1);
-          color: transparent;
-        `;
-      }
+      // case DayoCycle.Deleting: {
+      //   return css`
+      //     transition: 0.4s
+      //         ${props =>
+      //           props.theme.transition ||
+      //           'cubic-bezier(0.68, -0.55, 0.265, 1.55)'}
+      //         0.1s,
+      //       color 0.2s;
+      //     right: 0%;
+      //     padding: 0;
+      //     margin-top: 0;
+      //     margin-bottom: 0;
+      //     border: none;
+      //     height: 0px !important;
+      //     overflow: hidden;
+      //     opacity: 0;
+      //     transform: scale(1);
+      //     color: transparent;
+      //   `;
+      // }
 
       default: {
         return '';
@@ -131,9 +148,7 @@ aside.alert = alertStyled.aside`
 
   /* close icon */
   & svg:last-child {
-    transition: 0.5s
-      ${(props: any) =>
-        props.theme.transition || 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'};
+    transition: ${getTransition};
     transform: scale(0.69);
     margin-left: 0.3em;
     cursor: pointer;

@@ -1,17 +1,12 @@
 import AlertImpl from './alert-impl';
 
-export interface ConstructorDataArgument {
-  name: string;
-  color: string;
-}
-
 export default class Alert implements AlertImpl {
   private static memo = new Map<string, AlertImpl>();
 
-  public static create(data: ConstructorDataArgument): Alert {
+  public static create(data: AlertImpl['data']): AlertImpl {
     const key = JSON.stringify(data);
     if (this.memo.has(key)) {
-      return (this.memo.get(key) as unknown) as Alert;
+      return (this.memo.get(key) as unknown) as AlertImpl;
     }
 
     const alert = new Alert(data);
@@ -19,12 +14,19 @@ export default class Alert implements AlertImpl {
     return alert;
   }
 
-  public name: string;
+  public data: AlertImpl['data'];
 
-  public color: string;
+  private constructor(data: AlertImpl['data']) {
+    this.data = data;
+  }
 
-  private constructor(data: ConstructorDataArgument) {
-    this.name = data.name;
-    this.color = data.color;
+  public icon(icon: string): this {
+    this.data.icon = icon;
+    return this;
+  }
+
+  public message(message: string): this {
+    this.data.message = message;
+    return this;
   }
 }
