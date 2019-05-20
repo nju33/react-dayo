@@ -1,0 +1,17 @@
+export const ASAGI = '#33a6b8';
+export const YANAGIZOME = '#91ad70';
+export const SHAREGAKI = '#ffba84';
+export const USUBENI = '#e87a90';
+export const KURENAI = '#cb1b45';
+export const SHIRONERI = '#fcfaf2';
+export const KESHIZUMI = '#434343';
+export const KANZO = '#fc9f4d';
+export const NIBI = '#656765';
+export const MURASAKITOBI = '#60373e';
+export const TAMAGO = '#f9bf45';
+export const SANGOSYU = '#f17c67';
+export const KURUMI = '#947a6d';
+export const NAE = '#86c166';
+export const BENIFUJI = '#b481bb';
+export const SORA = '#58b2dc';
+export const RURI = '#005caf';
