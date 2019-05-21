@@ -1,84 +1,85 @@
-import nanoid from 'nanoid';
-import {Position} from './constants/position';
-import SeedImpl from './seed-impl';
-import Cycle from '../cycle';
+import SeedImpl, {SeedValues} from './seed-impl';
 
-export default class Seed implements SeedImpl {
-  private static memo = new Map<string, SeedImpl>();
+export class Seed implements SeedImpl {
+  public values: SeedValues;
 
-  public static create(data: SeedImpl['data']): SeedImpl {
-    const key = JSON.stringify(data);
-    if (this.memo.has(key)) {
-      return (this.memo.get(key) as unknown) as SeedImpl;
+  public constructor(values: SeedValues) {
+    this.values = values;
+  }
+
+  public get id(): SeedValues['id'] {
+    return this.values.id;
+  }
+
+  public get cycle(): SeedValues['cycle'] {
+    return this.values.cycle;
+  }
+
+  public get theme(): {
+    textColor: NonNullable<SeedValues['textColor']>;
+    backgroundColor: NonNullable<SeedValues['backgroundColor']>;
+    transitionTimingFunction: NonNullable<
+      SeedValues['transitionTimingFunction']
+    >;
+  } {
+    const {textColor, backgroundColor, transitionTimingFunction} = this.values;
+
+    return {textColor, backgroundColor, transitionTimingFunction};
+  }
+
+  public get message(): NonNullable<SeedValues['message']> {
+    const {message} = this.values;
+    const name = this.values.name || 'Unknown';
+
+    if (message === undefined) {
+      throw new Error(`${name}'s message is undefind`);
     }
 
-    const seed = new Seed(data);
-    this.memo.set(key, seed);
-    return seed;
+    return message;
   }
 
-  public data: SeedImpl['data'];
-
-  private constructor(data: SeedImpl['data']) {
-    this.data = {
-      id: nanoid(),
-      position: Position.CenterTop,
-      ...data,
-    };
-  }
-
-  public icon(icon: string): this {
-    this.data.icon = icon;
-    return this;
-  }
-
-  public message(message: string): this {
-    this.data.message = message;
-    return this;
-  }
-
-  public position(position: Position): this {
-    this.data.position = position;
-    return this;
+  private wait(msec: number): Promise<void> {
+    return new Promise(
+      (resolve): void => {
+        setTimeout(resolve, msec);
+      },
+    );
   }
 
   public [Symbol.asyncIterator] = async function*(
-    this: Seed,
-  ): AsyncIterator<object> {
-    const id = nanoid();
-    const cycle = new Cycle();
+    this: SeedImpl,
+  ): AsyncIterator<SeedImpl> {
+    // after enter
+    yield this;
 
-    yield {
-      id,
-      cycle,
-      position: this.data.position,
-    };
+    await this.wait(50);
+    this.cycle.proceed();
 
-    await new Promise(
-      (r): void => {
-        requestAnimationFrame(r);
-      },
-    );
+    // after entering
+    yield this;
 
-    cycle.proceed();
-    yield {
-      id,
-      cycle,
-      position: this.data.position,
-    };
+    await this.cycle.waitUntilEntered(60000);
 
-    cycle.proceed();
-    yield {
-      id,
-      cycle,
-      position: this.data.position,
-    };
+    // after entered
+    yield this;
 
-    cycle.proceed();
-    yield {
-      id,
-      cycle,
-      position: this.data.position,
-    };
-  }.bind(this);
+    await this.wait(5000);
+    this.cycle.proceed();
+
+    // after exit
+    yield this;
+
+    await this.wait(50);
+    this.cycle.proceed();
+
+    // after exiting
+    yield this;
+
+    await this.cycle.waitUntilExited();
+
+    // after exited
+    yield this;
+  };
 }
+
+export default Seed;

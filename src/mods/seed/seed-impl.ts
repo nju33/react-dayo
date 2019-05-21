@@ -1,18 +1,24 @@
-import {Position} from './constants/position';
+import {SeedData} from './seed-factory-impl';
+import Cycle from '../cycle';
 
-export interface InstanceData {
+export interface SeedValues extends SeedData {
   id: string;
-  name: string;
-  color: string;
-  icon?: string;
-  message?: string;
-  position?: Position;
+  cycle: Cycle;
 }
 
 export default interface SeedImpl {
-  data: InstanceData;
-  icon(icon: string): this;
-  message(message: string): this;
-  position(position: Position): this;
-  [Symbol.asyncIterator](): AsyncIterator<object>;
+  // eslint-disable-next-line @typescript-eslint/no-misused-new
+  values: SeedValues;
+  id: SeedValues['id'];
+  cycle: Cycle;
+  theme: {
+    textColor: NonNullable<SeedValues['textColor']>;
+    backgroundColor: NonNullable<SeedValues['backgroundColor']>;
+    transitionTimingFunction: NonNullable<
+      SeedValues['transitionTimingFunction']
+    >;
+  };
+  message: NonNullable<SeedValues['message']>;
+  wait(msec: number): Promise<void>;
+  [Symbol.asyncIterator](): AsyncIterator<SeedImpl>;
 }

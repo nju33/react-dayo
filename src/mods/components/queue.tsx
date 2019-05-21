@@ -6,7 +6,7 @@ const component = ({} as unknown) as {
 };
 
 /* eslint-disable react/prop-types */
-const Queue: React.FC<{}> = (props): JSX.Element => {
+export const Queue: React.FC<{}> = (props): JSX.Element => {
   return (
     <component.container>
       {props.children}
@@ -17,7 +17,7 @@ const Queue: React.FC<{}> = (props): JSX.Element => {
 };
 /* eslint-enable react/prop-types */
 
-Queue.displayName = 'Queue';
+Queue.displayName = 'Dayo(Queue)';
 
 component.container = styled.aside`
   position: fixed;
@@ -25,6 +25,7 @@ component.container = styled.aside`
   top: 10px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 `;
 
 export default Queue;

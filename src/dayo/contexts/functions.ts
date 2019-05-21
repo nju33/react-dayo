@@ -1,24 +1,24 @@
 import React from 'react';
 
 export interface DayoFunctions {
-  log(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  success(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  warn(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  error(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  heart(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  help(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  message(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  refresh(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  setting(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  remove(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  star(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  upload(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  user(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  play(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  mail(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  link(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  bookmark(message: string): ((ev?: React.MouseEvent<unknown>) => void);
-  hide(itemId: string): ((ev?: React.MouseEvent<unknown>) => void);
+  log(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  success(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  warn(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  error(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  heart(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  help(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  message(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  refresh(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  setting(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  remove(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  star(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  upload(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  user(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  play(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  mail(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  link(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  bookmark(message: string): (ev?: React.MouseEvent<unknown>) => void;
+  hide(itemId: string): (ev?: React.MouseEvent<unknown>) => void;
   messageClear(itemId: string): void;
 }
 

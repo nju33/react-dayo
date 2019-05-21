@@ -1,27 +1,31 @@
 import React from 'react';
-import {SeedImpl} from '../seed';
-import Cycle from '../cycle';
+import {SeedFactoryImpl, SeedImpl} from '../seed';
 import Queue from '../components/queue';
-// import {Alert} from './alert';
+import Box from '../components/box';
 
 enum DispatcherEventName {
-  UpdateState,
+  UpdateSeed,
+  DoneSeed,
 }
 
 class Dispatcher {
-  private events = new Map<DispatcherEventName, ((state: object) => void)[]>();
+  private events = new Map<
+    DispatcherEventName,
+    ((seedOnCycle: SeedImpl) => void)[]
+  >();
 
   public dispatch = (
-    seed: SeedImpl,
+    seedFactory: SeedFactoryImpl,
   ): (() => Promise<void>) => async (): Promise<void> => {
-    for await (const state of seed) {
-      this.emit(DispatcherEventName.UpdateState, state);
+    const seed = seedFactory.createSeed();
+    for await (const seedOnCycle of seed) {
+      this.emit(DispatcherEventName.UpdateSeed, seedOnCycle);
     }
 
-    // this.emit(DispatcherEventName.Show, seed);
+    this.emit(DispatcherEventName.DoneSeed, seed);
   };
 
-  public emit(event: DispatcherEventName, state: object): void {
+  public emit(event: DispatcherEventName, seedOnCycle: SeedImpl): void {
     const callbacks = this.events.get(event);
     if (callbacks === undefined) {
       return;
@@ -29,7 +33,7 @@ class Dispatcher {
 
     callbacks.forEach(
       (callback): void => {
-        callback(state);
+        callback(seedOnCycle);
       },
     );
   }
@@ -56,12 +60,6 @@ interface DayoImpl {
   dispatcher: Dispatcher;
 }
 
-// const Alert: React.FC<{}> = (props): JSX.Element => {
-//   return (
-//     <div></div>
-//   )
-// }
-
 export const createDayo = (): [
   React.ComponentClass,
   Dispatcher['dispatch']
@@ -72,48 +70,115 @@ export const createDayo = (): [
     public dispatcher = dispatcher;
 
     public state = {
-      queue: [] as {id: string; cycle: Cycle}[],
+      queue: [] as SeedImpl[],
     };
+
+    private rewriteQueueItem(seedOnCycle: SeedImpl): void {
+      const targetIndex = this.state.queue.findIndex(
+        (item): boolean => {
+          return item.id === seedOnCycle.id;
+        },
+      );
+
+      if (targetIndex === -1) {
+        return;
+      }
+
+      const {queue} = this.state;
+      queue[targetIndex] = seedOnCycle;
+
+      this.setState({queue});
+    }
 
     public componentDidMount(): void {
       dispatcher.on(
-        DispatcherEventName.UpdateState,
-        (state: {id: string; cycle: Cycle}): void => {
-          if (state.cycle.isCreating()) {
-            this.addAlert(state);
+        DispatcherEventName.UpdateSeed,
+        (seedOnCycle: SeedImpl): void => {
+          if (seedOnCycle.cycle.isEnter()) {
+            this.addAlert(seedOnCycle);
             return;
           }
 
-          if (state.cycle.isCreated()) {
-            console.log(state);
-            console.log(1);
-            return;
-          }
+          // console.log('UpdateSeed', {
+          //   isEnter: seedOnCycle.cycle.isEnter(),
+          //   isEntering: seedOnCycle.cycle.isEntering(),
+          //   isEntered: seedOnCycle.cycle.isEntered(),
+          //   isExit: seedOnCycle.cycle.isExit(),
+          // });
 
-          console.log(9);
+          return this.rewriteQueueItem(seedOnCycle);
+        },
+      );
+
+      dispatcher.on(
+        DispatcherEventName.DoneSeed,
+        (seed: SeedImpl): void => {
+          const {queue} = this.state;
+          const nextQueue = queue.filter(
+            (item): boolean => {
+              return item.id !== seed.id;
+            },
+          );
+
+          this.setState({queue: nextQueue});
         },
       );
     }
 
-    public addAlert(state: {id: string; cycle: Cycle}): void {
+    public addAlert(seedOnCycle: SeedImpl): void {
+      const overflowLength =
+        this.state.queue.length < 10 ? 0 : this.state.queue.length - 10;
+
       this.setState({
-        queue: [...this.state.queue, state],
+        queue: [...this.state.queue, seedOnCycle],
       });
+
+      if (overflowLength > 0) {
+        this.state.queue.slice(0, overflowLength).forEach(
+          (seedOnCycle): void => {
+            seedOnCycle.cycle.proceed();
+          },
+        );
+      }
     }
 
-    // public createAlert(seed: SeedImpl): void {
-    //   this.setState({
-    //     queue: [...this.state.queue, seed],
-    //   });
-    // }
+    private onTransitionEnd(seedOnCycle: SeedImpl): () => void {
+      return (): void => {
+        if (
+          seedOnCycle.cycle.isEnter() ||
+          seedOnCycle.cycle.isEntered() ||
+          seedOnCycle.cycle.isExit() ||
+          seedOnCycle.cycle.isExited()
+        ) {
+          return;
+        }
+
+        if (seedOnCycle.cycle.isEntering() || seedOnCycle.cycle.isExiting()) {
+          seedOnCycle.cycle.proceed();
+        }
+      };
+    }
 
     public render(): JSX.Element {
-      // eslint-disable-next-line react/prop-types
       return (
         <Queue>
           {this.state.queue.map(
-            (item): any => {
-              return <div key={Math.random()}>aa</div>;
+            (seedOnCycle): JSX.Element => {
+              return (
+                <Box
+                  key={seedOnCycle.id}
+                  theme={seedOnCycle.theme}
+                  isEnter={seedOnCycle.cycle.isEnter()}
+                  isEntering={seedOnCycle.cycle.isEntering()}
+                  isEntered={seedOnCycle.cycle.isEntered()}
+                  isExit={seedOnCycle.cycle.isExit()}
+                  isExiting={seedOnCycle.cycle.isExiting()}
+                  isExited={seedOnCycle.cycle.isExited()}
+                  onTransitionEnd={this.onTransitionEnd(seedOnCycle)}
+                >
+                  <div>{seedOnCycle.message}</div>
+                </Box>
+              );
             },
           )}
         </Queue>
@@ -123,11 +188,3 @@ export const createDayo = (): [
 
   return [Dayo, dispatcher.dispatch];
 };
-
-// (
-//   <Dayo>
-//     {/* ... */}
-//       <button onClick={dispatch(log)}>button</button>
-//     {/* ... */}
-//   </Dayo>
-// )
