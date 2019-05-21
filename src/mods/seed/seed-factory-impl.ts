@@ -1,23 +1,27 @@
 import SeedImpl from './seed-impl';
 
-export interface SeedFactoryValue {
+export interface SeedFactoryValues {
   name?: string;
   textColor: string;
   backgroundColor: string;
   transitionTimingFunction?: string;
   icon?: string;
   message?: string;
+  closeButton?: JSX.Element;
 }
 
 export default interface SeedFactoryImpl {
-  values: SeedFactoryValue;
-  name(value: SeedFactoryValue['name']): SeedFactoryImpl;
-  textColor(value: SeedFactoryValue['textColor']): SeedFactoryImpl;
-  backgroundColor(value: SeedFactoryValue['backgroundColor']): SeedFactoryImpl;
+  values: SeedFactoryValues;
+  name(value: SeedFactoryValues['name']): SeedFactoryImpl;
+  textColor(value: SeedFactoryValues['textColor']): SeedFactoryImpl;
+  backgroundColor(value: SeedFactoryValues['backgroundColor']): SeedFactoryImpl;
   transitionTimingFunction(
-    value: SeedFactoryValue['transitionTimingFunction'],
+    value: SeedFactoryValues['transitionTimingFunction'],
   ): SeedFactoryImpl;
-  icon(value: NonNullable<SeedFactoryValue['icon']>): SeedFactoryImpl;
-  message(value: NonNullable<SeedFactoryValue['message']>): SeedFactoryImpl;
+  icon(value: NonNullable<SeedFactoryValues['icon']>): SeedFactoryImpl;
+  message(value: NonNullable<SeedFactoryValues['message']>): SeedFactoryImpl;
+  closeButton(
+    value: NonNullable<SeedFactoryValues['closeButton']>,
+  ): SeedFactoryImpl;
   createSeed(): SeedImpl;
 }

@@ -1,72 +1,25 @@
 import React from 'react';
+import {DayoOptions, DayoOptionTo} from './dayo-impl';
+import DayoImpl from './dayo-impl';
 import {SeedFactoryImpl, SeedImpl} from '../seed';
+import Dispatcher, {Event as DispatcherEvent} from '../dispatcher';
+
 import Queue from '../components/queue';
 import Box from '../components/box';
 
-enum DispatcherEventName {
-  UpdateSeed,
-  DoneSeed,
-}
+const defaultOptions = {
+  to: 'top' as DayoOptionTo,
+};
 
-class Dispatcher {
-  private events = new Map<
-    DispatcherEventName,
-    ((seedOnCycle: SeedImpl) => void)[]
-  >();
+export const createDayo = (
+  userOptions: Partial<DayoOptions> = {},
+): [React.ComponentClass, Dispatcher['dispatch']] => {
+  const options: DayoOptions = {...defaultOptions, ...userOptions};
 
-  public dispatch = (
-    seedFactory: SeedFactoryImpl,
-  ): (() => Promise<void>) => async (): Promise<void> => {
-    const seed = seedFactory.createSeed();
-    for await (const seedOnCycle of seed) {
-      this.emit(DispatcherEventName.UpdateSeed, seedOnCycle);
-    }
-
-    this.emit(DispatcherEventName.DoneSeed, seed);
-  };
-
-  public emit(event: DispatcherEventName, seedOnCycle: SeedImpl): void {
-    const callbacks = this.events.get(event);
-    if (callbacks === undefined) {
-      return;
-    }
-
-    callbacks.forEach(
-      (callback): void => {
-        callback(seedOnCycle);
-      },
-    );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public on(event: DispatcherEventName, cb: (resource: any) => void): void {
-    if (!this.events.has(event)) {
-      this.events.set(event, [cb]);
-      return;
-    }
-
-    const callbacks = this.events.get(event);
-    if (callbacks === undefined) {
-      throw new Error('strangely the `callbacks` is undefined');
-    }
-
-    callbacks.push(cb);
-
-    this.events.set(event, callbacks);
-  }
-}
-
-interface DayoImpl {
-  dispatcher: Dispatcher;
-}
-
-export const createDayo = (): [
-  React.ComponentClass,
-  Dispatcher['dispatch']
-] => {
   const dispatcher = new Dispatcher();
 
-  class Dayo extends React.Component<{}> implements DayoImpl {
+  class Dayo extends React.Component<{}>
+    implements DayoImpl<SeedFactoryImpl, SeedImpl> {
     public dispatcher = dispatcher;
 
     public state = {
@@ -90,42 +43,32 @@ export const createDayo = (): [
       this.setState({queue});
     }
 
+    private handleUpdateSeed = (seedOnCycle: SeedImpl): void => {
+      if (seedOnCycle.cycle.isEnter()) {
+        this.addAlert(seedOnCycle);
+        return;
+      }
+
+      return this.rewriteQueueItem(seedOnCycle);
+    };
+
+    private handleDoneSeed = (seed: SeedImpl): void => {
+      const {queue} = this.state;
+      const nextQueue = queue.filter(
+        (item): boolean => {
+          return item.id !== seed.id;
+        },
+      );
+
+      this.setState({queue: nextQueue});
+    };
+
     public componentDidMount(): void {
-      dispatcher.on(
-        DispatcherEventName.UpdateSeed,
-        (seedOnCycle: SeedImpl): void => {
-          if (seedOnCycle.cycle.isEnter()) {
-            this.addAlert(seedOnCycle);
-            return;
-          }
-
-          // console.log('UpdateSeed', {
-          //   isEnter: seedOnCycle.cycle.isEnter(),
-          //   isEntering: seedOnCycle.cycle.isEntering(),
-          //   isEntered: seedOnCycle.cycle.isEntered(),
-          //   isExit: seedOnCycle.cycle.isExit(),
-          // });
-
-          return this.rewriteQueueItem(seedOnCycle);
-        },
-      );
-
-      dispatcher.on(
-        DispatcherEventName.DoneSeed,
-        (seed: SeedImpl): void => {
-          const {queue} = this.state;
-          const nextQueue = queue.filter(
-            (item): boolean => {
-              return item.id !== seed.id;
-            },
-          );
-
-          this.setState({queue: nextQueue});
-        },
-      );
+      dispatcher.on(DispatcherEvent.UpdateSeed, this.handleUpdateSeed);
+      dispatcher.on(DispatcherEvent.DoneSeed, this.handleDoneSeed);
     }
 
-    public addAlert(seedOnCycle: SeedImpl): void {
+    private addAlert(seedOnCycle: SeedImpl): void {
       const overflowLength =
         this.state.queue.length < 10 ? 0 : this.state.queue.length - 10;
 
@@ -159,14 +102,21 @@ export const createDayo = (): [
       };
     }
 
+    private onClickCloseButton(seedOnCycle: SeedImpl): () => void {
+      return (): void => {
+        seedOnCycle.cycle.proceed();
+      };
+    }
+
     public render(): JSX.Element {
       return (
-        <Queue>
+        <Queue to={options.to}>
           {this.state.queue.map(
             (seedOnCycle): JSX.Element => {
               return (
                 <Box
                   key={seedOnCycle.id}
+                  to={options.to}
                   theme={seedOnCycle.theme}
                   isEnter={seedOnCycle.cycle.isEnter()}
                   isEntering={seedOnCycle.cycle.isEntering()}
@@ -175,6 +125,8 @@ export const createDayo = (): [
                   isExiting={seedOnCycle.cycle.isExiting()}
                   isExited={seedOnCycle.cycle.isExited()}
                   onTransitionEnd={this.onTransitionEnd(seedOnCycle)}
+                  onClickCloseButton={this.onClickCloseButton(seedOnCycle)}
+                  closeButton={seedOnCycle.closeButton}
                 >
                   <div>{seedOnCycle.message}</div>
                 </Box>

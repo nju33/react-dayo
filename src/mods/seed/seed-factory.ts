@@ -61,6 +61,10 @@ export default class SeedFactory implements SeedFactoryImpl {
     return SeedFactory.create({...this.values, message: value});
   }
 
+  public closeButton(value: JSX.Element): SeedFactoryImpl {
+    return SeedFactory.create({...this.values, closeButton: value});
+  }
+
   public createSeed(): Seed {
     return new Seed({
       id: nanoid(),

@@ -18,6 +18,7 @@ const component = ({} as unknown) as {
 
 export interface BoxProps {
   theme: BoxTheme;
+  to: 'top' | 'bottom';
   isEnter: boolean;
   isEntering: boolean;
   isEntered: boolean;
@@ -26,6 +27,8 @@ export interface BoxProps {
   isExited: boolean;
   icon?: JSX.Element;
   onTransitionEnd(): void;
+  closeButton?: JSX.Element;
+  onClickCloseButton(): void;
 }
 
 /* eslint-disable react/prop-types */
@@ -52,6 +55,7 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       ref={containerRef}
       theme={props.theme}
       aria-live="assertive"
+      data-to={props.to}
       data-is-enter={props.isEnter}
       data-is-entering={props.isEntering}
       data-is-entered={props.isEntered}
@@ -62,7 +66,9 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
     >
       <div className="dayo-Alert_LeftArea">{props.icon}</div>
       <div ref={middleAreaRef}>{props.children}</div>
-      <div className="dayo-Alert_RightArea">{props.icon}</div>
+      <div className="dayo-Alert_RightArea" onClick={props.onClickCloseButton}>
+        {props.closeButton}
+      </div>
     </component.container>
   );
 };
@@ -88,8 +94,19 @@ component.container = styled.div`
   &[data-is-enter='true'] {
     will-change: transform;
     transition: none;
-    transform: translate3d(0, 0.5em, 0);
     opacity: 0;
+  }
+
+  &[data-is-enter='true'] {
+    color: orange;
+  }
+
+  &[data-is-enter='true'][data-to='top'] {
+    transform: translate3d(0, 0.5em, 0);
+  }
+
+  &[data-is-enter='true'][data-to='bottom'] {
+    transform: translate3d(0, -0.5em, 0);
   }
 
   &[data-is-entering='true'] {
@@ -112,7 +129,12 @@ component.container = styled.div`
     transition-duration: 0.3s;
     will-change: transform, margin, padding, opacity, height;
     overflow: hidden;
-    transform: translate3d(0, -0.5em, 0) scale(0.7);
+    &[data-to='top'] {
+      transform: translate3d(0, -0.5em, 0);
+    }
+    &[data-to='bottom'] {
+      transform: translate3d(0, 0.5em, 0);
+    }
     padding: 0;
     margin: 0;
     opacity: 0;
@@ -122,7 +144,12 @@ component.container = styled.div`
   &[data-is-deleted='true'] {
     transition-duration: none;
     transition-duration: 0;
-    transform: translate3d(0, -0.5em, 0) scale(0.7);
+    &[data-to='top'] {
+      transform: translate3d(0, -0.5em, 0) scale(0.7);
+    }
+    &[data-to='bottom'] {
+      transform: translate3d(0, 0.5em, 0) scale(0.7);
+    }
     overflow: hidden;
     padding: 0;
     margin: 0;
@@ -133,6 +160,13 @@ component.container = styled.div`
   .dayo-Alert_LeftArea:empty,
   .dayo-Alert_RightArea:empty {
     display: none;
+  }
+
+  .dayo-Alert_RightArea {
+    width: 2em;
+    height: 1em;
+    position: relative;
+    cursor: pointer;
   }
 `;
 

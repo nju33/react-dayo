@@ -1,3 +1,2 @@
-import Dayo from './dayo';
-
+export * from './dayo-impl';
 export * from './dayo';

@@ -43,6 +43,12 @@ export class Seed implements SeedImpl {
     return message;
   }
 
+  public get closeButton(): SeedValues['closeButton'] {
+    const {closeButton} = this.values;
+
+    return closeButton;
+  }
+
   public wait(msec: number): Promise<void> {
     return new Promise(
       (resolve): void => {

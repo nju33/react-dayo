@@ -1,7 +1,7 @@
-import {SeedFactoryValue} from './seed-factory-impl';
+import {SeedFactoryValues} from './seed-factory-impl';
 import Cycle from '../cycle';
 
-export interface SeedValues extends SeedFactoryValue {
+export interface SeedValues extends SeedFactoryValues {
   id: string;
   cycle: Cycle;
 }
@@ -19,6 +19,7 @@ export default interface SeedImpl {
     >;
   };
   message: NonNullable<SeedValues['message']>;
+  closeButton: SeedValues['closeButton'];
   wait(msec: number): Promise<void>;
   [Symbol.asyncIterator](): AsyncIterator<SeedImpl>;
 }
