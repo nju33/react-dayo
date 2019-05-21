@@ -18,3 +18,9 @@
 
 import log from './log';
 export {log};
+
+import warn from './warn';
+export {warn};
+
+import error from './error';
+export {error};

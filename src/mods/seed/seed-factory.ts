@@ -58,10 +58,6 @@ export default class SeedFactory implements SeedFactoryImpl {
     return SeedFactory.create({...this.data, message: value});
   }
 
-  public position(value: Position): SeedFactoryImpl {
-    return SeedFactory.create({...this.data, position: value});
-  }
-
   public createSeed(): Seed {
     return new Seed({
       id: nanoid(),

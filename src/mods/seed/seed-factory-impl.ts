@@ -1,4 +1,3 @@
-import {Position} from './constants/position';
 import SeedImpl from './seed-impl';
 
 export interface SeedData {
@@ -8,7 +7,6 @@ export interface SeedData {
   transitionTimingFunction?: string;
   icon?: string;
   message?: string;
-  position?: Position;
 }
 
 export default interface SeedFactoryImpl {
@@ -21,6 +19,5 @@ export default interface SeedFactoryImpl {
   ): SeedFactoryImpl;
   icon(value: NonNullable<SeedData['icon']>): SeedFactoryImpl;
   message(value: NonNullable<SeedData['message']>): SeedFactoryImpl;
-  position(value: NonNullable<SeedData['position']>): SeedFactoryImpl;
   createSeed(): SeedImpl;
 }

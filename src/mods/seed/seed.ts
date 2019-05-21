@@ -63,7 +63,8 @@ export class Seed implements SeedImpl {
     // after entered
     yield this;
 
-    await this.wait(5000);
+    // await this.wait(5000);
+    await this.wait(500000000);
     this.cycle.proceed();
 
     // after exit

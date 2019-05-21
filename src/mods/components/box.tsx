@@ -49,6 +49,7 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
     <component.container
       ref={containerRef}
       theme={props.theme}
+      aria-live="assertive"
       data-is-enter={props.isEnter}
       data-is-entering={props.isEntering}
       data-is-entered={props.isEntered}
@@ -66,8 +67,8 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
 Box.displayName = 'Dayo(Box)';
 
 component.container = styled.div`
-  /* display: 'inline-block'; */
-  /* width: 100%; */
+  display: flex;
+  align-items: center;
   color: ${(props): BoxTheme['textColor'] => props.theme.textColor};
   background-color: ${(props): BoxTheme['backgroundColor'] =>
     props.theme.backgroundColor};
@@ -75,6 +76,7 @@ component.container = styled.div`
     ${(props): BoxTheme['transitionTimingFunction'] =>
       props.theme.transitionTimingFunction};
   transition-property: margin, opacity;
+  padding: 0.25em 0.5em;
 
   margin: 5px 0;
   opacity: 1;
@@ -86,25 +88,25 @@ component.container = styled.div`
   }
 
   &[data-is-entering='true'] {
+    will-change: margin, opacity;
     margin: 5px 0;
     opacity: 1;
   }
 
+  /*
   &[data-is-entered='true'] {
-    transition: none;
   }
 
   &[data-is-delete='true'] {
-    transition-property: none;
-    overflow: hidden;
-    margin: 5px 0;
-    opacity: 1;
   }
+ */
 
   &[data-is-deleting='true'] {
-    transition-property: margin, opacity, height;
+    transition-property: margin, padding, opacity, height;
+    will-change: margin, padding, opacity, height;
     transition-duration: 0.3s;
     overflow: hidden;
+    padding: 0;
     margin: 0;
     opacity: 0;
     height: 0 !important;
@@ -114,6 +116,7 @@ component.container = styled.div`
     transition-duration: none;
     transition-duration: 0;
     overflow: hidden;
+    padding: 0;
     margin: 0;
     opacity: 0;
     height: 0 !important;
