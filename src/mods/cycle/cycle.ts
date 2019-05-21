@@ -12,7 +12,7 @@ export type IsFn = () => boolean;
 export class Cycle {
   private step = CycleStep.Enter;
 
-  public proceed(): void {
+  public proceed = (): void => {
     switch (this.step) {
       case CycleStep.Enter: {
         this.step = CycleStep.Entering;
@@ -44,7 +44,7 @@ export class Cycle {
         break;
       }
     }
-  }
+  };
 
   public getCurrentStep(): CycleStep {
     return this.step;

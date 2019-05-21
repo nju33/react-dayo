@@ -1,7 +1,7 @@
-import {SeedData} from './seed-factory-impl';
+import {SeedFactoryValue} from './seed-factory-impl';
 import Cycle from '../cycle';
 
-export interface SeedValues extends SeedData {
+export interface SeedValues extends SeedFactoryValue {
   id: string;
   cycle: Cycle;
 }

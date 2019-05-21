@@ -1,6 +1,6 @@
 import nanoid from 'nanoid';
 import {Position} from './constants/position';
-import SeedFactoryImpl from './seed-impl';
+import SeedFactoryImpl from './seed-factory-impl';
 import Seed from './seed';
 import Cycle from '../cycle';
 
@@ -14,55 +14,58 @@ const defaults = {
 export default class SeedFactory implements SeedFactoryImpl {
   private static memo = new Map<string, SeedFactoryImpl>();
 
-  public static create(data: SeedFactoryImpl['data']): SeedFactoryImpl {
-    const key = JSON.stringify(data);
+  public static create(values: SeedFactoryImpl['values']): SeedFactoryImpl {
+    const key = JSON.stringify(values);
     if (this.memo.has(key)) {
       return (this.memo.get(key) as unknown) as SeedFactoryImpl;
     }
 
-    const seed = new SeedFactory(data);
-    this.memo.set(key, seed);
-    return seed;
+    const seedFactory = new SeedFactory(values);
+    this.memo.set(key, seedFactory);
+    return seedFactory;
   }
 
-  public data: SeedFactoryImpl['data'];
+  public values: SeedFactoryImpl['values'];
 
-  private constructor(data: SeedFactoryImpl['data']) {
-    this.data = {
+  private constructor(values: SeedFactoryImpl['values']) {
+    this.values = {
       ...defaults,
-      ...data,
+      ...values,
     };
   }
 
   public name(value: string): SeedFactoryImpl {
-    return SeedFactory.create({...this.data, name: value});
+    return SeedFactory.create({...this.values, name: value});
   }
 
   public textColor(value: string): SeedFactoryImpl {
-    return SeedFactory.create({...this.data, textColor: value});
+    return SeedFactory.create({...this.values, textColor: value});
+  }
+
+  public backgroundColor(value: string): SeedFactoryImpl {
+    return SeedFactory.create({...this.values, backgroundColor: value});
   }
 
   public transitionTimingFunction(value: string): SeedFactoryImpl {
-    return SeedFactory.create({...this.data, transitionTimingFunction: value});
-  }
-
-  public transitoin(value: string): SeedFactoryImpl {
-    return SeedFactory.create({...this.data, transition: value});
+    return SeedFactory.create({
+      ...this.values,
+      transitionTimingFunction: value,
+    });
   }
 
   public icon(value: string): SeedFactoryImpl {
-    return SeedFactory.create({...this.data, icon: value});
+    return SeedFactory.create({...this.values, icon: value});
   }
 
   public message(value: string): SeedFactoryImpl {
-    return SeedFactory.create({...this.data, message: value});
+    return SeedFactory.create({...this.values, message: value});
   }
 
   public createSeed(): Seed {
     return new Seed({
       id: nanoid(),
       cycle: new Cycle(),
-      ...this.data,
+      ...this.values,
     });
   }
 }

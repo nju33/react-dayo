@@ -1,6 +1,6 @@
 import SeedImpl from './seed-impl';
 
-export interface SeedData {
+export interface SeedFactoryValue {
   name?: string;
   textColor: string;
   backgroundColor: string;
@@ -10,14 +10,14 @@ export interface SeedData {
 }
 
 export default interface SeedFactoryImpl {
-  data: SeedData;
-  name(value: SeedData['name']): SeedFactoryImpl;
-  textColor(value: SeedData['textColor']): SeedFactoryImpl;
-  backgroundColor(value: SeedData['backgroundColor']): SeedFactoryImpl;
+  values: SeedFactoryValue;
+  name(value: SeedFactoryValue['name']): SeedFactoryImpl;
+  textColor(value: SeedFactoryValue['textColor']): SeedFactoryImpl;
+  backgroundColor(value: SeedFactoryValue['backgroundColor']): SeedFactoryImpl;
   transitionTimingFunction(
-    value: SeedData['transitionTimingFunction'],
+    value: SeedFactoryValue['transitionTimingFunction'],
   ): SeedFactoryImpl;
-  icon(value: NonNullable<SeedData['icon']>): SeedFactoryImpl;
-  message(value: NonNullable<SeedData['message']>): SeedFactoryImpl;
+  icon(value: NonNullable<SeedFactoryValue['icon']>): SeedFactoryImpl;
+  message(value: NonNullable<SeedFactoryValue['message']>): SeedFactoryImpl;
   createSeed(): SeedImpl;
 }

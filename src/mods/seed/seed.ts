@@ -22,7 +22,12 @@ export class Seed implements SeedImpl {
       SeedValues['transitionTimingFunction']
     >;
   } {
-    const {textColor, backgroundColor, transitionTimingFunction} = this.values;
+    const {textColor, backgroundColor, transitionTimingFunction} = (this
+      .values as unknown) as {
+      textColor: string;
+      backgroundColor: string;
+      transitionTimingFunction: string;
+    };
 
     return {textColor, backgroundColor, transitionTimingFunction};
   }
@@ -38,7 +43,7 @@ export class Seed implements SeedImpl {
     return message;
   }
 
-  private wait(msec: number): Promise<void> {
+  public wait(msec: number): Promise<void> {
     return new Promise(
       (resolve): void => {
         setTimeout(resolve, msec);
@@ -49,37 +54,28 @@ export class Seed implements SeedImpl {
   public [Symbol.asyncIterator] = async function*(
     this: SeedImpl,
   ): AsyncIterator<SeedImpl> {
-    // after enter
-    yield this;
+    yield this; // after enter
 
-    await this.wait(50);
-    this.cycle.proceed();
+    await this.wait(50).then(this.cycle.proceed);
 
-    // after entering
-    yield this;
+    yield this; // after entering
 
     await this.cycle.waitUntilEntered(60000);
 
-    // after entered
-    yield this;
+    yield this; // after entered
 
-    // await this.wait(5000);
-    await this.wait(500000000);
-    this.cycle.proceed();
+    await this.wait(5000).then(this.cycle.proceed);
+    // await this.wait(500000000); // for debug
 
-    // after exit
-    yield this;
+    yield this; // after exit
 
-    await this.wait(50);
-    this.cycle.proceed();
+    await this.wait(50).then(this.cycle.proceed);
 
-    // after exiting
-    yield this;
+    yield this; // after exiting
 
-    await this.cycle.waitUntilExited();
+    await this.cycle.waitUntilExited(60000);
 
-    // after exited
-    yield this;
+    yield this; // after exited
   };
 }
 
