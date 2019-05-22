@@ -55,6 +55,7 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       ref={containerRef}
       theme={props.theme}
       aria-live="assertive"
+      aria-atomic="true"
       data-to={props.to}
       data-is-enter={props.isEnter}
       data-is-entering={props.isEntering}
