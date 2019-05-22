@@ -69,7 +69,6 @@ export class Seed implements SeedImpl {
           (resolve): void => {
             onTick(
               (): void => {
-                console.log(9);
                 if (condition()) {
                   resolve();
                 }
