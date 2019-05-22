@@ -16,12 +16,12 @@ test('Cycle', (): void => {
   expect(cycle.isExited()).toBeTruthy();
 });
 
-test('Cycle#waitUntil', async (): Promise<void> => {
-  const cycle = new Cycle();
+// test('Cycle#waitUntil', async (): Promise<void> => {
+//   const cycle = new Cycle();
 
-  setTimeout((): void => {
-    cycle.proceed();
-  }, 100);
+//   setTimeout((): void => {
+//     cycle.proceed();
+//   }, 100);
 
-  await expect(cycle.waitUntil(cycle.isEntering)).resolves.toBeUndefined();
-});
+//   await expect(cycle.waitUntil(cycle.isEntering)).resolves.toBeUndefined();
+// });
