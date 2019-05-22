@@ -1,4 +1,5 @@
 import SeedImpl, {SeedValues} from './seed-impl';
+import Interval, {IntervalImpl} from '../interval';
 
 export class Seed implements SeedImpl {
   public values: SeedValues;
@@ -57,20 +58,54 @@ export class Seed implements SeedImpl {
     );
   }
 
+  private waitUntil(
+    condition: () => boolean,
+    interval: IntervalImpl<SeedImpl>,
+  ): Promise<void> {
+    return interval.wait(
+      this,
+      (onTick): Promise<void> => {
+        return new Promise(
+          (resolve): void => {
+            onTick(
+              (): void => {
+                console.log(9);
+                if (condition()) {
+                  resolve();
+                }
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  private waitUntilEntered(interval: IntervalImpl<SeedImpl>): Promise<void> {
+    return this.waitUntil(this.cycle.isEntered, interval);
+  }
+
+  private waitUntilExited(interval: IntervalImpl<SeedImpl>): Promise<void> {
+    return this.waitUntil(this.cycle.isExited, interval);
+  }
+
   public [Symbol.asyncIterator] = async function*(
-    this: SeedImpl,
+    this: Seed,
   ): AsyncIterator<SeedImpl> {
+    const interval = Interval.create<SeedImpl>();
+
     yield this; // after enter
 
     await this.wait(50).then(this.cycle.proceed);
 
     yield this; // after entering
 
-    await this.cycle.waitUntilEntered(60000);
+    await this.waitUntilEntered(interval);
 
     yield this; // after entered
 
     await this.wait(5000).then(this.cycle.proceed);
+    // await this.wait(1000).then(this.cycle.proceed); // for debug
     // await this.wait(500000000); // for debug
 
     yield this; // after exit
@@ -79,7 +114,7 @@ export class Seed implements SeedImpl {
 
     yield this; // after exiting
 
-    await this.cycle.waitUntilExited(60000);
+    await this.waitUntilExited(interval);
 
     yield this; // after exited
   };

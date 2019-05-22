@@ -2,6 +2,9 @@ import DispatcherImpl from './dispatcher-impl';
 import {Event as DispatcherEvent} from './constants/events';
 import {SeedFactoryImpl, SeedImpl} from '../seed';
 
+/**
+ * Dispatcher for Seed
+ */
 export class Dispatcher implements DispatcherImpl<SeedFactoryImpl, SeedImpl> {
   private events = new Map<
     DispatcherEvent,
