@@ -113,11 +113,11 @@ export class Seed implements SeedImpl {
 
     yield this; // after entered
 
-    await Promise.race(
-      [this.wait(5000), this.waitUntilClick(interval)].filter(Boolean),
-    ).then(this.cycle.proceed);
+    // await Promise.race(
+    //   [this.wait(5000), this.waitUntilClick(interval)].filter(Boolean),
+    // ).then(this.cycle.proceed);
     // await this.wait(1000).then(this.cycle.proceed); // for debug
-    // await this.wait(500000000); // for debug
+    await this.wait(500000000); // for debug
 
     yield this; // after exit
 

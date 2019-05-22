@@ -14,10 +14,19 @@ export class Dispatcher implements DispatcherImpl<SeedFactoryImpl, SeedImpl> {
   public dispatch = (
     seedFactory: SeedFactoryImpl,
   ): (() => Promise<void>) => async (): Promise<void> => {
+    console.log(9999);
     const seed = seedFactory.createSeed();
-    for await (const seedOnCycle of seed) {
-      this.emit(DispatcherEvent.UpdateSeed, seedOnCycle);
+    console.log(9999);
+    try {
+      for await (const seedOnCycle of seed) {
+        console.log(9999);
+        this.emit(DispatcherEvent.UpdateSeed, seedOnCycle);
+      }
+    } catch (err) {
+      console.log(err);
     }
+
+    console.log(9999);
 
     this.emit(DispatcherEvent.DoneSeed, seed);
   };

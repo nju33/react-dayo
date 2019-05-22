@@ -3,10 +3,17 @@ import {render, createPortal} from 'react-dom';
 import log from './src/mods/seed/presets/log';
 import warn from './src/mods/seed/presets/warn';
 import error from './src/mods/seed/presets/error';
-import {createDayo} from './src/mods/dayo/dayo';
+import {createDayo} from './src';
 
 const [Dayo, dispatch] = createDayo();
 const [Dayo2, dispatch2] = createDayo({to: 'bottom'});
+
+window.addEventListener(
+  'error',
+  (ev): void => {
+    console.log(ev);
+  },
+);
 
 render(
   <div>

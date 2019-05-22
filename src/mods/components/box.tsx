@@ -86,7 +86,7 @@ component.container = styled.div`
   transition: 0.5s
     ${(props): BoxTheme['transitionTimingFunction'] =>
       props.theme.transitionTimingFunction};
-  transform: translate3d(0, 0, 0);
+  /* transform: translate3d(0, 0, 0); */
   padding: 0.25em 0.5em;
 
   margin: 0.15em 0;
@@ -113,28 +113,31 @@ component.container = styled.div`
   &[data-is-entering='true'] {
     transition-property: transform, opacity;
     will-change: transform, opacity;
-    transform: translate3d(0, 0, 0);
+    /* transform: translate3d(0, 0, 0); */
     opacity: 1;
   }
 
-  /*
-  &[data-is-entered='true'] {
-  }
+  /* &[data-is-entered='true'] {
+    transform: translate3d(0, 0, 0);
+  } */
 
-  &[data-is-delete='true'] {
-  }
- */
+  /* &[data-is-delete='true'] {
+  } */
 
   &[data-is-deleting='true'] {
     transition-property: transform margin, padding, opacity, height;
+    /* transition-duration: 0.3s; */
     transition-duration: 0.3s;
     will-change: transform, margin, padding, opacity, height;
     overflow: hidden;
+    backface-visibility: hidden;
     &[data-to='top'] {
       transform: translate3d(0, -0.5em, 0);
+      /* transform-origin: center top; */
     }
     &[data-to='bottom'] {
       transform: translate3d(0, 0.5em, 0);
+      /* transform-origin: center bottom; */
     }
     padding: 0;
     margin: 0;
@@ -147,9 +150,11 @@ component.container = styled.div`
     transition-duration: 0;
     &[data-to='top'] {
       transform: translate3d(0, -0.5em, 0) scale(0.7);
+      /* transform-origin: center top; */
     }
     &[data-to='bottom'] {
       transform: translate3d(0, 0.5em, 0) scale(0.7);
+      /* transform-origin: center bottom; */
     }
     overflow: hidden;
     padding: 0;
@@ -164,10 +169,26 @@ component.container = styled.div`
   }
 
   .dayo-Alert_RightArea {
-    width: 2em;
+    width: 1em;
+    margin-left: 0.5em;
+    display: grid;
+    grid-template-rows: 1fr;
     height: 1em;
     position: relative;
     cursor: pointer;
+
+    svg {
+      transition: 0.3s
+        ${(props): BoxTheme['transitionTimingFunction'] =>
+          props.theme.transitionTimingFunction};
+      transform: scale(0.7);
+      opacity: 0.3;
+    }
+
+    &:hover svg {
+      transform: scale(0.89);
+      opacity: 1;
+    }
   }
 `;
 

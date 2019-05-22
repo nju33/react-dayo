@@ -27,6 +27,8 @@ component.container = styled.aside`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 
   &[data-to='top'] {
     flex-direction: column;

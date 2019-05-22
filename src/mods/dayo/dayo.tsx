@@ -70,7 +70,8 @@ export const createDayo = (
 
     private addAlert(seedOnCycle: SeedImpl): void {
       const overflowLength =
-        this.state.queue.length < 10 ? 0 : this.state.queue.length - 10;
+        this.state.queue.length < 2 ? 0 : this.state.queue.length - 2;
+      // this.state.queue.length < 10 ? 0 : this.state.queue.length - 10;
 
       this.setState({
         queue: [...this.state.queue, seedOnCycle],

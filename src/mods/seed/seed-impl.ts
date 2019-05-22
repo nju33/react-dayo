@@ -20,6 +20,7 @@ export default interface SeedImpl {
   };
   message: NonNullable<SeedValues['message']>;
   closeButton: SeedValues['closeButton'];
+  setCloseButtonClicked(): void;
   wait(msec: number): Promise<void>;
   [Symbol.asyncIterator](): AsyncIterator<SeedImpl>;
 }
