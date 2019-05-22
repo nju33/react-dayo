@@ -4,6 +4,8 @@ import Interval, {IntervalImpl} from '../interval';
 export class Seed implements SeedImpl {
   public values: SeedValues;
 
+  public closeButtonClicked = false;
+
   public constructor(values: SeedValues) {
     this.values = values;
   }
@@ -50,6 +52,10 @@ export class Seed implements SeedImpl {
     return closeButton;
   }
 
+  public setCloseButtonClicked(): void {
+    this.closeButtonClicked = true;
+  }
+
   public wait(msec: number): Promise<void> {
     return new Promise(
       (resolve): void => {
@@ -88,6 +94,10 @@ export class Seed implements SeedImpl {
     return this.waitUntil(this.cycle.isExited, interval);
   }
 
+  private waitUntilClick(interval: IntervalImpl<SeedImpl>): Promise<void> {
+    return this.waitUntil((): boolean => this.closeButtonClicked, interval);
+  }
+
   public [Symbol.asyncIterator] = async function*(
     this: Seed,
   ): AsyncIterator<SeedImpl> {
@@ -103,7 +113,9 @@ export class Seed implements SeedImpl {
 
     yield this; // after entered
 
-    await this.wait(5000).then(this.cycle.proceed);
+    await Promise.race(
+      [this.wait(5000), this.waitUntilClick(interval)].filter(Boolean),
+    ).then(this.cycle.proceed);
     // await this.wait(1000).then(this.cycle.proceed); // for debug
     // await this.wait(500000000); // for debug
 

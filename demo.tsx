@@ -21,7 +21,7 @@ render(
       <button onClick={dispatch(log.message('ログ2だよ'))}>log2</button>
       <button onClick={dispatch2(log.message('ログ2だよ'))}>log2</button>
       <button onClick={dispatch(warn.message('警告だよ'))}>warn</button>
-      <button onClick={dispatch(error.message('警告だよ'))}>error</button>
+      <button onClick={dispatch(error.message('エラーだよ'))}>error</button>
     </div>
     {createPortal(<Dayo />, document.getElementById('alert-left-top') as any)}
     {createPortal(<Dayo2 />, document.getElementById(

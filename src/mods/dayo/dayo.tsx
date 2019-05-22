@@ -104,6 +104,7 @@ export const createDayo = (
 
     private onClickCloseButton(seedOnCycle: SeedImpl): () => void {
       return (): void => {
+        seedOnCycle.setCloseButtonClicked();
         seedOnCycle.cycle.proceed();
       };
     }
@@ -125,8 +126,8 @@ export const createDayo = (
                   isExiting={seedOnCycle.cycle.isExiting()}
                   isExited={seedOnCycle.cycle.isExited()}
                   onTransitionEnd={this.onTransitionEnd(seedOnCycle)}
-                  onClickCloseButton={this.onClickCloseButton(seedOnCycle)}
                   closeButton={seedOnCycle.closeButton}
+                  onClickCloseButton={this.onClickCloseButton(seedOnCycle)}
                 >
                   <div>{seedOnCycle.message}</div>
                 </Box>
