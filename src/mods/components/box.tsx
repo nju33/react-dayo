@@ -3,10 +3,9 @@ import rawStyled, {
   StyledComponentBase,
   ThemedBaseStyledInterface,
 } from 'styled-components';
+import {BlockComponent} from '../seed/seed-impl';
 
 export interface BoxTheme {
-  textColor: string;
-  backgroundColor: string;
   transitionTimingFunction: string;
 }
 
@@ -17,7 +16,9 @@ const component = ({} as unknown) as {
 };
 
 export interface BoxProps {
+  Block: BlockComponent;
   theme: BoxTheme;
+  close(): void;
   to: 'top' | 'bottom';
   isEnter: boolean;
   isEntering: boolean;
@@ -25,10 +26,7 @@ export interface BoxProps {
   isExit: boolean;
   isExiting: boolean;
   isExited: boolean;
-  icon?: JSX.Element;
   onTransitionEnd(): void;
-  closeButton?: JSX.Element;
-  onClickCloseButton(): void;
 }
 
 /* eslint-disable react/prop-types */
@@ -55,7 +53,7 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       ref={containerRef}
       theme={props.theme}
       aria-live="assertive"
-      aria-atomic="true"
+      // aria-atomic="true"
       data-to={props.to}
       data-is-enter={props.isEnter}
       data-is-entering={props.isEntering}
@@ -65,10 +63,8 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       data-is-deleted={props.isExited}
       onTransitionEnd={props.onTransitionEnd}
     >
-      <div className="dayo-Alert_LeftArea">{props.icon}</div>
-      <div ref={middleAreaRef}>{props.children}</div>
-      <div className="dayo-Alert_RightArea" onClick={props.onClickCloseButton}>
-        {props.closeButton}
+      <div ref={middleAreaRef}>
+        <props.Block close={props.close}>{props.children}</props.Block>
       </div>
     </component.container>
   );
@@ -80,16 +76,9 @@ Box.displayName = 'Dayo(Box)';
 component.container = styled.div`
   display: flex;
   align-items: center;
-  color: ${(props): BoxTheme['textColor'] => props.theme.textColor};
-  background-color: ${(props): BoxTheme['backgroundColor'] =>
-    props.theme.backgroundColor};
   transition: 0.5s
     ${(props): BoxTheme['transitionTimingFunction'] =>
       props.theme.transitionTimingFunction};
-  /* transform: translate3d(0, 0, 0); */
-  padding: 0.25em 0.5em;
-
-  margin: 0.15em 0;
   opacity: 1;
 
   &[data-is-enter='true'] {
@@ -113,7 +102,6 @@ component.container = styled.div`
   &[data-is-entering='true'] {
     transition-property: transform, opacity;
     will-change: transform, opacity;
-    /* transform: translate3d(0, 0, 0); */
     opacity: 1;
   }
 
@@ -133,11 +121,9 @@ component.container = styled.div`
     backface-visibility: hidden;
     &[data-to='top'] {
       transform: translate3d(0, -0.5em, 0);
-      /* transform-origin: center top; */
     }
     &[data-to='bottom'] {
       transform: translate3d(0, 0.5em, 0);
-      /* transform-origin: center bottom; */
     }
     padding: 0;
     margin: 0;
@@ -150,45 +136,15 @@ component.container = styled.div`
     transition-duration: 0;
     &[data-to='top'] {
       transform: translate3d(0, -0.5em, 0) scale(0.7);
-      /* transform-origin: center top; */
     }
     &[data-to='bottom'] {
       transform: translate3d(0, 0.5em, 0) scale(0.7);
-      /* transform-origin: center bottom; */
     }
     overflow: hidden;
     padding: 0;
     margin: 0;
     opacity: 0;
     height: 0 !important;
-  }
-
-  .dayo-Alert_LeftArea:empty,
-  .dayo-Alert_RightArea:empty {
-    display: none;
-  }
-
-  .dayo-Alert_RightArea {
-    width: 1em;
-    margin-left: 0.5em;
-    display: grid;
-    grid-template-rows: 1fr;
-    height: 1em;
-    position: relative;
-    cursor: pointer;
-
-    svg {
-      transition: 0.3s
-        ${(props): BoxTheme['transitionTimingFunction'] =>
-          props.theme.transitionTimingFunction};
-      transform: scale(0.7);
-      opacity: 0.3;
-    }
-
-    &:hover svg {
-      transform: scale(0.89);
-      opacity: 1;
-    }
   }
 `;
 

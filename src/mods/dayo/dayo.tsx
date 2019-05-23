@@ -70,8 +70,8 @@ export const createDayo = (
 
     private addAlert(seedOnCycle: SeedImpl): void {
       const overflowLength =
-        this.state.queue.length < 2 ? 0 : this.state.queue.length - 2;
-      // this.state.queue.length < 10 ? 0 : this.state.queue.length - 10;
+        // this.state.queue.length < 2 ? 0 : this.state.queue.length - 2;
+        this.state.queue.length < 10 ? 0 : this.state.queue.length - 10;
 
       this.setState({
         queue: [...this.state.queue, seedOnCycle],
@@ -103,13 +103,6 @@ export const createDayo = (
       };
     }
 
-    private onClickCloseButton(seedOnCycle: SeedImpl): () => void {
-      return (): void => {
-        seedOnCycle.setCloseButtonClicked();
-        seedOnCycle.cycle.proceed();
-      };
-    }
-
     public render(): JSX.Element {
       return (
         <Queue to={options.to}>
@@ -119,7 +112,9 @@ export const createDayo = (
                 <Box
                   key={seedOnCycle.id}
                   to={options.to}
+                  Block={seedOnCycle.Block}
                   theme={seedOnCycle.theme}
+                  close={seedOnCycle.close}
                   isEnter={seedOnCycle.cycle.isEnter()}
                   isEntering={seedOnCycle.cycle.isEntering()}
                   isEntered={seedOnCycle.cycle.isEntered()}
@@ -127,8 +122,6 @@ export const createDayo = (
                   isExiting={seedOnCycle.cycle.isExiting()}
                   isExited={seedOnCycle.cycle.isExited()}
                   onTransitionEnd={this.onTransitionEnd(seedOnCycle)}
-                  closeButton={seedOnCycle.closeButton}
-                  onClickCloseButton={this.onClickCloseButton(seedOnCycle)}
                 >
                   <div>{seedOnCycle.message}</div>
                 </Box>

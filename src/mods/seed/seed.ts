@@ -1,13 +1,20 @@
-import SeedImpl, {SeedValues} from './seed-impl';
+import React from 'react';
+import SeedImpl, {SeedValues, BlockComponent} from './seed-impl';
 import Interval, {IntervalImpl} from '../interval';
 
 export class Seed implements SeedImpl {
   public values: SeedValues;
 
-  public closeButtonClicked = false;
+  public Block: BlockComponent;
 
-  public constructor(values: SeedValues) {
+  public closed = false;
+
+  public constructor(
+    values: SeedValues,
+    Block: BlockComponent = React.Fragment,
+  ) {
     this.values = values;
+    this.Block = Block;
   }
 
   public get id(): SeedValues['id'] {
@@ -19,20 +26,15 @@ export class Seed implements SeedImpl {
   }
 
   public get theme(): {
-    textColor: NonNullable<SeedValues['textColor']>;
-    backgroundColor: NonNullable<SeedValues['backgroundColor']>;
     transitionTimingFunction: NonNullable<
       SeedValues['transitionTimingFunction']
     >;
   } {
-    const {textColor, backgroundColor, transitionTimingFunction} = (this
-      .values as unknown) as {
-      textColor: string;
-      backgroundColor: string;
+    const {transitionTimingFunction} = (this.values as unknown) as {
       transitionTimingFunction: string;
     };
 
-    return {textColor, backgroundColor, transitionTimingFunction};
+    return {transitionTimingFunction};
   }
 
   public get message(): NonNullable<SeedValues['message']> {
@@ -44,16 +46,6 @@ export class Seed implements SeedImpl {
     }
 
     return message;
-  }
-
-  public get closeButton(): SeedValues['closeButton'] {
-    const {closeButton} = this.values;
-
-    return closeButton;
-  }
-
-  public setCloseButtonClicked(): void {
-    this.closeButtonClicked = true;
   }
 
   public wait(msec: number): Promise<void> {
@@ -95,8 +87,12 @@ export class Seed implements SeedImpl {
   }
 
   private waitUntilClick(interval: IntervalImpl<SeedImpl>): Promise<void> {
-    return this.waitUntil((): boolean => this.closeButtonClicked, interval);
+    return this.waitUntil((): boolean => this.closed, interval);
   }
+
+  public close = (): void => {
+    this.closed = true;
+  };
 
   public [Symbol.asyncIterator] = async function*(
     this: Seed,
@@ -113,11 +109,11 @@ export class Seed implements SeedImpl {
 
     yield this; // after entered
 
-    // await Promise.race(
-    //   [this.wait(5000), this.waitUntilClick(interval)].filter(Boolean),
-    // ).then(this.cycle.proceed);
+    await Promise.race(
+      [this.wait(5000), this.waitUntilClick(interval)].filter(Boolean),
+    ).then(this.cycle.proceed);
     // await this.wait(1000).then(this.cycle.proceed); // for debug
-    await this.wait(500000000); // for debug
+    // await this.wait(500000000); // for debug
 
     yield this; // after exit
 

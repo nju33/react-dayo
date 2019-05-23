@@ -3,7 +3,9 @@
     "src"
   ],
   "exclude": [
-    "index.mdx"
+    "index.mdx",
+    "node_modules",
+    ".cache"
   ],
   "compilerOptions": {
     "target": "es5",
