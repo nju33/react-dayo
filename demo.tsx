@@ -46,10 +46,10 @@ render(
         confirm
       </button>
     </div>
-    {createPortal(<Dayo maxLength={3} />, document.getElementById(
+    {createPortal(<Dayo maxLength={2} />, document.getElementById(
       'alert-left-top',
     ) as any)}
-    {createPortal(<Dayo2 />, document.getElementById(
+    {createPortal(<Dayo2 maxLength={3} />, document.getElementById(
       'alert-right-center',
     ) as any)}
   </div>,

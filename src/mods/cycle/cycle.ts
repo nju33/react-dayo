@@ -1,10 +1,10 @@
 export enum CycleStep {
-  Enter,
-  Entering,
-  Entered,
-  Exit,
-  Exiting,
-  Exited,
+  Enter = 'enter',
+  Entering = 'entering',
+  Entered = 'entered',
+  Exit = 'exit',
+  Exiting = 'exiting',
+  Exited = 'exited',
 }
 
 export type IsFn = () => boolean;

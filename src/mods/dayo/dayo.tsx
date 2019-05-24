@@ -61,6 +61,7 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
     ): void => {
       if (seedOnCycle.cycle.isEnter()) {
         this.addAlert(seedOnCycle);
+        // this.closeOverflowSeeds();
         return;
       }
 
@@ -88,19 +89,27 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
     private addAlert(
       seedOnCycle: SeedImpl<BlockComponentAdditionalProps>,
     ): void {
-      const queueMaxLength = this.props.maxLength || 10;
-      const overflowLength =
-        this.state.queue.length < queueMaxLength
-          ? 0
-          : this.state.queue.length - queueMaxLength;
-
       this.setState({
         queue: [...this.state.queue, seedOnCycle],
       });
 
+      this.closeOverflowSeeds();
+    }
+
+    private closeOverflowSeeds(): void {
+      const queueMaxLength = this.props.maxLength || 10;
+      const enteredItems = this.state.queue.filter(
+        (item): boolean => item.cycle.isEntering() || item.cycle.isEntered(),
+      );
+      const newItemLength = 1;
+
+      const overflowLength =
+        enteredItems.length + newItemLength - queueMaxLength;
+
       if (overflowLength > 0) {
-        this.state.queue.slice(0, overflowLength + 1).forEach(
+        enteredItems.slice(0, overflowLength).forEach(
           (seedOnCycle): void => {
+            console.log(seedOnCycle.cycle);
             seedOnCycle.cycle.skip();
           },
         );
@@ -111,16 +120,12 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
       seedOnCycle: SeedImpl<BlockComponentAdditionalProps>,
     ): () => void {
       return (): void => {
-        if (
-          seedOnCycle.cycle.isEnter() ||
-          seedOnCycle.cycle.isEntered() ||
-          seedOnCycle.cycle.isExit() ||
-          seedOnCycle.cycle.isExited()
-        ) {
+        if (seedOnCycle.cycle.isEntering()) {
+          seedOnCycle.cycle.proceed();
           return;
         }
 
-        if (seedOnCycle.cycle.isEntering() || seedOnCycle.cycle.isExiting()) {
+        if (seedOnCycle.cycle.isExiting()) {
           seedOnCycle.cycle.proceed();
         }
       };

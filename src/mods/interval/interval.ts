@@ -27,7 +27,7 @@ export class Interval<Item> implements IntervalImpl<Item> {
   private startTick(): void {
     this.intervalId = setInterval((): void => {
       this.emitter.emit('tick', {});
-    }, 200);
+    }, 30);
   }
 
   private isRunningTick(): boolean {
