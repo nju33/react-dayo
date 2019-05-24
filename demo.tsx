@@ -46,7 +46,9 @@ render(
         confirm
       </button>
     </div>
-    {createPortal(<Dayo />, document.getElementById('alert-left-top') as any)}
+    {createPortal(<Dayo maxLength={3} />, document.getElementById(
+      'alert-left-top',
+    ) as any)}
     {createPortal(<Dayo2 />, document.getElementById(
       'alert-right-center',
     ) as any)}

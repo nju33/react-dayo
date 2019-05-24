@@ -99,6 +99,12 @@ export class Seed<BlockComponentAdditionalProps extends object = {}>
     return this.waitUntil((): boolean => this.closed, interval);
   }
 
+  private waitUntilSkipCycle(
+    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
+  ) {
+    return this.waitUntil(this.cycle.isSkip, interval);
+  }
+
   public close = (): void => {
     this.closed = true;
   };
@@ -110,30 +116,37 @@ export class Seed<BlockComponentAdditionalProps extends object = {}>
 
     yield this; // after enter
 
-    await this.wait(50).then(this.cycle.proceed);
+    await Promise.race([
+      this.wait(50).then(this.cycle.proceed),
+      this.waitUntilSkipCycle(interval).then(this.cycle.proceed),
+    ]);
 
     yield this; // after entering
 
-    await this.waitUntilEntered(interval);
+    await Promise.race([
+      this.waitUntilEntered(interval),
+      this.waitUntilSkipCycle(interval).then(this.cycle.proceed),
+    ]);
 
     yield this; // after entered
 
     await Promise.race(
       [
-        // this.wait(5000),
         // this.wait(1000), // for debug
-        this.wait(500000000), // for debug
-        this.waitUntilClick(interval),
+        // this.wait(500000000), // for debug
+        this.wait(5000).then(this.cycle.proceed),
+        this.waitUntilClick(interval).then(this.cycle.proceed),
+        this.waitUntilSkipCycle(interval).then(this.cycle.proceed),
       ].filter(Boolean),
-    ).then(this.cycle.proceed);
+    );
 
     yield this; // after exit
 
-    await this.wait(50).then(this.cycle.proceed);
+    await Promise.race([this.wait(50).then(this.cycle.proceed)]);
 
     yield this; // after exiting
 
-    await this.waitUntilExited(interval);
+    await Promise.race([this.waitUntilExited(interval)]);
 
     yield this; // after exited
   };

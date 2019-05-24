@@ -11,17 +11,21 @@ const defaultOptions = {
   to: 'top' as DayoOptionTo,
 };
 
+export interface DayoProps {
+  maxLength?: number;
+}
+
 export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
   userOptions: Partial<DayoOptions> = {},
 ): [
-  React.ComponentClass,
+  React.ComponentClass<DayoProps>,
   Dispatcher<BlockComponentAdditionalProps>['dispatch']
 ] => {
   const options: DayoOptions = {...defaultOptions, ...userOptions};
 
   const dispatcher = new Dispatcher<BlockComponentAdditionalProps>();
 
-  class Dayo extends React.Component
+  class Dayo extends React.Component<DayoProps>
     implements
       DayoImpl<
         SeedFactoryImpl<BlockComponentAdditionalProps>,
@@ -84,18 +88,20 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
     private addAlert(
       seedOnCycle: SeedImpl<BlockComponentAdditionalProps>,
     ): void {
+      const queueMaxLength = this.props.maxLength || 10;
       const overflowLength =
-        // this.state.queue.length < 2 ? 0 : this.state.queue.length - 2;
-        this.state.queue.length < 10 ? 0 : this.state.queue.length - 10;
+        this.state.queue.length < queueMaxLength
+          ? 0
+          : this.state.queue.length - queueMaxLength;
 
       this.setState({
         queue: [...this.state.queue, seedOnCycle],
       });
 
       if (overflowLength > 0) {
-        this.state.queue.slice(0, overflowLength).forEach(
+        this.state.queue.slice(0, overflowLength + 1).forEach(
           (seedOnCycle): void => {
-            seedOnCycle.cycle.proceed();
+            seedOnCycle.cycle.skip();
           },
         );
       }
