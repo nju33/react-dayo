@@ -4,9 +4,30 @@ import {BlockComponentProps} from '../../seed-impl';
 import SeedFactory from '../../seed-factory';
 import ConfirmProps from './confirm-props';
 import confirmMixin from './mixin';
+import {SHIRONEZUMI, SHIRONERI, SUMI} from '../../constants/colors';
 
 const Confirm = styled.section`
-  ${confirmMixin}
+  ${confirmMixin};
+  color: ${SUMI};
+  background: ${SHIRONERI};
+  border: 1px solid ${SHIRONEZUMI};
+
+  .buttons {
+    border-top: 1px solid ${SHIRONEZUMI};
+  }
+
+  .confirm {
+    border-left: 1px solid ${SHIRONEZUMI};
+  }
+
+  .confirm,
+  .deny {
+    transition: 0.2s;
+
+    &:hover {
+      background: ${SHIRONEZUMI};
+    }
+  }
 `;
 
 const UnfrendlyConfirm: React.NamedExoticComponent<
@@ -23,10 +44,10 @@ const UnfrendlyConfirm: React.NamedExoticComponent<
         </div>
         <div className="buttons">
           <div className="deny" onClick={props.close}>
-            {props.deny || 'いいえ'}
+            {props.deny || 'No'}
           </div>
           <div className="confirm" onClick={props.close}>
-            {props.confirm || 'はい'}
+            {props.confirm || 'Yes'}
           </div>
         </div>
         <div />

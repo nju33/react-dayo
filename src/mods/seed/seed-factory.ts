@@ -93,6 +93,21 @@ export default class SeedFactory<
     );
   }
 
+  public props(
+    values: BlockComponentAdditionalProps,
+  ): SeedFactoryImpl<BlockComponentAdditionalProps> {
+    return SeedFactory.create<BlockComponentAdditionalProps>(
+      {
+        ...this.values,
+        props: ({
+          ...this.values.props,
+          ...values,
+        } as unknown) as BlockComponentAdditionalProps,
+      },
+      this.BlockComponent,
+    );
+  }
+
   public createSeed(): SeedImpl<BlockComponentAdditionalProps> {
     return new Seed(
       {

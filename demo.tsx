@@ -36,7 +36,11 @@ render(
       <button onClick={dispatch2(success.message(`成功だよ`))}>success</button>
       <button
         onClick={dispatch2(
-          unfriendly.message(`確認だよ\n閉じていい？`).prop('confirm', 'はい'),
+          unfriendly.message(`確認だよ\n閉じていい？`).props({
+            title: 'タイトル',
+            confirm: 'はい',
+            deny: 'いいえ',
+          }),
         )}
       >
         confirm

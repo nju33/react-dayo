@@ -26,18 +26,19 @@ component.container = styled.aside`
   font-size: 0.8em;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
   backface-visibility: hidden;
   transform: translateZ(0);
 
   &[data-to='top'] {
     flex-direction: column;
+    align-items: flex-start;
     left: 0;
     top: 0;
   }
 
   &[data-to='bottom'] {
     flex-direction: column-reverse;
+    align-items: flex-end;
     right: 0;
     bottom: 0;
   }

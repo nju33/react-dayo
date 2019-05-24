@@ -27,6 +27,9 @@ export interface SeedFactoryImpl<BlockComponentAdditionalProps extends object> {
     key: Key,
     value: NonNullable<BlockComponentAdditionalProps[Key]>,
   ): SeedFactoryImpl<BlockComponentAdditionalProps>;
+  props(
+    values: BlockComponentAdditionalProps,
+  ): SeedFactoryImpl<BlockComponentAdditionalProps>;
   createSeed(): SeedImpl<BlockComponentAdditionalProps>;
 }
 
