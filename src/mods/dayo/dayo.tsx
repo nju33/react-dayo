@@ -109,7 +109,6 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
       if (overflowLength > 0) {
         enteredItems.slice(0, overflowLength).forEach(
           (seedOnCycle): void => {
-            console.log(seedOnCycle.cycle);
             seedOnCycle.cycle.skip();
           },
         );

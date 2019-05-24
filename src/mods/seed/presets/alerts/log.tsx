@@ -50,4 +50,4 @@ const LogAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
   );
 };
 
-export default SeedFactory.create({key: 'log'}, LogAlert);
+export default SeedFactory.create({key: 'log', timeout: 5000}, LogAlert);

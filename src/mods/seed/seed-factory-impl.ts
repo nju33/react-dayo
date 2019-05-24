@@ -7,6 +7,7 @@ export interface SeedFactoryValues<
   name?: string;
   message?: string;
   transitionTimingFunction?: string;
+  timeout?: number | false;
   props?: BlockComponentAdditionalProps;
 }
 
@@ -21,6 +22,11 @@ export interface SeedFactoryImpl<BlockComponentAdditionalProps extends object> {
   message(
     value: NonNullable<
       SeedFactoryValues<BlockComponentAdditionalProps>['message']
+    >,
+  ): SeedFactoryImpl<BlockComponentAdditionalProps>;
+  timeout(
+    value: NonNullable<
+      SeedFactoryValues<BlockComponentAdditionalProps>['timeout']
     >,
   ): SeedFactoryImpl<BlockComponentAdditionalProps>;
   prop<Key extends keyof BlockComponentAdditionalProps>(

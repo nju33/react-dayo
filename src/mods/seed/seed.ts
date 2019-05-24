@@ -122,20 +122,17 @@ export class Seed<BlockComponentAdditionalProps extends object = {}>
 
     yield this; // after entering
 
-    await Promise.race([
-      this.waitUntilEntered(interval),
-      // this.waitUntilSkipCycle(interval),
-    ]);
+    await Promise.race([this.waitUntilEntered(interval)]);
 
     yield this; // after entered
 
     await Promise.race([
       // this.wait(1000), // for debug
       // this.wait(500000000), // for debug
-      this.wait(5000),
+      this.values.timeout ? this.wait(this.values.timeout) : false,
       this.waitUntilClick(interval),
       this.waitUntilSkipCycle(interval),
-    ]).then(
+    ].filter(Boolean) as Promise<unknown>[]).then(
       (): void => {
         this.cycle.proceed();
       },

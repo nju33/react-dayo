@@ -77,6 +77,17 @@ export default class SeedFactory<
     );
   }
 
+  public timeout(
+    value: NonNullable<
+      SeedFactoryImpl<BlockComponentAdditionalProps>['values']['timeout']
+    >,
+  ): SeedFactoryImpl<BlockComponentAdditionalProps> {
+    return SeedFactory.create<BlockComponentAdditionalProps>(
+      {...this.values, timeout: value},
+      this.BlockComponent,
+    );
+  }
+
   public prop<Key extends keyof BlockComponentAdditionalProps>(
     key: Key,
     value: NonNullable<BlockComponentAdditionalProps[Key]>,

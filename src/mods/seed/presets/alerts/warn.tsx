@@ -50,4 +50,4 @@ const ErrorAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
   );
 };
 
-export default SeedFactory.create({key: 'warn'}, ErrorAlert);
+export default SeedFactory.create({key: 'warn', timeout: 5000}, ErrorAlert);
