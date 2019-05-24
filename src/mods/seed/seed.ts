@@ -101,7 +101,7 @@ export class Seed<BlockComponentAdditionalProps extends object = {}>
 
   private waitUntilSkipCycle(
     interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
-  ) {
+  ): Promise<void> {
     return this.waitUntil(this.cycle.isSkip, interval);
   }
 
