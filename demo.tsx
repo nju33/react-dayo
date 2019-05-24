@@ -1,8 +1,10 @@
 import React from 'react';
 import {render, createPortal} from 'react-dom';
-import log from './src/mods/seed/presets/log';
-import warn from './src/mods/seed/presets/warn';
-import error from './src/mods/seed/presets/error';
+import log from './src/mods/seed/presets/alerts/log';
+import warn from './src/mods/seed/presets/alerts/warn';
+import error from './src/mods/seed/presets/alerts/error';
+import success from './src/mods/seed/presets/alerts/success';
+import unfriendly from './src/mods/seed/presets/confirms/unfriendly';
 import {createDayo} from './src';
 
 const [Dayo, dispatch] = createDayo();
@@ -14,8 +16,6 @@ window.addEventListener(
     console.log(ev);
   },
 );
-
-console.log(log, error);
 
 render(
   <div>
@@ -32,6 +32,14 @@ render(
       <button onClick={dispatch(warn.message('警告だよ'))}>warn</button>
       <button onClick={dispatch(error.message(`エラーだよ${Math.random()}`))}>
         error
+      </button>
+      <button onClick={dispatch2(success.message(`成功だよ`))}>success</button>
+      <button
+        onClick={dispatch2(
+          unfriendly.message(`確認だよ\n閉じていい？`).prop('confirm', 'はい'),
+        )}
+      >
+        confirm
       </button>
     </div>
     {createPortal(<Dayo />, document.getElementById('alert-left-top') as any)}

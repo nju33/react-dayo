@@ -5,14 +5,19 @@ import {SeedFactoryImpl, SeedImpl} from '../seed';
 /**
  * Dispatcher for Seed
  */
-export class Dispatcher implements DispatcherImpl<SeedFactoryImpl, SeedImpl> {
+export class Dispatcher<BlockComponentAdditionalProps extends object = {}>
+  implements
+    DispatcherImpl<
+      SeedFactoryImpl<BlockComponentAdditionalProps>,
+      SeedImpl<BlockComponentAdditionalProps>
+    > {
   private events = new Map<
     DispatcherEvent,
-    ((seedOnCycle: SeedImpl) => void)[]
+    ((seedOnCycle: SeedImpl<BlockComponentAdditionalProps>) => void)[]
   >();
 
   public dispatch = (
-    seedFactory: SeedFactoryImpl,
+    seedFactory: SeedFactoryImpl<BlockComponentAdditionalProps>,
   ): (() => Promise<void>) => async (): Promise<void> => {
     const seed = seedFactory.createSeed();
     for await (const seedOnCycle of seed) {
@@ -22,7 +27,10 @@ export class Dispatcher implements DispatcherImpl<SeedFactoryImpl, SeedImpl> {
     this.emit(DispatcherEvent.DoneSeed, seed);
   };
 
-  public emit(event: DispatcherEvent, seedOnCycle: SeedImpl): void {
+  public emit(
+    event: DispatcherEvent,
+    seedOnCycle: SeedImpl<BlockComponentAdditionalProps>,
+  ): void {
     const callbacks = this.events.get(event);
     if (callbacks === undefined) {
       return;
@@ -36,7 +44,10 @@ export class Dispatcher implements DispatcherImpl<SeedFactoryImpl, SeedImpl> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public on(event: DispatcherEvent, cb: (seedOnCycle: SeedImpl) => void): void {
+  public on(
+    event: DispatcherEvent,
+    cb: (seedOnCycle: SeedImpl<BlockComponentAdditionalProps>) => void,
+  ): void {
     if (!this.events.has(event)) {
       this.events.set(event, [cb]);
       return;

@@ -10,22 +10,28 @@ const defaults = {
   transitionTimingFunction: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
 };
 
-export default class SeedFactory implements SeedFactoryImpl {
+export default class SeedFactory<
+  BlockComponentAdditionalProps extends object = {}
+> implements SeedFactoryImpl<BlockComponentAdditionalProps> {
   private static memo = new Map<
     string,
     {
       BlockComponent: BlockComponent | undefined;
-      values: SeedFactoryImpl['values'];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      values: SeedFactoryImpl<any>['values'];
     }
   >();
 
-  public static create(
-    values: SeedFactoryImpl['values'],
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  public static create<BlockComponentAdditionalProps extends object = {}>(
+    values: SeedFactoryImpl<BlockComponentAdditionalProps>['values'],
     BlockComponent: BlockComponent | undefined = undefined,
-  ): SeedFactoryImpl {
+  ): SeedFactoryImpl<BlockComponentAdditionalProps> {
     const key = JSON.stringify(values);
     if (this.memo.has(key)) {
-      return (this.memo.get(key) as unknown) as SeedFactoryImpl;
+      return (this.memo.get(key) as unknown) as SeedFactoryImpl<
+        BlockComponentAdditionalProps
+      >;
     }
 
     const seedFactory = new SeedFactory(values, BlockComponent);
@@ -33,13 +39,14 @@ export default class SeedFactory implements SeedFactoryImpl {
 
     return seedFactory;
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   public BlockComponent: BlockComponent | undefined;
 
-  public values: SeedFactoryImpl['values'];
+  public values: SeedFactoryImpl<BlockComponentAdditionalProps>['values'];
 
   private constructor(
-    values: SeedFactoryImpl['values'],
+    values: SeedFactoryImpl<BlockComponentAdditionalProps>['values'],
     BlockComponent: BlockComponent | undefined,
   ) {
     this.values = {
@@ -49,8 +56,10 @@ export default class SeedFactory implements SeedFactoryImpl {
     this.BlockComponent = BlockComponent;
   }
 
-  public transitionTimingFunction(value: string): SeedFactoryImpl {
-    return SeedFactory.create(
+  public transitionTimingFunction(
+    value: string,
+  ): SeedFactoryImpl<BlockComponentAdditionalProps> {
+    return SeedFactory.create<BlockComponentAdditionalProps>(
       {
         ...this.values,
         transitionTimingFunction: value,
@@ -59,14 +68,32 @@ export default class SeedFactory implements SeedFactoryImpl {
     );
   }
 
-  public message(value: string): SeedFactoryImpl {
-    return SeedFactory.create(
+  public message(
+    value: string,
+  ): SeedFactoryImpl<BlockComponentAdditionalProps> {
+    return SeedFactory.create<BlockComponentAdditionalProps>(
       {...this.values, message: value},
       this.BlockComponent,
     );
   }
 
-  public createSeed(): SeedImpl {
+  public prop<Key extends keyof BlockComponentAdditionalProps>(
+    key: Key,
+    value: NonNullable<BlockComponentAdditionalProps[Key]>,
+  ): SeedFactoryImpl<BlockComponentAdditionalProps> {
+    return SeedFactory.create<BlockComponentAdditionalProps>(
+      {
+        ...this.values,
+        props: ({
+          ...this.values.props,
+          [key]: value,
+        } as unknown) as BlockComponentAdditionalProps,
+      },
+      this.BlockComponent,
+    );
+  }
+
+  public createSeed(): SeedImpl<BlockComponentAdditionalProps> {
     return new Seed(
       {
         id: nanoid(),

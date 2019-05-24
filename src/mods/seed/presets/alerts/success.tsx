@@ -1,17 +1,17 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
-import {BlockComponentProps} from '../seed-impl';
-import SeedFactory from '../seed-factory';
-import {SHIRONEZUMI, SHIRONERI, SUMI} from '../constants/colors';
-import CloseIcon from '../../components/close-icon';
+import {BlockComponentProps} from '../../seed-impl';
+import SeedFactory from '../../seed-factory';
+import {NAE, SHIRONERI} from '../../constants/colors';
+import CloseIcon from '../../../components/close-icon';
 
 export const mixin = css`
   display: flex;
   align-items: center;
   font-size: .8em;
-  color: '${SUMI}';
-  background: ${SHIRONERI};
-  border: 1px solid ${SHIRONEZUMI};
+  color: '${SHIRONERI}';
+  background: ${NAE};
+  border: 1px solid ${NAE};
   padding: 0.25em 0.5em;
   margin-top: 0.3em;
 
@@ -39,7 +39,7 @@ const Alert = styled.div`
 `;
 
 // eslint-disable-next-line react/prop-types
-const LogAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
+const SuccessAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
   return (
     <Alert>
       <div className="middle">{props.children}</div>
@@ -50,4 +50,4 @@ const LogAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
   );
 };
 
-export default SeedFactory.create({key: 'log'}, LogAlert);
+export default SeedFactory.create({key: 'success'}, SuccessAlert);

@@ -18,6 +18,7 @@ const component = ({} as unknown) as {
 export interface BoxProps {
   Block: BlockComponent;
   theme: BoxTheme;
+  additionalProps?: object;
   close(): void;
   to: 'top' | 'bottom';
   isEnter: boolean;
@@ -64,7 +65,9 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       onTransitionEnd={props.onTransitionEnd}
     >
       <div ref={middleAreaRef}>
-        <props.Block close={props.close}>{props.children}</props.Block>
+        <props.Block close={props.close} {...props.additionalProps || {}}>
+          {props.children}
+        </props.Block>
       </div>
     </component.container>
   );

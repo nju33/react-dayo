@@ -2,32 +2,33 @@ import React from 'react';
 import SeedImpl, {SeedValues, BlockComponent} from './seed-impl';
 import Interval, {IntervalImpl} from '../interval';
 
-export class Seed implements SeedImpl {
-  public values: SeedValues;
+export class Seed<BlockComponentAdditionalProps extends object = {}>
+  implements SeedImpl<BlockComponentAdditionalProps> {
+  public values: SeedValues<BlockComponentAdditionalProps>;
 
   public Block: BlockComponent;
 
   public closed = false;
 
   public constructor(
-    values: SeedValues,
+    values: SeedValues<BlockComponentAdditionalProps>,
     Block: BlockComponent = React.Fragment,
   ) {
     this.values = values;
     this.Block = Block;
   }
 
-  public get id(): SeedValues['id'] {
+  public get id(): SeedValues<BlockComponentAdditionalProps>['id'] {
     return this.values.id;
   }
 
-  public get cycle(): SeedValues['cycle'] {
+  public get cycle(): SeedValues<BlockComponentAdditionalProps>['cycle'] {
     return this.values.cycle;
   }
 
   public get theme(): {
     transitionTimingFunction: NonNullable<
-      SeedValues['transitionTimingFunction']
+      SeedValues<BlockComponentAdditionalProps>['transitionTimingFunction']
     >;
   } {
     const {transitionTimingFunction} = (this.values as unknown) as {
@@ -37,7 +38,9 @@ export class Seed implements SeedImpl {
     return {transitionTimingFunction};
   }
 
-  public get message(): NonNullable<SeedValues['message']> {
+  public get message(): NonNullable<
+    SeedValues<BlockComponentAdditionalProps>['message']
+  > {
     const {message} = this.values;
     const name = this.values.name || 'Unknown';
 
@@ -58,7 +61,7 @@ export class Seed implements SeedImpl {
 
   private waitUntil(
     condition: () => boolean,
-    interval: IntervalImpl<SeedImpl>,
+    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
   ): Promise<void> {
     return interval.wait(
       this,
@@ -78,15 +81,21 @@ export class Seed implements SeedImpl {
     );
   }
 
-  private waitUntilEntered(interval: IntervalImpl<SeedImpl>): Promise<void> {
+  private waitUntilEntered(
+    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
+  ): Promise<void> {
     return this.waitUntil(this.cycle.isEntered, interval);
   }
 
-  private waitUntilExited(interval: IntervalImpl<SeedImpl>): Promise<void> {
+  private waitUntilExited(
+    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
+  ): Promise<void> {
     return this.waitUntil(this.cycle.isExited, interval);
   }
 
-  private waitUntilClick(interval: IntervalImpl<SeedImpl>): Promise<void> {
+  private waitUntilClick(
+    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
+  ): Promise<void> {
     return this.waitUntil((): boolean => this.closed, interval);
   }
 
@@ -95,9 +104,9 @@ export class Seed implements SeedImpl {
   };
 
   public [Symbol.asyncIterator] = async function*(
-    this: Seed,
-  ): AsyncIterator<SeedImpl> {
-    const interval = Interval.create<SeedImpl>();
+    this: Seed<BlockComponentAdditionalProps>,
+  ): AsyncIterator<SeedImpl<BlockComponentAdditionalProps>> {
+    const interval = Interval.create<SeedImpl<BlockComponentAdditionalProps>>();
 
     yield this; // after enter
 

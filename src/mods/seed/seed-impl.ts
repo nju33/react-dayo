@@ -11,24 +11,29 @@ export type BlockComponent =
   | React.FunctionComponent<BlockComponentProps>
   | React.ExoticComponent<BlockComponentProps>;
 
-export interface SeedValues extends SeedFactoryValues {
+export interface SeedValues<BlockComponentAdditionalProps extends object>
+  extends SeedFactoryValues<BlockComponentAdditionalProps> {
   id: string;
   cycle: Cycle;
 }
 
-export default interface SeedImpl {
+export default interface SeedImpl<
+  BlockComponentAdditionalProps extends object
+> {
   Block: BlockComponent;
-  values: SeedValues;
-  id: SeedValues['id'];
+  values: SeedValues<BlockComponentAdditionalProps>;
+  id: SeedValues<BlockComponentAdditionalProps>['id'];
   cycle: Cycle;
   theme: {
     transitionTimingFunction: NonNullable<
-      SeedValues['transitionTimingFunction']
+      SeedValues<BlockComponentAdditionalProps>['transitionTimingFunction']
     >;
   };
-  message: NonNullable<SeedValues['message']>;
+  message: NonNullable<SeedValues<BlockComponentAdditionalProps>['message']>;
   closed: boolean;
   wait(msec: number): Promise<void>;
   close(): void;
-  [Symbol.asyncIterator](): AsyncIterator<SeedImpl>;
+  [Symbol.asyncIterator](): AsyncIterator<
+    SeedImpl<BlockComponentAdditionalProps>
+  >;
 }
