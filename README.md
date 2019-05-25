@@ -11,14 +11,14 @@
 
 <!-- [![ci:status](https://badgen.net/circleci/github/nju33/react-dayo)](https://circleci.com/gh/nju33/react-dayo) -->
 
-## Usage 
+## Usage
 
 ```ts
 /**
  * As to prepare of using the `Dayo`
- * 
+ *
  * ```sh
- * yarn add react-dayo react @types/react styled-components @types/styled-components 
+ * yarn add react-dayo react @types/react styled-components @types/styled-components
  * ```
  */
 import {DayoProvider, DayoFunctionsConsumer, Dayo} from 'react-dayo';

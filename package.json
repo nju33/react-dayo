@@ -1,68 +1,30 @@
 {
-  "name": "react-dayo",
+  "private": true,
   "description": "A React's notification component",
-  "version": "0.1.4",
-  "main": "dist/main/index.js",
-  "types": "dist/types/index.d.ts",
-  "module": "dist/module/index.js",
-  "source": "src/index.ts",
-  "repository": "git@github.com:nju33/react-dayo.git",
+  "repository": "nju33/react-dayo",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "react-component",
-    "notification"
+  "workspaces": [
+    "example",
+    "packages/*"
   ],
   "scripts": {
-    "prepare": "yarn build",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "dev": "parcel demo.html --port 2348",
-    "doc.dev": "docz dev --port 5438",
-    "build.main": "tsc -P tsconfig.main.json",
-    "build.module": "tsc -P tsconfig.module.json",
-    "build.types": "tsc -P tsconfig.types.json --emitDeclarationOnly",
-    "build.docs": "yarn docz build -d docs --base /react-dayo/",
-    "build": "yarn build.main && yarn build.module && yarn build.types"
-  },
-  "peerDependencies": {
-    "@types/react": "^16.8.0",
-    "react": "^16.8.0",
-    "styled-components": "^4.0.0"
+    "prepare": "lerna bootstrap",
+    "test": "lerna run test --no-private",
+    "dev": "lerna run start --stream --scope @react-dayo/example",
+    "build": "lerna run build --stream --no-private"
   },
   "devDependencies": {
-    "@geekcojp/prettier-config": "0.3.0",
     "@nju33/eslint-config": "0.0.25",
     "@nju33/prettier": "0.0.25",
-    "@types/core-js": "^2.5.0",
     "@types/jest": "24.0.13",
-    "@types/nanoevents": "^1.0.0",
-    "@types/nanoid": "2.0.0",
-    "@types/react": "16.7.20",
-    "@types/react-dom": "16.8.4",
-    "@types/react-icons": "3.0.0",
-    "@types/styled-components": "4.1.15",
     "docz": "1.2.0",
     "eslint": "5.16.0",
     "jest": "24.8.0",
-    "parcel-bundler": "^1.12.3",
+    "lerna": "^3.14.1",
     "prettier": "1.17.1",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
     "renovate-config-nju33": "0.0.1",
-    "styled-components": "4.1.3",
-    "ts-jest": "24.0.2",
     "typescript": "3.4.5"
   },
-  "dependencies": {
-    "core-js": "^3.1.2",
-    "nanoevents": "^1.0.8",
-    "nanoid": "2.0.2",
-    "polished": "3.3.2",
-    "react-icons": "3.7.0",
-    "react-redux": "7.0.3"
-  }
+  "dependencies": {}
 }

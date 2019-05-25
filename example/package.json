@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "@react-dayo/example",
+  "version": "0.0.0",
+  "main": "src/index.html",
+  "browser": "src/index.html",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html --port 2348 # --log-level 5"
+  },
+  "devDependencies": {
+    "@nju33/tsconfig-react-module": "^0.0.25",
+    "parcel-bundler": "^1.12.3"
+  },
+  "dependencies": {
+    "@types/core-js": "^2.5.0",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "@types/styled-components": "^4.1.15",
+    "core-js": "^3.1.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "styled-components": "^4.2.0"
+  }
+}
