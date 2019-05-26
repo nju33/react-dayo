@@ -8,13 +8,13 @@
     "baseUrl": "../packages",
     "typeRoots": ["./node_modules/@types", "../node_modules/@types"],
     "paths": {
-      "react-dayo/dist/module/*": [
-        "react-dayo/dist/module/*.js",
+      "react-dayo/dist/main/*": [
+        "react-dayo/dist/module/*",
         "react-dayo/src/*.tsx",
         "react-dayo/src/*.ts"
       ],
       "react-dayo": [
-        "react-dayo/dist/module/index.js",
+        "react-dayo/dist/module",
         "react-dayo/src/index.ts"
       ]
     }

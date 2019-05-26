@@ -120,7 +120,7 @@ export default class SeedFactory<
   }
 
   public createSeed(): SeedImpl<BlockComponentAdditionalProps> {
-    return new Seed(
+    return new Seed<BlockComponentAdditionalProps>(
       {
         id: nanoid(),
         cycle: new Cycle(),

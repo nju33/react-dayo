@@ -26,6 +26,7 @@ module.exports = withTypescript({
       rule.include.push(/react-dayo\/packages\/.*\.(ts|tsx)$/);
     });
 
+    // in Local
     config.module.rules.push({
       test: /react-dayo\/packages\/.*\.(js|jsx|ts|tsx)$/,
       // for debug

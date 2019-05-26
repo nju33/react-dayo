@@ -6,12 +6,11 @@ import React from 'react';
 import {createPortal} from 'react-dom';
 import styled from 'styled-components';
 import {createDayo} from 'react-dayo';
-// packages/react-dayo/src/mods/seed/presets/alerts/log.tsx
-import log from 'react-dayo/dist/module/mods/seed/presets/alerts/log';
-import warn from 'react-dayo/dist/module/mods/seed/presets/alerts/warn';
-import error from 'react-dayo/dist/module/mods/seed/presets/alerts/error';
-import success from 'react-dayo/dist/module/mods/seed/presets/alerts/success';
-import unfriendly from 'react-dayo/dist/module/mods/seed/presets/confirms/unfriendly';
+import log from 'react-dayo/dist/main/mods/seed/presets/alerts/log';
+import warn from 'react-dayo/dist/main/mods/seed/presets/alerts/warn';
+import error from 'react-dayo/dist/main/mods/seed/presets/alerts/error';
+import success from 'react-dayo/dist/main/mods/seed/presets/alerts/success';
+import unfriendly from 'react-dayo/dist/main/mods/seed/presets/confirms/unfriendly';
 
 const [LeftTopAlertDayo, dispatchAtLeftTop] = createDayo();
 const [RightBottomAlertDayo, dispatchAtRightBottom] = createDayo({
