@@ -13,6 +13,8 @@
     "test": "lerna run test --stream --no-private",
     "dev": "lerna run dev --stream --scope @react-dayo/example",
     "build": "lerna run build --stream --no-private",
+    "publish": "lerna publish",
+    "postpublish": "yarn push:example",
     "push:example": "gh-pages --src '{pages/**,*}' --dist example --branch example --dotfiles"
   },
   "devDependencies": {
