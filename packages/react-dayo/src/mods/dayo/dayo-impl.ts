@@ -4,6 +4,7 @@ export type DayoOptionTo = 'top' | 'bottom';
 
 export interface DayoOptions {
   to: DayoOptionTo;
+  maxLength: number;
 }
 
 export interface DayoImpl<F, T> {

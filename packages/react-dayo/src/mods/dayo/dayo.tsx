@@ -9,33 +9,42 @@ import Box from '../components/box';
 
 const defaultOptions = {
   to: 'top' as DayoOptionTo,
+  maxLength: 5,
 };
 
-export interface DayoProps {
-  maxLength?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface DayoProps extends DayoOptions {}
 
 export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
   userOptions: Partial<DayoOptions> = {},
 ): [
-  React.ComponentClass<DayoProps>,
+  React.ComponentClass<Partial<DayoProps>>,
   Dispatcher<BlockComponentAdditionalProps>['dispatch']
 ] => {
   const options: DayoOptions = {...defaultOptions, ...userOptions};
 
   const dispatcher = new Dispatcher<BlockComponentAdditionalProps>();
 
-  class Dayo extends React.Component<DayoProps>
+  class Dayo extends React.Component<Partial<DayoProps>>
     implements
       DayoImpl<
         SeedFactoryImpl<BlockComponentAdditionalProps>,
         SeedImpl<BlockComponentAdditionalProps>
       > {
+    public static defaultProps = defaultOptions;
+
     public dispatcher = dispatcher;
 
     public state = {
       queue: [] as SeedImpl<BlockComponentAdditionalProps>[],
     };
+
+    private getOption<Key extends keyof DayoProps>(key: Key): DayoProps[Key] {
+      return (
+        ((this.props as unknown) as DayoProps)[key] ||
+        ((options as unknown) as DayoProps)[key]
+      );
+    }
 
     private rewriteQueueItem(
       seedOnCycle: SeedImpl<BlockComponentAdditionalProps>,
@@ -97,7 +106,7 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
     }
 
     private closeOverflowSeeds(): void {
-      const queueMaxLength = this.props.maxLength || 10;
+      const queueMaxLength = this.getOption('maxLength');
       const enteredItems = this.state.queue.filter(
         (item): boolean => item.cycle.isEntering() || item.cycle.isEntered(),
       );
@@ -138,7 +147,7 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
               return (
                 <Box
                   key={seedOnCycle.id}
-                  to={options.to}
+                  to={this.getOption('to')}
                   Block={seedOnCycle.Block}
                   additionalProps={seedOnCycle.values.props}
                   theme={seedOnCycle.theme}
