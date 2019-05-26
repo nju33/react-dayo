@@ -15,13 +15,3 @@ test('Cycle', (): void => {
   cycle.proceed();
   expect(cycle.isExited()).toBeTruthy();
 });
-
-// test('Cycle#waitUntil', async (): Promise<void> => {
-//   const cycle = new Cycle();
-
-//   setTimeout((): void => {
-//     cycle.proceed();
-//   }, 100);
-
-//   await expect(cycle.waitUntil(cycle.isEntering)).resolves.toBeUndefined();
-// });

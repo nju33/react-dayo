@@ -2,24 +2,28 @@
   "private": true,
   "name": "@react-dayo/example",
   "version": "0.0.0",
-  "main": "src/index.html",
-  "browser": "src/index.html",
+  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "parcel src/index.html --port 2348 # --log-level 5"
-  },
-  "devDependencies": {
-    "@nju33/tsconfig-react-module": "^0.0.25",
-    "parcel-bundler": "^1.12.3"
+    "dev": "next"
   },
   "dependencies": {
     "@types/core-js": "^2.5.0",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
+    "@types/next": "^8.0.5",
+    "@types/react": "^16.8.18",
     "@types/styled-components": "^4.1.15",
+    "@zeit/next-typescript": "^1.1.1",
     "core-js": "^3.1.2",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "styled-components": "^4.2.0"
+    "next": "^8.1.0",
+    "react": "^16.8.6",
+    "react-dayo": "^0.1.4",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.2.0",
+    "ts-loader": "^6.0.1"
+  },
+  "devDependencies": {
+    "@nju33/tsconfig-react-module": "^0.0.25",
+    "@types/jest": "^24.0.13",
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
   }
 }
