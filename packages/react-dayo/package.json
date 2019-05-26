@@ -26,7 +26,8 @@
     "build:main": "tsc -P tsconfig.main.json",
     "build:module": "tsc -P tsconfig.module.json",
     "build:types": "tsc -P tsconfig.types.json --emitDeclarationOnly",
-    "build": "run-p build:*"
+    "build": "run-p build:*",
+    "docs": "typedoc --theme minimal --out docs src/index.ts --ignoreCompilerErrors"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
@@ -45,6 +46,7 @@
     "react": "16.8.6",
     "react-test-renderer": "^16.8.6",
     "styled-components": "4.2.0",
+    "typedoc": "^0.14.2",
     "typescript": "3.4.5"
   },
   "dependencies": {

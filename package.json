@@ -14,8 +14,9 @@
     "dev": "lerna run dev --stream --scope @react-dayo/example",
     "build": "lerna run build --stream --no-private",
     "publish": "lerna publish",
-    "postpublish": "yarn push:example",
-    "push:example": "gh-pages --src '{pages/**,*}' --dist example --branch example --dotfiles"
+    "postpublish": "run-p push:*",
+    "push:example": "gh-pages --dist example --src '{pages/**,*}' --branch example --dotfiles",
+    "push:docs": "gh-pages --dist packages/react-dayo --src '{src/**,*}' --branch docs --dotfiles"
   },
   "devDependencies": {
     "@nju33/eslint-config": "0.0.25",
@@ -23,6 +24,7 @@
     "eslint": "5.16.0",
     "gh-pages": "^2.0.1",
     "lerna": "^3.14.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "1.17.1",
     "renovate-config-nju33": "0.0.1",
     "typescript": "3.4.5"
