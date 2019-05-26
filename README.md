@@ -33,6 +33,8 @@ import {createDayo} from 'react-dayo';
 import log from 'react-dayo/dist/main/mods/seed/presets/alerts/log';
 ````
 
+The Directory structure is looked at [here](https://unpkg.com/react-dayo/).
+
 ## Example
 
 First write the markup.
