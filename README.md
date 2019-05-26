@@ -80,3 +80,7 @@ ReactDom.render(
 ## Creat custom seed
 
 todo
+
+## Archive
+
+- [@0.1.4](https://nju33.github.io/react-dayo/)

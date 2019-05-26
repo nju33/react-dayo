@@ -20,7 +20,7 @@
     "dialog"
   ],
   "scripts": {
-    "prepare": "yarn build",
+    "prepare": "if [ -z \"$CIRCLECI\" ]; then yarn build; fi",
     "test": "jest",
     "test:watch": "jest --watch",
     "build:main": "tsc -P tsconfig.main.json",
@@ -46,6 +46,7 @@
     "react": "16.8.6",
     "react-test-renderer": "^16.8.6",
     "styled-components": "4.2.0",
+    "ts-jest": "^24.0.2",
     "typedoc": "^0.14.2",
     "typescript": "3.4.5"
   },
