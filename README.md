@@ -5,7 +5,7 @@ A Queue component for notification etc.
 [![github](https://badgen.net/badge//nju33,react-dayo/000?icon=github&list=1)](https://github.com/nju33/react-dayo)
 [![npm:version](https://badgen.net/npm/v/react-dayo?icon=npm&label=)](https://www.npmjs.com/package/react-dayo)
 [![typescript](https://badgen.net/badge//typescript/0376c6?icon=typescript)](https://www.typescriptlang.org/)
-[![ci:status](https://badgen.net/circleci/github/nju33/react-dayo)](https://circleci.com/gh/nju33/react-dayo)
+[![ci:status](https://badgen.net/circleci/github/nju33/react-dayo/master)](https://circleci.com/gh/nju33/react-dayo)
 [![Coverage Status](https://coveralls.io/repos/github/nju33/react-dayo/badge.svg?branch=v0.2.2)](https://coveralls.io/github/nju33/react-dayo?branch=master)
 [![document:typedoc](https://badgen.net/badge/document/typedoc/9602ff)](https://docs--react-dayo.netlify.com/)
 [![license](https://badgen.net/npm/license/react-dayo)](https://github.com/nju33/react-dayo/blob/master/LICENSE)

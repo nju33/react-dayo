@@ -50,7 +50,12 @@ workflows:
   version: 2
   test:
     jobs:
-      - prepare
+      - prepare:
+          filters:
+            branches:
+              ignore:
+                - example
+                - docs
       - test:
           requires:
             - prepare
