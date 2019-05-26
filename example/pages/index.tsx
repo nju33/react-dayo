@@ -12,20 +12,11 @@ import warn from 'react-dayo/dist/module/mods/seed/presets/alerts/warn';
 import error from 'react-dayo/dist/module/mods/seed/presets/alerts/error';
 import success from 'react-dayo/dist/module/mods/seed/presets/alerts/success';
 import unfriendly from 'react-dayo/dist/module/mods/seed/presets/confirms/unfriendly';
-console.log(createDayo);
-console.log(log);
 
 const [LeftTopAlertDayo, dispatchAtLeftTop] = createDayo();
 const [RightBottomAlertDayo, dispatchAtRightBottom] = createDayo({
   to: 'bottom',
 });
-
-// window.addEventListener(
-//   'error',
-//   (ev): void => {
-//     console.log(ev);
-//   },
-// );
 
 const ButtonBlock = styled.aside`
   font-family: 'Lato', 'Noto Sans JP', '游ゴシック Medium', '游ゴシック体',
