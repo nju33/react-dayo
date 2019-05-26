@@ -14,6 +14,7 @@ export const mixin = css`
   border: 1px solid ${SHIRONEZUMI};
   padding: 0.25em 0.5em;
   margin-top: 0.3em;
+  box-sizing: border-box;
 
   .middle {
     margin: 0 0.5em;

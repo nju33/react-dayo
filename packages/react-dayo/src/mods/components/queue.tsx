@@ -22,7 +22,7 @@ export const Queue: React.FC<QueueProps> = (props): JSX.Element => {
 Queue.displayName = 'Dayo(Queue)';
 
 component.container = styled.aside`
-  position: fixed;
+  position: absolute;
   font-size: 0.8em;
   display: flex;
   justify-content: flex-start;

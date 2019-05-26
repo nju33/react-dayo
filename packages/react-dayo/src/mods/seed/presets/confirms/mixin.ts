@@ -7,6 +7,7 @@ export const mixin = css`
   font-size: 0.8em;
   width: 300px;
   margin-top: 0.3em;
+  box-sizing: border-box;
 
   .header,
   .body {

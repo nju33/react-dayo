@@ -148,6 +148,10 @@ component.container = styled.div`
     opacity: 0;
     height: 0 !important;
   }
+
+  > div {
+    text-align: center;
+  }
 `;
 
 export default Box;
