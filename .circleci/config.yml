@@ -14,7 +14,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "packages/react-dayo/package.json" }}-{{ checksum "example/package.json" }}
             - v1-dependencies-
       - when:
           condition: <<parameters.re-install>>
@@ -23,7 +23,7 @@ commands:
             - save_cache:
                 paths:
                   - node_modules
-                key: v1-dependencies-{{ checksum "package.json" }}
+                key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "packages/react-dayo/package.json" }}-{{ checksum "example/package.json" }}
   yarn_test:
     steps:
       - run: yarn test
@@ -51,4 +51,4 @@ workflows:
       - prepare
       - test:
           requires:
-              - prepare
+            - prepare
