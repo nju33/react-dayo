@@ -1,5 +1,7 @@
 # React Dayo
 
+A Queue component for notification etc.
+
 [![github](https://badgen.net/badge//nju33,react-dayo/000?icon=github&list=1)](https://github.com/nju33/react-dayo)
 [![npm:version](https://badgen.net/npm/v/react-dayo?icon=npm&label=)](https://www.npmjs.com/package/react-dayo)
 [![typescript](https://badgen.net/badge/lang/typescript/0376c6)](https://www.typescriptlang.org/)
