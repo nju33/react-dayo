@@ -7,7 +7,7 @@ import Dispatcher, {Event as DispatcherEvent} from '../dispatcher';
 import Queue from '../components/queue';
 import Box from '../components/box';
 
-const defaultOptions = {
+export const defaultOptions = {
   to: 'top' as DayoOptionTo,
   maxLength: 5,
 };
@@ -31,7 +31,7 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
         SeedFactoryImpl<BlockComponentAdditionalProps>,
         SeedImpl<BlockComponentAdditionalProps>
       > {
-    public static defaultProps = defaultOptions;
+    public static defaultProps = options;
 
     public dispatcher = dispatcher;
 
@@ -141,7 +141,7 @@ export const createDayo = <BlockComponentAdditionalProps extends object = {}>(
 
     public render(): JSX.Element {
       return (
-        <Queue to={options.to}>
+        <Queue to={this.getOption('to')}>
           {this.state.queue.map(
             (seedOnCycle): JSX.Element => {
               return (

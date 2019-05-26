@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createDayo rendering 1`] = `
+<aside
+  data-to="bottom"
+/>
+`;
+
+exports[`createDayo rendering 2`] = `
+<aside
+  data-to="bottom"
+/>
+`;

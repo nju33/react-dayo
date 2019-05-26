@@ -1,12 +1,9 @@
 import React from 'react';
-import SeedFactory from './seed-factory';
 import SeedImpl, {SeedValues, BlockComponent} from './seed-impl';
 import Interval, {IntervalImpl} from '../interval';
 
 export class Seed<BlockComponentAdditionalProps extends object = {}>
   implements SeedImpl<BlockComponentAdditionalProps> {
-  public static createFactory = SeedFactory.create;
-
   public values: SeedValues<BlockComponentAdditionalProps>;
 
   public Block: BlockComponent;
