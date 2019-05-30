@@ -2,16 +2,16 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {BlockComponentProps} from '../../seed-impl';
 import SeedFactory from '../../seed-factory';
-import {GINSYU, SHIRONERI} from '../../constants/colors';
-import CloseIcon from '../../../../components/close-icon';
+import {KUCHIBA, SHIRONERI} from '../../constants/colors';
+import CloseIcon from '../../../components/close-icon';
 
 export const mixin = css`
   display: flex;
   align-items: center;
   font-size: .8em;
   color: '${SHIRONERI}';
-  background: ${GINSYU};
-  border: 1px solid ${GINSYU};
+  background: ${KUCHIBA};
+  border: 1px solid ${KUCHIBA};
   padding: 0.25em 0.5em;
   margin-top: 0.3em;
   box-sizing: border-box;
@@ -51,4 +51,4 @@ const ErrorAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
   );
 };
 
-export default SeedFactory.create({key: 'error', timeout: 5000}, ErrorAlert);
+export default SeedFactory.create({key: 'warn', timeout: 5000}, ErrorAlert);

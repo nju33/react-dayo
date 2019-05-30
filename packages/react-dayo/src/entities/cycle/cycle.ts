@@ -9,9 +9,6 @@ export enum CycleStep {
 
 export type IsFn = () => boolean;
 
-/**
- * Value Object
- */
 export class Cycle {
   private step = CycleStep.Enter;
 

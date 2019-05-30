@@ -2,16 +2,16 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {BlockComponentProps} from '../../seed-impl';
 import SeedFactory from '../../seed-factory';
-import {GINSYU, SHIRONERI} from '../../constants/colors';
-import CloseIcon from '../../../../components/close-icon';
+import {NAE, SHIRONERI} from '../../constants/colors';
+import CloseIcon from '../../../components/close-icon';
 
 export const mixin = css`
   display: flex;
   align-items: center;
   font-size: .8em;
   color: '${SHIRONERI}';
-  background: ${GINSYU};
-  border: 1px solid ${GINSYU};
+  background: ${NAE};
+  border: 1px solid ${NAE};
   padding: 0.25em 0.5em;
   margin-top: 0.3em;
   box-sizing: border-box;
@@ -40,7 +40,7 @@ const Alert = styled.div`
 `;
 
 // eslint-disable-next-line react/prop-types
-const ErrorAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
+const SuccessAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
   return (
     <Alert>
       <div className="middle">{props.children}</div>
@@ -51,4 +51,7 @@ const ErrorAlert: React.FC<BlockComponentProps> = (props): JSX.Element => {
   );
 };
 
-export default SeedFactory.create({key: 'error', timeout: 5000}, ErrorAlert);
+export default SeedFactory.create(
+  {key: 'success', timeout: 5000},
+  SuccessAlert,
+);

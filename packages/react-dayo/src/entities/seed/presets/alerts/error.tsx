@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 import {BlockComponentProps} from '../../seed-impl';
 import SeedFactory from '../../seed-factory';
 import {GINSYU, SHIRONERI} from '../../constants/colors';
-import CloseIcon from '../../../../components/close-icon';
+import CloseIcon from '../../../components/close-icon';
 
 export const mixin = css`
   display: flex;

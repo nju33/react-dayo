@@ -3,9 +3,8 @@ import {DayoOptions, DayoOptionTo} from './dayo-impl';
 import DayoImpl from './dayo-impl';
 import {SeedFactoryImpl, SeedImpl} from '../seed';
 import Dispatcher, {Event as DispatcherEvent} from '../dispatcher';
-
-import Queue from '../components/queue';
-import Box from '../components/box';
+import Queue from '../../components/queue';
+import Box from '../../components/box/box';
 
 export const defaultOptions = {
   to: 'top' as DayoOptionTo,

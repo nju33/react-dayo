@@ -1,15 +1,14 @@
 import React, {useRef, useEffect} from 'react';
-import rawStyled, {
+import originalStyled, {
   StyledComponentBase,
   ThemedBaseStyledInterface,
 } from 'styled-components';
-import {BlockComponent} from '../seed/seed-impl';
+import {BlockComponent} from '../../mods/seed/seed-impl';
 
 export interface BoxTheme {
   transitionTimingFunction: string;
 }
-
-const styled = rawStyled as ThemedBaseStyledInterface<BoxTheme>;
+const styled = originalStyled as ThemedBaseStyledInterface<BoxTheme>;
 
 const component = ({} as unknown) as {
   container: StyledComponentBase<'div', {}>;
@@ -19,7 +18,6 @@ export interface BoxProps {
   Block: BlockComponent;
   theme: BoxTheme;
   additionalProps?: object;
-  close(): void;
   to: 'top' | 'bottom';
   isEnter: boolean;
   isEntering: boolean;
@@ -27,8 +25,20 @@ export interface BoxProps {
   isExit: boolean;
   isExiting: boolean;
   isExited: boolean;
+  close(): void;
   onTransitionEnd(): void;
 }
+
+const init = (refs: {
+  container: React.RefObject<HTMLDivElement>;
+  middleArea: React.RefObject<HTMLDivElement>;
+}): void => {
+  if (refs.container.current !== null && refs.middleArea.current !== null) {
+    refs.container.current.style.height = `${
+      refs.middleArea.current.clientHeight
+    }px`;
+  }
+};
 
 /* eslint-disable react/prop-types */
 export const Box: React.FC<BoxProps> = (props): JSX.Element => {
@@ -37,14 +47,8 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
 
   useEffect(
     (): void => {
-      if (!props.isEnter) {
-        return;
-      }
-
-      if (containerRef.current !== null && middleAreaRef.current !== null) {
-        containerRef.current.style.height = `${
-          middleAreaRef.current.clientHeight
-        }px`;
+      if (props.isEnter) {
+        init({container: containerRef, middleArea: middleAreaRef});
       }
     },
   );
@@ -74,6 +78,8 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
 /* eslint-enable react/prop-types */
 
 Box.displayName = 'Dayo(Box)';
+
+export default Box;
 
 component.container = styled.div`
   display: flex;
@@ -153,5 +159,3 @@ component.container = styled.div`
     text-align: center;
   }
 `;
-
-export default Box;
