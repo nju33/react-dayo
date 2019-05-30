@@ -87,3 +87,5 @@ todo
 ## Archive
 
 - [@0.1.4](https://nju33.github.io/react-dayo/)
+
+[![BrowserStack](./fixtures/Browserstack-logo@2x.png)](https://www.browserstack.com)
