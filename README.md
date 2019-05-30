@@ -17,21 +17,18 @@ A Queue component for notification etc.
 
 ````ts
 /**
- * To prepare of using the `react-dayo` which dependencied `react@^16.8.0` and `@types/react`
+ * To prepare of using the `react-dayo`.
+ * It requires `react@^16.8.0`, `@types/react`, `styled-components@^4.2.0` and `@types/styled-components`.
  * And you will need `react-dom` and `@types/react-dom` too
  *
  * ```sh
- * yarn add react-dayo react @types/react react-dom react @types/react-dom
+ * yarn add react-dayo react @types/react react-dom react @types/react-dom styled-components @types/styled-components
  * ```
  */
 import {createDayo} from 'react-dayo';
 /**
- * To import presets for example the `log`.
- * Also in that case, Your project is required `styled-components@^4.2.0` and `@types/styled-components`
- *
- * ```sh
- * yarn add styled-components @types/styled-components
- * ```
+ * If you intent to use `log` which is one of the preset.
+ * You also write the following like.
  */
 import log from 'react-dayo/dist/main/mods/seed/presets/alerts/log';
 ````
