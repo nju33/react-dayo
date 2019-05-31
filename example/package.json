@@ -28,6 +28,6 @@
     "typescript": "3.4.5"
   },
   "devDependencies": {
-    "ts-loader": "6.0.1"
+    "ts-loader": "6.0.2"
   }
 }
