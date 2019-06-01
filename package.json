@@ -19,7 +19,7 @@
     "push:docs": "gh-pages --dist packages/react-dayo --src '{src/**,*}' --branch docs --dotfiles"
   },
   "devDependencies": {
-    "@nju33/eslint-config": "0.0.25",
+    "@nju33/eslint-config": "0.0.26",
     "@nju33/prettier": "0.0.25",
     "eslint": "5.16.0",
     "gh-pages": "2.0.1",
