@@ -1622,24 +1622,24 @@
   resolved "https://registry.yarnpkg.com/@nju33/prettier/-/prettier-0.0.25.tgz#93f01e9f6bd9ce2f5e19df68e6d43b6666376a9e"
   integrity sha512-U8Db7EtX+d9/uTFmR84TP6aejuqQoy37CUbONkPiXNFfFVqXpnVEHMcLy71sccnOEc0i4Sf5WQLew1aKFl0EOQ==
 
-"@nju33/tsconfig-base@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@nju33/tsconfig-base/-/tsconfig-base-0.0.25.tgz#5d19817b0c0dd4f11477193ab7b5d3794215c96c"
-  integrity sha512-ZNQrqYPmuPRgI1m9s9ao+C9Wlt3il0lGLxRmGaBMWVGSfxDqm0M+kKXrWvyGeN8Y+I5JPefnEKQN3KCW+OoIuA==
+"@nju33/tsconfig-base@^0.0.26":
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/@nju33/tsconfig-base/-/tsconfig-base-0.0.26.tgz#49bb979bc38607f483a8a08757066c80fed80794"
+  integrity sha512-4aEYvakze+rhJ1CDRWIuSsR6xZLgJ9pTlyepS+oEsjUqBitV4Iu0KYBGtkpaKEUW5Qcshc3Poyyg87ZBU3cD6g==
 
-"@nju33/tsconfig-react-base@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@nju33/tsconfig-react-base/-/tsconfig-react-base-0.0.25.tgz#17218493a5c7523814b7fb87a07dbf0a3ffa1b8e"
-  integrity sha512-na6RAVWHHW1Jjfb3GQPml3pVyZVxGxuf0SDAxyW18xbSPU78bf8kMO816d1D0qsPW9F0jeXUY04YftaAdlrHaw==
+"@nju33/tsconfig-react-base@^0.0.26":
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/@nju33/tsconfig-react-base/-/tsconfig-react-base-0.0.26.tgz#7610d307640060051a852aed53012a97ff7b577f"
+  integrity sha512-pleE3eMUYlQnVjorfR+XcMbBGwAwAPyxW9QE9MOC1WEdJihYvlXm7JeVF63fLmAtMvck5rz0R9LMFayxK7q55Q==
   dependencies:
-    "@nju33/tsconfig-base" "^0.0.25"
+    "@nju33/tsconfig-base" "^0.0.26"
 
-"@nju33/tsconfig-react-module@0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@nju33/tsconfig-react-module/-/tsconfig-react-module-0.0.25.tgz#2093058da051e3064e00358b4233878b316c40a4"
-  integrity sha512-Z4U3fkXV4cCrWoG5VKkjq4UA6302ynkLdEYIFvuvrsizofISWqpy6Y9e6jHU8oXx5kT3bZs//rQ3Z6P+3qQacQ==
+"@nju33/tsconfig-react-module@0.0.26":
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/@nju33/tsconfig-react-module/-/tsconfig-react-module-0.0.26.tgz#6ff884c52ef9574cad85c9bc320c94b3a8a7da0a"
+  integrity sha512-LH/WfuOCS3YgQgKBLcYWpjvTYbOE4Hp2C+n9ADIoerh0FIrjiODWetq8+iN6VgXwn1C62ckkTRrbv/it0WSHUQ==
   dependencies:
-    "@nju33/tsconfig-react-base" "^0.0.25"
+    "@nju33/tsconfig-react-base" "^0.0.26"
 
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
