@@ -1,88 +1,66 @@
-export enum CycleStep {
-  Enter = 'enter',
-  Entering = 'entering',
-  Entered = 'entered',
-  Exit = 'exit',
-  Exiting = 'exiting',
-  Exited = 'exited',
-}
+import {Step} from './constants/step';
+import {CycleImpl} from './interfaces';
 
-export type IsFn = () => boolean;
-
-export class Cycle {
-  private step = CycleStep.Enter;
+export class Cycle implements CycleImpl {
+  private step = Step.Enter;
 
   private skiped = false;
 
-  public proceed = (): void => {
+  public proceed = () => {
     switch (this.step) {
-      case CycleStep.Enter: {
-        this.step = CycleStep.Entering;
+      case Step.Enter: {
+        this.step = Step.Entering;
         break;
       }
 
-      case CycleStep.Entering: {
-        this.step = CycleStep.Entered;
+      case Step.Entering: {
+        this.step = Step.Entered;
         break;
       }
 
-      case CycleStep.Entered: {
-        this.step = CycleStep.Exit;
+      case Step.Entered: {
+        this.step = Step.Exit;
         break;
       }
 
-      case CycleStep.Exit: {
-        this.step = CycleStep.Exiting;
+      case Step.Exit: {
+        this.step = Step.Exiting;
         break;
       }
 
-      case CycleStep.Exiting: {
-        this.step = CycleStep.Exited;
+      case Step.Exiting: {
+        this.step = Step.Exited;
         break;
       }
 
-      case CycleStep.Exited:
+      case Step.Exited:
       default: {
         break;
       }
     }
   };
 
-  public skip(): void {
+  public skip() {
     this.skiped = true;
   }
 
-  public isSkip = (): boolean => {
-    return this.skiped;
-  };
+  public isSkip = () => this.skiped;
 
-  public getCurrentStep(): CycleStep {
+  public getCurrentStep() {
     return this.step;
   }
 
-  public isEnter: IsFn = (): boolean => {
-    return this.step === CycleStep.Enter;
-  };
+  public isEnter = () => this.step === Step.Enter;
 
-  public isEntering: IsFn = (): boolean => {
-    return this.step === CycleStep.Entering;
-  };
+  public isEntering = () => this.step === Step.Entering;
 
-  public isEntered: IsFn = (): boolean => {
-    return this.step === CycleStep.Entered;
-  };
+  public isEntered = () => this.step === Step.Entered;
 
-  public isExit: IsFn = (): boolean => {
-    return this.step === CycleStep.Exit;
-  };
+  public isExit = () => this.step === Step.Exit;
 
-  public isExiting: IsFn = (): boolean => {
-    return this.step === CycleStep.Exiting;
-  };
+  public isExiting = () => this.step === Step.Exiting;
 
-  public isExited: IsFn = (): boolean => {
-    return this.step === CycleStep.Exited;
-  };
+  public isExited = () => this.step === Step.Exited;
 }
 
 export default Cycle;

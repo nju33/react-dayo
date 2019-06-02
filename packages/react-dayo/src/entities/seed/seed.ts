@@ -1,34 +1,44 @@
-import React from 'react';
-import SeedImpl, {SeedValues, BlockComponent} from './seed-impl';
-import Interval, {IntervalImpl} from '../interval';
+import nanoid from 'nanoid';
+// import SeedBuilder, {ISeedBuilder, SeedBuilderValues} from '../seed-builder';
+import SeedBuilder, {SeedBuilderValues} from '../seed-builder';
+import Cycle from '../cycle';
+import {ISeed, SeedValues, BlockComponent} from './interfaces';
+import Interval, {IInterval} from '../interval';
 
-export class Seed<BlockComponentAdditionalProps extends object = {}>
-  implements SeedImpl<BlockComponentAdditionalProps> {
-  public values: SeedValues<BlockComponentAdditionalProps>;
+export class Seed<
+  BlockComponentProps extends object = {},
+  BCP extends BlockComponentProps = BlockComponentProps
+> implements ISeed<BCP> {
+  public builder: SeedBuilder<BCP>;
 
-  public Block: BlockComponent;
+  public get values(): SeedBuilderValues<BCP> {
+    return (this.builder.values as unknown) as SeedBuilderValues<BCP>;
+  }
+
+  public readonly BlockComponent: BlockComponent | undefined;
+
+  public readonly id = nanoid();
+
+  public readonly cycle = new Cycle();
 
   public closed = false;
 
   public constructor(
-    values: SeedValues<BlockComponentAdditionalProps>,
-    Block: BlockComponent = React.Fragment,
+    BlockComponent: BlockComponent,
+    userDefaultValues: Partial<SeedBuilderValues<BCP>> = {},
   ) {
-    this.values = values;
-    this.Block = Block;
+    this.BlockComponent = BlockComponent;
+    this.builder = new SeedBuilder<BCP>(userDefaultValues);
+    this.builder.from(this);
   }
 
-  public get id(): SeedValues<BlockComponentAdditionalProps>['id'] {
-    return this.values.id;
-  }
-
-  public get cycle(): SeedValues<BlockComponentAdditionalProps>['cycle'] {
-    return this.values.cycle;
+  public issue(): Seed<BCP> {
+    return new Seed<BCP>(this.BlockComponent as BlockComponent, this.values);
   }
 
   public get theme(): {
     transitionTimingFunction: NonNullable<
-      SeedValues<BlockComponentAdditionalProps>['transitionTimingFunction']
+      SeedValues<BCP>['transitionTimingFunction']
     >;
   } {
     const {transitionTimingFunction} = (this.values as unknown) as {
@@ -38,9 +48,7 @@ export class Seed<BlockComponentAdditionalProps extends object = {}>
     return {transitionTimingFunction};
   }
 
-  public get message(): NonNullable<
-    SeedValues<BlockComponentAdditionalProps>['message']
-  > {
+  public get message(): NonNullable<SeedValues<BCP>['message']> {
     const {message} = this.values;
     const name = this.values.name || 'Unknown';
 
@@ -61,58 +69,43 @@ export class Seed<BlockComponentAdditionalProps extends object = {}>
 
   private waitUntil(
     condition: () => boolean,
-    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
+    interval: IInterval,
   ): Promise<void> {
-    return interval.wait(
-      this,
-      (onTick): Promise<void> => {
-        return new Promise(
-          (resolve): void => {
-            onTick(
-              (): void => {
-                if (condition()) {
-                  resolve();
-                }
-              },
-            );
-          },
-        );
-      },
-    );
+    return interval.wait(this, onTick => {
+      return new Promise(resolve => {
+        onTick(() => {
+          if (condition()) {
+            resolve();
+          }
+        });
+      });
+    });
   }
 
-  private waitUntilEntered(
-    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
-  ): Promise<void> {
+  private waitUntilEntered(interval: IInterval): Promise<void> {
     return this.waitUntil(this.cycle.isEntered, interval);
   }
 
-  private waitUntilExited(
-    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
-  ): Promise<void> {
+  private waitUntilExited(interval: IInterval): Promise<void> {
     return this.waitUntil(this.cycle.isExited, interval);
   }
 
-  private waitUntilClick(
-    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
-  ): Promise<void> {
+  private waitUntilClick(interval: IInterval): Promise<void> {
     return this.waitUntil((): boolean => this.closed, interval);
   }
 
-  private waitUntilSkipCycle(
-    interval: IntervalImpl<SeedImpl<BlockComponentAdditionalProps>>,
-  ): Promise<void> {
+  private waitUntilSkipCycle(interval: IInterval): Promise<void> {
     return this.waitUntil(this.cycle.isSkip, interval);
   }
 
-  public close = (): void => {
+  public close = () => {
     this.closed = true;
   };
 
   public [Symbol.asyncIterator] = async function*(
-    this: Seed<BlockComponentAdditionalProps>,
-  ): AsyncIterator<SeedImpl<BlockComponentAdditionalProps>> {
-    const interval = Interval.create<SeedImpl<BlockComponentAdditionalProps>>();
+    this: Seed<BCP>,
+  ): AsyncIterator<ISeed<BCP>> {
+    const interval = Interval.create();
 
     yield this; // after enter
 

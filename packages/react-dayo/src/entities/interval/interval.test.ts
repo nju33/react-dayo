@@ -1,77 +1,57 @@
-import Interval from './__interval';
+import Interval from './interval';
 
-test('Interval', async (): Promise<void> => {
-  const wait = (msec: number): Promise<void> => {
-    return new Promise(
-      (r): void => {
-        setTimeout(r, msec);
-      },
-    );
+test('Interval', async () => {
+  const wait = (msec: number) => {
+    return new Promise(r => {
+      setTimeout(r, msec);
+    });
   };
 
   const interval = Interval.create();
 
   const seed1 = {id: 'a'};
   let seed1Done = false;
-  const updateFnForseed1 = (): Promise<void> => {
-    return new Promise(
-      (resolve): void => {
-        setTimeout((): void => {
-          seed1Done = true;
-          resolve();
-        }, 200);
-      },
-    );
+  const updateFnForseed1 = () => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        seed1Done = true;
+        resolve();
+      }, 200);
+    });
   };
 
   const seed2 = {id: 'b'};
   let seed2Done = false;
-  const updateFnForseed2 = (): Promise<void> => {
-    return new Promise(
-      (resolve): void => {
-        setTimeout((): void => {
-          seed2Done = true;
-          resolve();
-        }, 800);
-      },
-    );
+  const updateFnForseed2 = () => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        seed2Done = true;
+        resolve();
+      }, 800);
+    });
   };
 
   Promise.all([
     updateFnForseed1(),
-    interval.wait(
-      seed1,
-      (onTick): Promise<void> => {
-        return new Promise(
-          (resolve): void => {
-            onTick(
-              (): void => {
-                if (seed1Done) {
-                  resolve();
-                }
-              },
-            );
-          },
-        );
-      },
-    ),
+    interval.wait(seed1, onTick => {
+      return new Promise(resolve => {
+        onTick(() => {
+          if (seed1Done) {
+            resolve();
+          }
+        });
+      });
+    }),
     updateFnForseed2(),
-    interval.wait(
-      seed2,
-      (onTick): Promise<void> => {
-        return new Promise(
-          (resolve): void => {
-            onTick(
-              (): void => {
-                if (seed2Done) {
-                  resolve();
-                }
-              },
-            );
-          },
-        );
-      },
-    ),
+    interval.wait(seed2, onTick => {
+      return new Promise(resolve => {
+        onTick(() => {
+          if (seed2Done) {
+            resolve();
+          }
+        });
+      });
+    }),
   ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

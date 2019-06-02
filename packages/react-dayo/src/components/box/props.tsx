@@ -1,4 +1,4 @@
-import {BlockComponent} from '../../mods/seed/seed-impl';
+import {BlockComponent} from '../../entities/seed';
 
 export type BoxBlockComponent =
   | React.ComponentClass<{}>

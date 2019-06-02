@@ -1,4 +1,4 @@
-import {SeedFactoryValues} from './seed-factory-impl';
+import {SeedBuilderValues} from '../seed-builder';
 import Cycle from '../cycle';
 
 export interface BlockComponentProps {
@@ -11,31 +11,39 @@ export type BlockComponent =
   | React.FunctionComponent<BlockComponentProps>
   | React.ExoticComponent<BlockComponentProps>;
 
-export interface SeedValues<BlockComponentAdditionalProps extends object>
-  extends SeedFactoryValues<BlockComponentAdditionalProps> {
+export interface SeedValues<BlockComponentProps extends object = {}>
+  extends SeedBuilderValues<BlockComponentProps> {
   id: string;
   cycle: Cycle;
 }
 
-export default interface SeedStruct<
-  BlockComponentAdditionalProps extends object,
-  B extends BlockComponentAdditionalProps = BlockComponentAdditionalProps
+export interface SeedStruct<
+  BlockComponentAdditionalProps extends object = {},
+  BCP extends BlockComponentAdditionalProps = BlockComponentAdditionalProps
 > {
-  Block: BlockComponent;
-  values: SeedValues<B>;
-  id: SeedValues<B>['id'];
+  BlockComponent: BlockComponent | undefined;
+  id: string;
   cycle: Cycle;
+  values: SeedBuilderValues<BCP>;
   theme: {
     transitionTimingFunction: NonNullable<
-      SeedValues<B>['transitionTimingFunction']
+      SeedValues<BCP>['transitionTimingFunction']
     >;
   };
-  message: NonNullable<SeedValues<B>['message']>;
+  message: NonNullable<SeedValues<BCP>['message']>;
   closed: boolean;
 }
 
-export interface SeedImpl {
+export interface SeedImpl<
+  BlockComponentAdditionalProps extends object = {},
+  BCP extends BlockComponentAdditionalProps = BlockComponentAdditionalProps
+> {
   wait(msec: number): Promise<void>;
   close(): void;
-  [Symbol.asyncIterator](): AsyncIterator<SeedStruct<{}>>;
+  [Symbol.asyncIterator](): AsyncIterator<SeedImpl<BCP>>;
 }
+
+export type ISeed<
+  BlockComponentAdditionalProps extends object = {},
+  BCP extends BlockComponentAdditionalProps = BlockComponentAdditionalProps
+> = SeedStruct<BCP> & SeedImpl<BCP>;

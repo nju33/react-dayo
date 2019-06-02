@@ -1,2 +1,2 @@
-export * from './mods/seed';
-export * from './mods/dayo';
+export * from './dayo';
+export * from './entities/seed';

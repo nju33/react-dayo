@@ -5,13 +5,14 @@
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
   "workspaces": [
-    "example",
+    "examples/*",
     "packages/*"
   ],
   "scripts": {
     "prepare": "lerna bootstrap",
     "test": "lerna run test --stream --no-private",
-    "dev": "lerna run dev --stream --scope @react-dayo/example",
+    "rm-dist": "lerna exec --no-private -- rm -rf dist",
+    "dev": "lerna run dev --stream --scope @example/react-dayo",
     "build": "lerna run build --stream --no-private",
     "publish": "lerna publish",
     "postpublish": "run-s push:*",
@@ -19,7 +20,7 @@
     "push:docs": "gh-pages --dist packages/react-dayo --src '{src/**,*}' --branch docs --dotfiles"
   },
   "devDependencies": {
-    "@nju33/eslint-config": "0.0.25",
+    "@nju33/eslint-config": "^0.0.26",
     "@nju33/prettier": "0.0.25",
     "eslint": "5.16.0",
     "gh-pages": "2.0.1",

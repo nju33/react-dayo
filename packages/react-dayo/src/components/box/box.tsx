@@ -3,7 +3,7 @@ import originalStyled, {
   StyledComponentBase,
   ThemedBaseStyledInterface,
 } from 'styled-components';
-import {BlockComponent} from '../../mods/seed/seed-impl';
+import {BlockComponent} from '../../entities/seed';
 
 export interface BoxTheme {
   transitionTimingFunction: string;
@@ -15,7 +15,7 @@ const component = ({} as unknown) as {
 };
 
 export interface BoxProps {
-  Block: BlockComponent;
+  BlockComponent: BlockComponent | undefined;
   theme: BoxTheme;
   additionalProps?: object;
   to: 'top' | 'bottom';
@@ -68,9 +68,14 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       onTransitionEnd={props.onTransitionEnd}
     >
       <div ref={middleAreaRef}>
-        <props.Block close={props.close} {...props.additionalProps || {}}>
-          {props.children}
-        </props.Block>
+        {props.BlockComponent === undefined ? null : (
+          <props.BlockComponent
+            close={props.close}
+            {...props.additionalProps || {}}
+          >
+            {props.children}
+          </props.BlockComponent>
+        )}
       </div>
     </component.container>
   );

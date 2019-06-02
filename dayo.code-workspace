@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"name": "react-dayo",
+			"path": "./packages/react-dayo"
+		},
+		{
+			"name": "@example/react-dayo",
+			"path": "./examples/react-dayo"
+		},
+		{
+			"name": "<rootDir>",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.cache": true,
+			"**/.next": true,
+			"**/coverage": true,
+			"**/dist": true,
+			"**/docs": true,
+			"**/node_modules": true
+		},
+		"files.watcherExclude": {
+			"**/.cache/**": true,
+			"**/.next/**": true,
+			"**/coverage/**": true,
+			"**/dist/**": true,
+			"**/docs/**": true
+		},
+		"search.exclude": {
+			"**/.cache": true,
+			"**/.next": true,
+			"**/coverage": true,
+			"**/dist": true,
+			"**/docs": true
+		}
+	}
+}

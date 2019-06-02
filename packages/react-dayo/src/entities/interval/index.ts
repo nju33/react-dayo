@@ -1,5 +1,5 @@
-import Interval from './__interval';
+import Interval from './interval';
 
-export * from './interval-impl';
-export * from './__interval';
+export * from './interfaces';
+export * from './interval';
 export default Interval;

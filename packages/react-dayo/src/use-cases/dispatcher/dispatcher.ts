@@ -1,54 +1,43 @@
-import DispatcherImpl from './interfaces';
+import {DispatcherImpl, DispatcherEventFn} from './interfaces';
 import {Event} from './constants/events';
-import {SeedFactoryImpl, SeedImpl} from '../../mods/seed';
 
 /**
- * Dispatcher Use Case
+ * Dispatcher Use Case for seed
  */
-export class Dispatcher<BlockComponentAdditionalProps extends object = {}>
-  implements
-    DispatcherImpl<
-      SeedFactoryImpl<BlockComponentAdditionalProps>,
-      SeedImpl<BlockComponentAdditionalProps>
-    > {
-  private events = new Map<
-    Event,
-    ((seedOnCycle: SeedImpl<BlockComponentAdditionalProps>) => void)[]
-  >();
+export class Dispatcher implements DispatcherImpl {
+  private events = new Map<Event, DispatcherEventFn[]>();
 
-  public dispatch = (
-    seedFactory: SeedFactoryImpl<BlockComponentAdditionalProps>,
-  ): (() => Promise<void>) => async (): Promise<void> => {
-    const seed = seedFactory.createSeed();
+  /**
+   * To turn AsyncIterable that obtained form the factory.
+   */
+  public dispatch = (builder: {
+    seed: {issue(): AsyncIterable<unknown>};
+  }): (() => Promise<void>) => async (): Promise<void> => {
+    const {seed} = builder;
+    const issued = seed.issue();
 
-    for await (const seedOnCycle of seed) {
-      this.emit(Event.UpdateSeed, seedOnCycle);
+    for await (const yielded of issued) {
+      this.emit(Event.UpdateSeed, yielded);
     }
 
-    this.emit(Event.DoneSeed, seed);
+    this.emit(Event.DoneSeed, issued);
   };
 
-  public emit(
-    event: Event,
-    seedOnCycle: SeedImpl<BlockComponentAdditionalProps>,
-  ): void {
-    const callbacks = this.events.get(event);
-    if (callbacks === undefined) {
-      return;
-    }
+  /**
+   * To fire callback function for the event that is registered
+   */
+  public emit(event: Event, yielded: unknown): void {
+    const callbacks = this.events.get(event) || [];
 
-    callbacks.forEach(
-      (callback): void => {
-        callback(seedOnCycle);
-      },
-    );
+    callbacks.forEach(callback => {
+      callback(yielded);
+    });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public on(
-    event: Event,
-    cb: (seedOnCycle: SeedImpl<BlockComponentAdditionalProps>) => void,
-  ): void {
+  /**
+   * To register callback function for the event
+   */
+  public on(event: Event, cb: DispatcherEventFn): void {
     if (!this.events.has(event)) {
       this.events.set(event, [cb]);
       return;
@@ -59,9 +48,7 @@ export class Dispatcher<BlockComponentAdditionalProps extends object = {}>
       throw new Error('strangely the `callbacks` is undefined');
     }
 
-    callbacks.push(cb);
-
-    this.events.set(event, callbacks);
+    this.events.set(event, [...callbacks, cb]);
   }
 }
 

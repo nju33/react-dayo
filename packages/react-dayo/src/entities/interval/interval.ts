@@ -1,14 +1,14 @@
 import NanoEvents from 'nanoevents';
-import IntervalImpl from './interval-impl';
+import {IInterval} from './interfaces';
 
 /**
  * Value Object
  */
-export class Interval<Item> implements IntervalImpl<Item> {
+export class Interval implements IInterval {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static instance: Interval<any> | undefined;
+  private static instance: Interval | undefined;
 
-  public static create<Item>(): Interval<Item> {
+  public static create(): Interval {
     if (this.instance === undefined) {
       this.instance = new Interval();
     }
@@ -20,7 +20,7 @@ export class Interval<Item> implements IntervalImpl<Item> {
 
   private constructor() {}
 
-  private items = new Map<Item, Item>();
+  private items = new Map<unknown, unknown>();
 
   private intervalId: number | undefined;
 
@@ -33,10 +33,16 @@ export class Interval<Item> implements IntervalImpl<Item> {
     }, 30);
   }
 
+  /**
+   * Weather running `window.setInterval`
+   */
   private isRunningTick(): boolean {
     return this.intervalId !== undefined;
   }
 
+  /**
+   * To stop running `window.setInterval`
+   */
   private stopTick(): void {
     if (!this.isRunningTick()) {
       return;
@@ -53,20 +59,20 @@ export class Interval<Item> implements IntervalImpl<Item> {
   /**
    * whether item has
    */
-  private has(item: Item): boolean {
+  private has(item: unknown): boolean {
     return this.items.has(item);
   }
 
-  private add(item: Item): void {
+  private add(item: unknown): void {
     this.items.set(item, item);
   }
 
-  private remove(item: Item): void {
+  private remove(item: unknown): void {
     this.items.delete(item);
   }
 
   public async wait(
-    item: Item,
+    item: unknown,
     condition: (onTick: (cb: () => void) => void) => Promise<void>,
   ): Promise<void> {
     this.add(item);
