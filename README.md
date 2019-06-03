@@ -75,7 +75,7 @@ ReactDom.render(
 )
 ```
 
-[![Edit @react-dayo/example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/nju33/react-dayo/tree/example/?fontsize=14)
+[![Edit @example/react-dayo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/nju33/react-dayo/tree/%40example%2Freact-dayo/?fontsize=14)
 
 ## Creat custom seed
 
