@@ -50,7 +50,6 @@ export default class AppDocument extends Document<{
           <div
             id="alert-left-top"
             style={{
-              width: 300,
               position: 'fixed',
               left: 10,
               top: 10,
@@ -59,7 +58,6 @@ export default class AppDocument extends Document<{
           <div
             id="alert-center-top"
             style={{
-              width: 300,
               position: 'fixed',
               right: '50%',
               top: 10,
@@ -69,7 +67,6 @@ export default class AppDocument extends Document<{
           <div
             id="alert-right-top"
             style={{
-              width: 300,
               position: 'fixed',
               right: 10,
               top: 10,
@@ -78,7 +75,6 @@ export default class AppDocument extends Document<{
           <div
             id="alert-left-bottom"
             style={{
-              width: 300,
               position: 'fixed',
               left: 10,
               bottom: 10,
@@ -87,9 +83,8 @@ export default class AppDocument extends Document<{
           <div
             id="alert-center-bottom"
             style={{
-              width: 300,
               position: 'fixed',
-              right: '50%t s',
+              right: '50%',
               bottom: 10,
               transform: 'translateX(50%)',
             }}
@@ -97,7 +92,6 @@ export default class AppDocument extends Document<{
           <div
             id="alert-right-bottom"
             style={{
-              width: 300,
               position: 'fixed',
               right: 10,
               bottom: 10,
