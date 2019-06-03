@@ -1,8 +1,8 @@
 import React from 'react';
-import {DayoOptions, DayoProps} from './interfaces';
-import {IDayo} from './interfaces';
-import {ISeed} from '../entities/seed';
+import {DayoOptions, IDayo, DayoProps, DayoState} from './interfaces';
+import DayoOperators from './dayo-operators';
 import Dispatcher, {Event as DispatcherEvent} from '../use-cases/dispatcher';
+import {ISeed} from '../entities/seed';
 import Queue from '../components/queue';
 import Box from '../components/box/box';
 
@@ -27,15 +27,25 @@ export const createDayo = <
   /**
    * Interface
    */
-  class Dayo extends React.Component<Partial<DayoProps>>
+  class Dayo extends React.Component<Partial<DayoProps>, DayoState<ISeed<BCP>>>
     implements IDayo<ISeed<BCP>> {
     public static defaultProps = options;
 
     public dispatcher = dispatcher;
 
+    public operators = new DayoOperators(this);
+
     public state = {
       queue: [] as ISeed<BCP>[],
     };
+
+    public getQueue() {
+      return this.state.queue;
+    }
+
+    public setQueue(queue: ISeed<BCP>[]) {
+      this.setState({queue});
+    }
 
     /**
      * To just return `option`
@@ -48,29 +58,9 @@ export const createDayo = <
     }
 
     /**
-     * To refresh all items of queue for re-rendering
-     */
-    private rewriteQueueItem(seedOnCycle: ISeed<BCP>): void {
-      const targetIndex = this.state.queue.findIndex(
-        (item): boolean => {
-          return item.id === seedOnCycle.id;
-        },
-      );
-
-      if (targetIndex === -1) {
-        return;
-      }
-
-      const {queue} = this.state;
-      queue[targetIndex] = seedOnCycle;
-
-      this.setState({queue});
-    }
-
-    /**
      * To be called when rendered in the dom
      */
-    public componentDidMount(): void {
+    public componentDidMount() {
       dispatcher.on(DispatcherEvent.UpdateSeed, this.handleUpdateSeed);
       dispatcher.on(DispatcherEvent.DoneSeed, this.handleDoneSeed);
     }
@@ -82,61 +72,28 @@ export const createDayo = <
      * or else just re-rendering with new state
      *
      */
-    private handleUpdateSeed = (seedOnCycle: ISeed<BCP>): void => {
+    private handleUpdateSeed = (seedOnCycle: ISeed<BCP>) => {
       if (seedOnCycle.cycle.isEnter()) {
-        this.addAlert(seedOnCycle);
-        return;
+        this.operators.addSeed(seedOnCycle);
+        this.operators.skipOverflowSeeds({
+          maxLength: this.getOption('maxLength'),
+        });
       }
 
-      return this.rewriteQueueItem(seedOnCycle);
+      return this.operators.rewriteQueueItem(seedOnCycle);
     };
 
     /**
      * To be called when the cycle step is ended for removing a ended seed from the queue
      */
-    private handleDoneSeed = (seed: ISeed<BCP>): void => {
+    private handleDoneSeed = (seed: ISeed<BCP>) => {
       const {queue} = this.state;
-      const nextQueue = queue.filter(
-        (item): boolean => {
-          return item.id !== seed.id;
-        },
-      );
-
-      this.setState({queue: nextQueue});
-    };
-
-    /**
-     * To add new seed into the queue;
-     */
-    private addAlert(seedOnCycle: ISeed<BCP>): void {
-      this.setState({
-        queue: [...this.state.queue, seedOnCycle],
+      const nextQueue = queue.filter(item => {
+        return item.id !== seed.id;
       });
 
-      this.closeOverflowSeeds();
-    }
-
-    /**
-     * To close seeds overlowed
-     */
-    private closeOverflowSeeds(): void {
-      const queueMaxLength = this.getOption('maxLength');
-      const enteredItems = this.state.queue.filter(
-        (item): boolean => item.cycle.isEntering() || item.cycle.isEntered(),
-      );
-      const newItemLength = 1;
-
-      const overflowLength =
-        enteredItems.length + newItemLength - queueMaxLength;
-
-      if (overflowLength > 0) {
-        enteredItems.slice(0, overflowLength).forEach(
-          (seedOnCycle): void => {
-            seedOnCycle.cycle.skip();
-          },
-        );
-      }
-    }
+      this.setQueue(nextQueue);
+    };
 
     /**
      * Advance to the next cycle step at the css animation ended
@@ -157,7 +114,7 @@ export const createDayo = <
     /**
      * To just render component
      */
-    public render(): JSX.Element {
+    public render() {
       return (
         <Queue to={this.getOption('to')} position={this.getOption('position')}>
           {this.state.queue.map(
