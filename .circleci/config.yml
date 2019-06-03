@@ -8,16 +8,16 @@ executors:
 commands:
   yarn_install:
     parameters:
-      re-install:
+      re_install:
         type: boolean
         default: true
     steps:
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "packages/react-dayo/package.json" }}-{{ checksum "example/package.json" }}
+            - v1-dependencies-{{ checksum "yarn.lock" }}
             - v1-dependencies-
       - when:
-          condition: <<parameters.re-install>>
+          condition: << parameters.re_install >>
           steps:
             - run: yarn install
             - save_cache:
@@ -25,7 +25,7 @@ commands:
                   - example/node_modules
                   - packages/react-dayo/node_modules
                   - node_modules
-                key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "packages/react-dayo/package.json" }}-{{ checksum "example/package.json" }}
+                key: v1-dependencies-{{ checksum "yarn.lock" }}
   yarn_test:
     steps:
       - run: yarn test
@@ -43,7 +43,7 @@ jobs:
     steps:
       - checkout
       - yarn_install:
-          re-install: false
+          re_install: false
       - yarn_test
 
 workflows:
