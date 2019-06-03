@@ -16,7 +16,7 @@
     "build": "lerna run build --stream --no-private",
     "publish": "lerna publish",
     "postpublish": "run-s push:*",
-    "push:example": "gh-pages --dist example --src '{pages/**,*}' --branch example --dotfiles",
+    "push:example": "gh-pages --dist examples/react-dayo --src '{pages/**,*}' --branch @example/react-dayo --dotfiles",
     "push:docs": "gh-pages --dist packages/react-dayo --src '{src/**,*}' --branch docs --dotfiles"
   },
   "devDependencies": {
