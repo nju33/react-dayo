@@ -1,0 +1,22 @@
+{
+  "extends": "@nju33/tsconfig-react-module",
+  "include": ["pages"],
+  "exclude": [],
+  "compilerOptions": {
+    "lib": ["es2015", "es2016", "es2017", "dom", "esnext.asynciterable"],
+    "downlevelIteration": true,
+    "baseUrl": "../../packages",
+    "typeRoots": ["./node_modules/@types", "../node_modules/@types"],
+    "paths": {
+      "react-dayo/dist/main/*": [
+        "react-dayo/dist/module/*",
+        "react-dayo/src/*.tsx",
+        "react-dayo/src/*.ts"
+      ],
+      "react-dayo": [
+        "react-dayo/dist/module",
+        "react-dayo/src/index.ts"
+      ]
+    }
+  }
+}
