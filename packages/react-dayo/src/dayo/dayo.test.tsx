@@ -1,81 +1,73 @@
 import React from 'react';
-import TestRenderer from 'react-test-renderer';
-// import log from '../seed/presets/alerts/log';
-import {createDayo, defaultOptions} from './dayo';
+import {render, cleanup, wait, waitForElement} from '@testing-library/react';
+import success from '../presets/notifications/success';
+import {createDayo} from './dayo';
+import {DayoOptions} from './interfaces';
+import 'jest-dom/extend-expect';
 
-// describe('createDayo', (): void => {
-//   describe('options', (): void => {
-//     it('not passed options', (): void => {
-//       const [Dayo] = createDayo();
+describe('dayo', () => {
+  afterEach(cleanup);
 
-//       const renderer = TestRenderer.create(<Dayo />);
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  let Dayo: React.ComponentClass<Partial<DayoOptions>, any>;
+  let dispatch: any;
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
-//       expect(renderer.root.instance.getOption('to')).toBe(defaultOptions.to);
-//       expect(renderer.root.instance.getOption('maxLength')).toBe(
-//         defaultOptions.maxLength,
-//       );
-//     });
+  beforeEach(() => {
+    const [_Dayo, _dispatch] = createDayo();
+    Dayo = _Dayo;
+    dispatch = _dispatch;
+  });
 
-//     it('passed options', (): void => {
-//       const options = {
-//         to: 'bottom',
-//         maxLength: 3,
-//       } as const;
+  test('default', async () => {
+    jest.setTimeout(10000);
 
-//       const [Dayo] = createDayo(options);
+    const {container, queryByTestId, queryByText, queryAllByText} = render(
+      <Dayo />,
+    );
+    const message = 'test';
 
-//       const renderer = TestRenderer.create(<Dayo />);
+    expect(queryByTestId('dayo--queue')).toBeTruthy();
+    expect(queryByTestId('dayo--box')).toBeFalsy();
+    expect(queryByText(message)).toBeFalsy();
+    expect(container.firstChild).toMatchSnapshot();
 
-//       expect(renderer.root.instance.getOption('to')).toBe(options.to);
-//       expect(renderer.root.instance.getOption('maxLength')).toBe(
-//         options.maxLength,
-//       );
-//     });
+    dispatch(
+      success()
+        .message(message)
+        .timeout(1500),
+    )();
+    const dayoBoxNode = await waitForElement(() => queryByTestId('dayo--box'));
+    expect(dayoBoxNode).toBeTruthy();
 
-//     it('passed props', (): void => {
-//       const options = {
-//         to: 'bottom',
-//         maxLength: 3,
-//       } as const;
+    /**
+     * dispatch two more times
+     */
+    dispatch(
+      success()
+        .message(message)
+        .timeout(1500),
+    )();
+    dispatch(
+      success()
+        .message(message)
+        .timeout(1500),
+    )();
+    await wait(() => new Promise(r => setTimeout(r, 1000)));
+    const messages = queryAllByText(message);
+    expect(messages).toHaveLength(3);
+    expect(container.firstChild).toMatchSnapshot();
+  });
 
-//       const [Dayo] = createDayo({
-//         to: 'top',
-//         maxLength: 10,
-//       });
+  test('attributes', () => {
+    const {container, queryByTestId} = render(
+      <Dayo to="bottom" position="right" />,
+    );
 
-//       const renderer = TestRenderer.create(
-//         <Dayo to={options.to} maxLength={options.maxLength} />,
-//       );
-
-//       expect(renderer.root.instance.getOption('to')).toBe(options.to);
-//       expect(renderer.root.instance.getOption('maxLength')).toBe(
-//         options.maxLength,
-//       );
-//     });
-//   });
-
-//   test('rendering', (): void => {
-//     const [Dayo, dispatch] = createDayo();
-
-//     const json1 = ((): object => {
-//       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//       const renderer = TestRenderer.create(<Dayo to="bottom" />);
-//       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//       const object = renderer.toJSON() as any;
-//       delete object.props.className;
-//       return object;
-//     })();
-//     expect(json1).toMatchSnapshot();
-
-//     dispatch(log.message('test'))();
-//     const json2 = ((): object => {
-//       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//       const renderer = TestRenderer.create(<Dayo to="bottom" />);
-//       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//       const object = renderer.toJSON() as any;
-//       delete object.props.className;
-//       return object;
-//     })();
-//     expect(json2).toMatchSnapshot();
-//   });
-// });
+    const queue = queryByTestId('dayo--queue');
+    expect(queue).toBeTruthy();
+    expect(queue).toHaveAttribute('data-to', 'bottom');
+    expect(queue).toHaveAttribute('data-position', 'right');
+    expect(container.firstChild).toMatchSnapshot();
+  });
+});

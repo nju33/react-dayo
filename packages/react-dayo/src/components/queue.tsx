@@ -7,12 +7,17 @@ const component = ({} as unknown) as {
 
 export interface QueueProps {
   to: 'top' | 'bottom';
+  position: 'left' | 'center' | 'right';
 }
 
 /* eslint-disable react/prop-types */
 export const Queue: React.FC<QueueProps> = (props): JSX.Element => {
   return (
-    <component.container data-to={props.to}>
+    <component.container
+      data-to={props.to}
+      data-position={props.position}
+      data-testid="dayo--queue"
+    >
       {props.children}
     </component.container>
   );
@@ -22,7 +27,7 @@ export const Queue: React.FC<QueueProps> = (props): JSX.Element => {
 Queue.displayName = 'Dayo(Queue)';
 
 component.container = styled.aside`
-  position: absolute;
+  width: 100%;
   font-size: 0.8em;
   display: flex;
   justify-content: flex-start;
@@ -31,16 +36,22 @@ component.container = styled.aside`
 
   &[data-to='top'] {
     flex-direction: column;
-    align-items: flex-start;
-    left: 0;
-    top: 0;
   }
 
   &[data-to='bottom'] {
     flex-direction: column-reverse;
+  }
+
+  &[data-position='left'] {
+    align-items: flex-start;
+  }
+
+  &[data-position='center'] {
+    align-items: center;
+  }
+
+  &[data-position='right'] {
     align-items: flex-end;
-    right: 0;
-    bottom: 0;
   }
 `;
 

@@ -1,9 +1,8 @@
-// import {DispatcherImpl} from '../dispatcher';
-
-export type DayoOptionTo = 'top' | 'bottom';
+import {QueueProps} from '../components/queue';
 
 export interface DayoOptions {
-  to: DayoOptionTo;
+  to: QueueProps['to'];
+  position: QueueProps['position'];
   maxLength: number;
 }
 

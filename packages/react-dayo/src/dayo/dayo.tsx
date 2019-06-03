@@ -1,13 +1,14 @@
 import React from 'react';
-import {DayoOptions, DayoProps, DayoOptionTo} from './dayo-impl';
-import {IDayo} from './dayo-impl';
+import {DayoOptions, DayoProps} from './interfaces';
+import {IDayo} from './interfaces';
 import {ISeed} from '../entities/seed';
 import Dispatcher, {Event as DispatcherEvent} from '../use-cases/dispatcher';
 import Queue from '../components/queue';
 import Box from '../components/box/box';
 
 export const defaultOptions = {
-  to: 'top' as DayoOptionTo,
+  to: 'top' as DayoOptions['to'],
+  position: 'center' as DayoOptions['position'],
   maxLength: 5,
 };
 
@@ -158,9 +159,13 @@ export const createDayo = <
      */
     public render(): JSX.Element {
       return (
-        <Queue to={this.getOption('to')}>
+        <Queue to={this.getOption('to')} position={this.getOption('position')}>
           {this.state.queue.map(
             (seedOnCycle): JSX.Element => {
+              if (seedOnCycle.values === undefined) {
+                throw new Error('Unexpected error');
+              }
+
               return (
                 <Box
                   key={seedOnCycle.id}

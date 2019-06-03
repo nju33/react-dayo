@@ -13,7 +13,7 @@ export type BlockComponent =
 export interface SeedBuilderValues<BlockComponentProps extends object> {
   key: string;
   name: string;
-  message: string;
+  message: string | JSX.Element;
   transitionTimingFunction: string;
   timeout: number | false;
   props: BlockComponentProps;
@@ -30,7 +30,8 @@ export interface SeedBuilderStruct<
 > {
   // BlockComponent: BlockComponent | undefined;
   values: Partial<SeedBuilderValues<B>>;
-  seed: AsyncIterable<unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  seed: {issue(): AsyncIterable<unknown> & {values: any}};
 }
 
 export interface SeedBuilderImpl<

@@ -43,7 +43,7 @@ export default class AppDocument extends Document<{
           />
           {this.props.styleTags}
         </Head>
-        <body>
+        <body style={{margin: 0}}>
           <Main />
           <NextScript />
 
@@ -54,17 +54,53 @@ export default class AppDocument extends Document<{
               position: 'fixed',
               left: 10,
               top: 10,
-              transform: 'translateY(50%)',
             }}
           />
           <div
-            id="alert-right-center"
+            id="alert-center-top"
+            style={{
+              width: 300,
+              position: 'fixed',
+              right: '50%',
+              top: 10,
+              transform: 'translateX(50%)',
+            }}
+          />
+          <div
+            id="alert-right-top"
+            style={{
+              width: 300,
+              position: 'fixed',
+              right: 10,
+              top: 10,
+            }}
+          />
+          <div
+            id="alert-left-bottom"
+            style={{
+              width: 300,
+              position: 'fixed',
+              left: 10,
+              bottom: 10,
+            }}
+          />
+          <div
+            id="alert-center-bottom"
+            style={{
+              width: 300,
+              position: 'fixed',
+              right: '50%t s',
+              bottom: 10,
+              transform: 'translateX(50%)',
+            }}
+          />
+          <div
+            id="alert-right-bottom"
             style={{
               width: 300,
               position: 'fixed',
               right: 10,
               bottom: 10,
-              transform: 'translateY(50%)',
             }}
           />
         </body>

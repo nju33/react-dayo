@@ -1,13 +1,191 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`createDayo rendering 1`] = `
+exports[`dayo attributes 1`] = `
 <aside
+  class="sc-bwzfXH kLkFEs"
+  data-position="right"
+  data-testid="dayo--queue"
   data-to="bottom"
 />
 `;
 
-exports[`createDayo rendering 2`] = `
+exports[`dayo default 1`] = `
 <aside
-  data-to="bottom"
+  class="sc-bwzfXH kLkFEs"
+  data-position="center"
+  data-testid="dayo--queue"
+  data-to="top"
 />
+`;
+
+exports[`dayo default 2`] = `
+<aside
+  class="sc-bwzfXH kLkFEs"
+  data-position="center"
+  data-testid="dayo--queue"
+  data-to="top"
+>
+  <div
+    aria-live="assertive"
+    class="sc-htpNat iPDAVw"
+    data-is-delete="false"
+    data-is-deleted="false"
+    data-is-deleting="false"
+    data-is-enter="false"
+    data-is-entered="false"
+    data-is-entering="true"
+    data-testid="dayo--box"
+    data-to="top"
+    style="height: 0px;"
+  >
+    <div>
+      <div
+        class="sc-bdVaJa CLsaZ"
+      >
+        <div
+          class="dayo-notification--middle"
+        >
+          <div>
+            test
+          </div>
+        </div>
+        <div
+          class="dato-notification--right"
+        >
+          <svg
+            fill="none"
+            height="1em"
+            viewBox="0 0 500 500"
+            width="1em"
+          >
+            <rect
+              fill="black"
+              height="592.306"
+              rx="18.5096"
+              transform="rotate(-45 27 53.1765)"
+              width="37.0191"
+              x="27"
+              y="53.1765"
+            />
+            <rect
+              fill="black"
+              height="592.306"
+              rx="18.5096"
+              transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 472 53.1765)"
+              width="37.0191"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    aria-live="assertive"
+    class="sc-htpNat iPDAVw"
+    data-is-delete="false"
+    data-is-deleted="false"
+    data-is-deleting="false"
+    data-is-enter="false"
+    data-is-entered="false"
+    data-is-entering="true"
+    data-testid="dayo--box"
+    data-to="top"
+    style="height: 0px;"
+  >
+    <div>
+      <div
+        class="sc-bdVaJa CLsaZ"
+      >
+        <div
+          class="dayo-notification--middle"
+        >
+          <div>
+            test
+          </div>
+        </div>
+        <div
+          class="dato-notification--right"
+        >
+          <svg
+            fill="none"
+            height="1em"
+            viewBox="0 0 500 500"
+            width="1em"
+          >
+            <rect
+              fill="black"
+              height="592.306"
+              rx="18.5096"
+              transform="rotate(-45 27 53.1765)"
+              width="37.0191"
+              x="27"
+              y="53.1765"
+            />
+            <rect
+              fill="black"
+              height="592.306"
+              rx="18.5096"
+              transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 472 53.1765)"
+              width="37.0191"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    aria-live="assertive"
+    class="sc-htpNat iPDAVw"
+    data-is-delete="false"
+    data-is-deleted="false"
+    data-is-deleting="false"
+    data-is-enter="false"
+    data-is-entered="false"
+    data-is-entering="true"
+    data-testid="dayo--box"
+    data-to="top"
+    style="height: 0px;"
+  >
+    <div>
+      <div
+        class="sc-bdVaJa CLsaZ"
+      >
+        <div
+          class="dayo-notification--middle"
+        >
+          <div>
+            test
+          </div>
+        </div>
+        <div
+          class="dato-notification--right"
+        >
+          <svg
+            fill="none"
+            height="1em"
+            viewBox="0 0 500 500"
+            width="1em"
+          >
+            <rect
+              fill="black"
+              height="592.306"
+              rx="18.5096"
+              transform="rotate(-45 27 53.1765)"
+              width="37.0191"
+              x="27"
+              y="53.1765"
+            />
+            <rect
+              fill="black"
+              height="592.306"
+              rx="18.5096"
+              transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 472 53.1765)"
+              width="37.0191"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
 `;

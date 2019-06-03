@@ -12,37 +12,24 @@ export class SeedBuilder<
 > implements ISeedBuilder<BCP> {
   public values!: SeedBuilderStruct<BCP>['values'];
 
-  // public BlockComponent: BlockComponent | undefined;
-
-  private memo = new Map<string, SeedBuilder<BCP>>();
-
-  public seed!: AsyncIterable<unknown>;
+  public seed!: {
+    issue(): AsyncIterable<unknown> & {
+      values: SeedBuilderStruct<BCP>['values'];
+    };
+  };
 
   public constructor(values: SeedBuilderStruct<BCP>['values'] = {}) {
     this.values = {...defaults, ...values};
   }
 
-  // private getMemoKey(values: SeedBuilderStruct<BCP>['values']): string {
-  //   return JSON.stringify(values);
-  // }
-
-  public from(seed: AsyncIterable<unknown>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public from(seed: {
+    issue(): AsyncIterable<unknown> & {
+      values: SeedBuilderStruct<BCP>['values'];
+    };
+  }) {
     this.seed = seed;
   }
-
-  // public assign(values: SeedBuilderStruct<BCP>['values']): SeedBuilder<BCP> {
-  //   const key = this.getMemoKey(values);
-  //   const value = this.memo.get(key);
-  //   if (value !== undefined) {
-  //     return value;
-  //   }
-
-  //   const seedBuilder = new SeedBuilder<BCP>(BlockComponent, values);
-  //   seedBuilder.from(this.seed);
-  //   this.memo.set(key, seedBuilder);
-
-  //   return seedBuilder;
-  // }
 
   public transitionTimingFunction(
     this: ISeedBuilder<BCP>,
@@ -56,7 +43,10 @@ export class SeedBuilder<
     return this;
   }
 
-  public message(this: ISeedBuilder<BCP>, value: string): ISeedBuilder<BCP> {
+  public message(
+    this: ISeedBuilder<BCP>,
+    value: string | JSX.Element,
+  ): ISeedBuilder<BCP> {
     this.values = {...this.values, message: value};
 
     return this;

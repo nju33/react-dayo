@@ -5,19 +5,19 @@ import mixin from './mixin';
 import CloseIcon from '../../components/close-icon';
 
 const SUMI = '#1c1c1c';
-const ROKUSYOH = '#24936e';
+const SOHI = '#ed784a';
 
 const Notification = styled.div`
   ${mixin}
 `;
 
 // eslint-disable-next-line react/prop-types
-const Success: React.FC<BlockComponentProps> = (props): JSX.Element => {
+const Warn: React.FC<BlockComponentProps> = (props): JSX.Element => {
   return (
     <Notification
       theme={{
         textColor: SUMI,
-        backgroundColor: ROKUSYOH,
+        backgroundColor: SOHI,
       }}
     >
       <div className="dayo-notification--middle">{props.children}</div>
@@ -28,4 +28,4 @@ const Success: React.FC<BlockComponentProps> = (props): JSX.Element => {
   );
 };
 
-export default new Seed(Success, {timeout: 5000}).builder;
+export default new Seed(Warn, {timeout: 5000}).builder;

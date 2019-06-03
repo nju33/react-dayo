@@ -11,10 +11,12 @@ export class Dispatcher implements DispatcherImpl {
    * To turn AsyncIterable that obtained form the factory.
    */
   public dispatch = (builder: {
-    seed: {issue(): AsyncIterable<unknown>};
+    seed: {issue(): AsyncIterable<unknown> & {values: any}}; // eslint-disable-line @typescript-eslint/no-explicit-any
+    values: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   }): (() => Promise<void>) => async (): Promise<void> => {
-    const {seed} = builder;
+    const {seed, values} = builder;
     const issued = seed.issue();
+    issued.values = values;
 
     for await (const yielded of issued) {
       this.emit(Event.UpdateSeed, yielded);

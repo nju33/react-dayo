@@ -24,7 +24,7 @@ export interface SeedStruct<
   BlockComponent: BlockComponent | undefined;
   id: string;
   cycle: Cycle;
-  values: SeedBuilderValues<BCP>;
+  values: SeedBuilderValues<BCP> | undefined;
   theme: {
     transitionTimingFunction: NonNullable<
       SeedValues<BCP>['transitionTimingFunction']

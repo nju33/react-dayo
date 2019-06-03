@@ -1,2 +1,2 @@
-export * from './dayo-impl';
+export * from './interfaces';
 export * from './dayo';

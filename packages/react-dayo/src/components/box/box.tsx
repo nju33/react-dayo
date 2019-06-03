@@ -66,6 +66,7 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       data-is-deleting={props.isExiting}
       data-is-deleted={props.isExited}
       onTransitionEnd={props.onTransitionEnd}
+      data-testid="dayo--box"
     >
       <div ref={middleAreaRef}>
         {props.BlockComponent === undefined ? null : (

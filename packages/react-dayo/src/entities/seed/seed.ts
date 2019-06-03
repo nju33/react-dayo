@@ -9,11 +9,9 @@ export class Seed<
   BlockComponentProps extends object = {},
   BCP extends BlockComponentProps = BlockComponentProps
 > implements ISeed<BCP> {
-  public builder: SeedBuilder<BCP>;
+  public builder: () => SeedBuilder<BCP>;
 
-  public get values(): SeedBuilderValues<BCP> {
-    return (this.builder.values as unknown) as SeedBuilderValues<BCP>;
-  }
+  public values: SeedBuilderValues<BCP> | undefined;
 
   public readonly BlockComponent: BlockComponent | undefined;
 
@@ -28,12 +26,16 @@ export class Seed<
     userDefaultValues: Partial<SeedBuilderValues<BCP>> = {},
   ) {
     this.BlockComponent = BlockComponent;
-    this.builder = new SeedBuilder<BCP>(userDefaultValues);
-    this.builder.from(this);
+    this.builder = () => {
+      const builder = new SeedBuilder<BCP>(userDefaultValues);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      builder.from(this as any);
+      return builder;
+    };
   }
 
-  public issue(): Seed<BCP> {
-    return new Seed<BCP>(this.BlockComponent as BlockComponent, this.values);
+  public issue(values: SeedValues<BCP>): Seed<BCP> {
+    return new Seed<BCP>(this.BlockComponent as BlockComponent, values);
   }
 
   public get theme(): {
@@ -49,6 +51,10 @@ export class Seed<
   }
 
   public get message(): NonNullable<SeedValues<BCP>['message']> {
+    if (this.values === undefined) {
+      throw new Error('`message` and `timeout` is required');
+    }
+
     const {message} = this.values;
     const name = this.values.name || 'Unknown';
 
@@ -105,6 +111,10 @@ export class Seed<
   public [Symbol.asyncIterator] = async function*(
     this: Seed<BCP>,
   ): AsyncIterator<ISeed<BCP>> {
+    if (this.values === undefined) {
+      throw new Error('`message` and `timeout` is required');
+    }
+
     const interval = Interval.create();
 
     yield this; // after enter
