@@ -30,7 +30,6 @@
     "docs": "typedoc --theme minimal --out docs src/index.ts --ignoreCompilerErrors"
   },
   "peerDependencies": {
-    "@types/react": "^16.8.0",
     "react": "^16.8.0"
   },
   "devDependencies": {
@@ -54,8 +53,8 @@
     "typescript": "3.5.1"
   },
   "dependencies": {
-    "nanoevents": "^1.0.8",
+    "nanoevents": "^2.0.0",
     "nanoid": "2.0.3"
   },
-  "gitHead": "107d9a7165932e8a5ff645843552975b02073773"
+  "gitHead": "36ec4f93889ad71b26cda3cea8ccc5a52eb6627c"
 }
