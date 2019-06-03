@@ -1,0 +1,61 @@
+version: 2.1
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:10
+
+commands:
+  yarn_install:
+    parameters:
+      re-install:
+        type: boolean
+        default: true
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "packages/react-dayo/package.json" }}-{{ checksum "example/package.json" }}
+            - v1-dependencies-
+      - when:
+          condition: <<parameters.re-install>>
+          steps:
+            - run: yarn install
+            - save_cache:
+                paths:
+                  - example/node_modules
+                  - packages/react-dayo/node_modules
+                  - node_modules
+                key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "packages/react-dayo/package.json" }}-{{ checksum "example/package.json" }}
+  yarn_test:
+    steps:
+      - run: yarn test
+
+jobs:
+  prepare:
+    executor:
+      name: node
+    steps:
+      - checkout
+      - yarn_install
+  test:
+    executor:
+      name: node
+    steps:
+      - checkout
+      - yarn_install:
+          re-install: false
+      - yarn_test
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - prepare:
+          filters:
+            branches:
+              ignore:
+                - example
+                - docs
+      - test:
+          requires:
+            - prepare
