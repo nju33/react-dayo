@@ -16,7 +16,7 @@ const component = ({} as unknown) as {
 const init = (refs: {
   container: React.RefObject<HTMLDivElement>;
   middleArea: React.RefObject<HTMLDivElement>;
-}): void => {
+}) => {
   if (refs.container.current !== null && refs.middleArea.current !== null) {
     refs.container.current.style.height = `${
       refs.middleArea.current.clientHeight
@@ -25,17 +25,15 @@ const init = (refs: {
 };
 
 /* eslint-disable react/prop-types */
-export const Box: React.FC<BoxComponentProps> = (props): JSX.Element => {
+export const Box: React.FC<BoxComponentProps> = props => {
   const containerRef = useRef<HTMLDivElement>(null);
   const middleAreaRef = useRef<HTMLDivElement>(null);
 
-  useEffect(
-    (): void => {
-      if (props.isEnter) {
-        init({container: containerRef, middleArea: middleAreaRef});
-      }
-    },
-  );
+  useEffect(() => {
+    if (props.isEnter) {
+      init({container: containerRef, middleArea: middleAreaRef});
+    }
+  });
 
   return (
     <component.container

@@ -101,8 +101,8 @@ export const createDayo = <
     /**
      * Advance to the next cycle step at the css animation ended
      */
-    public onTransitionEnd(seedOnCycle: ISeed<BCP>): () => void {
-      return (): void => {
+    public onTransitionEnd(seedOnCycle: ISeed<BCP>) {
+      return () => {
         if (seedOnCycle.cycle.isEntering()) {
           seedOnCycle.cycle.proceed();
           return;

@@ -27,7 +27,7 @@ export class Interval implements IInterval {
   /**
    * just run with `window.setInterval`
    */
-  private startTick(): void {
+  private startTick() {
     this.intervalId = window.setInterval((): void => {
       this.emitter.emit('tick', {});
     }, 30);
@@ -59,15 +59,15 @@ export class Interval implements IInterval {
   /**
    * whether item has
    */
-  private has(item: unknown): boolean {
+  private has(item: unknown) {
     return this.items.has(item);
   }
 
-  private add(item: unknown): void {
+  private add(item: unknown) {
     this.items.set(item, item);
   }
 
-  private remove(item: unknown): void {
+  private remove(item: unknown) {
     this.items.delete(item);
   }
 

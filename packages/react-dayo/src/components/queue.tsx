@@ -7,7 +7,7 @@ const component = ({} as unknown) as {
 };
 
 /* eslint-disable react/prop-types */
-export const Queue: React.FC<QueueComponentProps> = (props): JSX.Element => {
+export const Queue: React.FC<QueueComponentProps> = props => {
   return (
     <component.container
       data-to={props.to}
