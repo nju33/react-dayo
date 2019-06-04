@@ -46,9 +46,9 @@ export const Box: React.FC<BoxComponentProps> = (props): JSX.Element => {
       data-is-enter={props.isEnter}
       data-is-entering={props.isEntering}
       data-is-entered={props.isEntered}
-      data-is-delete={props.isExit}
-      data-is-deleting={props.isExiting}
-      data-is-deleted={props.isExited}
+      data-is-exit={props.isExit}
+      data-is-exiting={props.isExiting}
+      data-is-exited={props.isExited}
       onTransitionEnd={props.onTransitionEnd}
       data-testid="dayo--box"
     >
@@ -107,10 +107,10 @@ component.container = styled.div`
     transform: translate3d(0, 0, 0);
   } */
 
-  /* &[data-is-delete='true'] {
+  /* &[data-is-exit='true'] {
   } */
 
-  &[data-is-deleting='true'] {
+  &[data-is-exiting='true'] {
     transition-property: transform margin, padding, opacity, height;
     /* transition-duration: 0.3s; */
     transition-duration: 0.3s;
@@ -129,7 +129,7 @@ component.container = styled.div`
     height: 0 !important;
   }
 
-  &[data-is-deleted='true'] {
+  &[data-is-exited='true'] {
     transition-duration: none;
     transition-duration: 0;
     &[data-to='top'] {
