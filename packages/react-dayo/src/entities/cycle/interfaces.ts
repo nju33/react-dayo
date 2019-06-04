@@ -14,9 +14,14 @@ export interface CycleImpl {
   skip(): void;
 
   /**
-   * Wheather skipped
+   * Whether skipped
    */
   isSkip(): boolean;
+
+  /**
+   * Whether in `isEntering` or `isEntered` step.
+   */
+  isEnterPhase(): boolean;
 
   /**
    * To get current step

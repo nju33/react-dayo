@@ -1,10 +1,11 @@
 import React from 'react';
 import {DayoOptions, IDayo, DayoProps, DayoState} from './interfaces';
-import DayoOperators from './dayo-operators';
+import DayoOperator from './dayo-operator';
+import DayoSelector from './dayo-selector';
 import Dispatcher, {Event as DispatcherEvent} from '../use-cases/dispatcher';
 import {ISeed} from '../entities/seed';
 import Queue from '../components/queue';
-import Box from '../components/box/box';
+import Box from '../components/box';
 
 export const defaultOptions = {
   to: 'top' as DayoOptions['to'],
@@ -33,7 +34,9 @@ export const createDayo = <
 
     public dispatcher = dispatcher;
 
-    public operators = new DayoOperators(this);
+    public operator = new DayoOperator(this);
+
+    public selector = new DayoSelector(this);
 
     public state = {
       queue: [] as ISeed<BCP>[],
@@ -50,7 +53,7 @@ export const createDayo = <
     /**
      * To just return `option`
      */
-    private getOption<Key extends keyof DayoProps>(key: Key): DayoProps[Key] {
+    public getOption<Key extends keyof DayoProps>(key: Key): DayoProps[Key] {
       return (
         ((this.props as unknown) as DayoProps)[key] ||
         ((options as unknown) as DayoProps)[key]
@@ -74,13 +77,13 @@ export const createDayo = <
      */
     private handleUpdateSeed = (seedOnCycle: ISeed<BCP>) => {
       if (seedOnCycle.cycle.isEnter()) {
-        this.operators.addSeed(seedOnCycle);
-        this.operators.skipOverflowSeeds({
+        this.operator.addSeed(seedOnCycle);
+        this.operator.skipOverflowSeeds({
           maxLength: this.getOption('maxLength'),
         });
       }
 
-      return this.operators.rewriteQueueItem(seedOnCycle);
+      return this.operator.rewriteQueueItem(seedOnCycle);
     };
 
     /**
@@ -98,7 +101,7 @@ export const createDayo = <
     /**
      * Advance to the next cycle step at the css animation ended
      */
-    private onTransitionEnd(seedOnCycle: ISeed<BCP>): () => void {
+    public onTransitionEnd(seedOnCycle: ISeed<BCP>): () => void {
       return (): void => {
         if (seedOnCycle.cycle.isEntering()) {
           seedOnCycle.cycle.proceed();
@@ -116,34 +119,17 @@ export const createDayo = <
      */
     public render() {
       return (
-        <Queue to={this.getOption('to')} position={this.getOption('position')}>
-          {this.state.queue.map(
-            (seedOnCycle): JSX.Element => {
-              if (seedOnCycle.values === undefined) {
-                throw new Error('Unexpected error');
-              }
-
-              return (
-                <Box
-                  key={seedOnCycle.id}
-                  to={this.getOption('to')}
-                  BlockComponent={seedOnCycle.BlockComponent}
-                  additionalProps={seedOnCycle.values.props}
-                  theme={seedOnCycle.theme}
-                  close={seedOnCycle.close}
-                  isEnter={seedOnCycle.cycle.isEnter()}
-                  isEntering={seedOnCycle.cycle.isEntering()}
-                  isEntered={seedOnCycle.cycle.isEntered()}
-                  isExit={seedOnCycle.cycle.isExit()}
-                  isExiting={seedOnCycle.cycle.isExiting()}
-                  isExited={seedOnCycle.cycle.isExited()}
-                  onTransitionEnd={this.onTransitionEnd(seedOnCycle)}
-                >
-                  <div>{seedOnCycle.message}</div>
-                </Box>
-              );
-            },
-          )}
+        <Queue {...this.selector.getQueueComponentProps()}>
+          {this.state.queue.map(seedOnCycle => {
+            return (
+              <Box
+                key={seedOnCycle.id}
+                {...this.selector.getBoxComponentProps(seedOnCycle)}
+              >
+                <div>{seedOnCycle.message}</div>
+              </Box>
+            );
+          })}
         </Queue>
       );
     }

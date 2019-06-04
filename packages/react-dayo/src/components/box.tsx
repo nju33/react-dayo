@@ -3,31 +3,15 @@ import originalStyled, {
   StyledComponentBase,
   ThemedBaseStyledInterface,
 } from 'styled-components';
-import {BlockComponent} from '../../entities/seed';
+import {BoxComponentProps} from '../dayo';
 
 export interface BoxTheme {
   transitionTimingFunction: string;
 }
 const styled = originalStyled as ThemedBaseStyledInterface<BoxTheme>;
-
 const component = ({} as unknown) as {
   container: StyledComponentBase<'div', {}>;
 };
-
-export interface BoxProps {
-  BlockComponent: BlockComponent | undefined;
-  theme: BoxTheme;
-  additionalProps?: object;
-  to: 'top' | 'bottom';
-  isEnter: boolean;
-  isEntering: boolean;
-  isEntered: boolean;
-  isExit: boolean;
-  isExiting: boolean;
-  isExited: boolean;
-  close(): void;
-  onTransitionEnd(): void;
-}
 
 const init = (refs: {
   container: React.RefObject<HTMLDivElement>;
@@ -41,7 +25,7 @@ const init = (refs: {
 };
 
 /* eslint-disable react/prop-types */
-export const Box: React.FC<BoxProps> = (props): JSX.Element => {
+export const Box: React.FC<BoxComponentProps> = (props): JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
   const middleAreaRef = useRef<HTMLDivElement>(null);
 

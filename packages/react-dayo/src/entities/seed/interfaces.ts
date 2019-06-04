@@ -43,7 +43,12 @@ export interface SeedImpl<
   [Symbol.asyncIterator](): AsyncIterator<SeedImpl<BCP>>;
 }
 
+export interface SeedCycleImpl {
+  isCycleInEnterPhase(): boolean;
+  skipCycle(): void;
+}
+
 export type ISeed<
   BlockComponentAdditionalProps extends object = {},
   BCP extends BlockComponentAdditionalProps = BlockComponentAdditionalProps
-> = SeedStruct<BCP> & SeedImpl<BCP>;
+> = SeedStruct<BCP> & SeedImpl<BCP> & SeedCycleImpl;

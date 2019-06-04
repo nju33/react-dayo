@@ -1,17 +1,13 @@
 import React from 'react';
 import styled, {StyledComponentBase} from 'styled-components';
+import {QueueComponentProps} from '../dayo';
 
 const component = ({} as unknown) as {
   container: StyledComponentBase<'aside', {}>;
 };
 
-export interface QueueProps {
-  to: 'top' | 'bottom';
-  position: 'left' | 'center' | 'right';
-}
-
 /* eslint-disable react/prop-types */
-export const Queue: React.FC<QueueProps> = (props): JSX.Element => {
+export const Queue: React.FC<QueueComponentProps> = (props): JSX.Element => {
   return (
     <component.container
       data-to={props.to}
