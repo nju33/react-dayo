@@ -1,0 +1,60 @@
+{
+  "name": "react-dayo",
+  "description": "A Queue component for notification etc",
+  "version": "0.3.3-alpha.0",
+  "main": "dist/main/index.js",
+  "types": "dist/types/index.d.ts",
+  "module": "dist/module/index.js",
+  "source": "src/index.ts",
+  "repository": "git@github.com:nju33/react-dayo.git",
+  "author": "nju33 <nju33.ki@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react-component",
+    "notification",
+    "alert",
+    "confirm",
+    "dialog"
+  ],
+  "scripts": {
+    "prepare": "if [ -z \"$CIRCLECI\" ]; then yarn build; fi",
+    "test": "if [ -z \"$CIRCLECI\" ]; then jest; else jest --coverage --coverageReporters=text-lcov | node_modules/.bin/coveralls; fi",
+    "test:watch": "jest --watch",
+    "build:main": "tsc -P tsconfig.main.json",
+    "build:module": "tsc -P tsconfig.module.json",
+    "build:types": "tsc -P tsconfig.types.json --emitDeclarationOnly",
+    "build": "run-p build:*",
+    "docs": "typedoc --theme minimal --out docs src/index.ts --ignoreCompilerErrors"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "8.0.1",
+    "@types/jest": "24.0.13",
+    "@types/nanoevents": "1.0.0",
+    "@types/nanoid": "2.0.0",
+    "@types/react": "16.8.19",
+    "@types/react-dom": "16.8.4",
+    "@types/react-test-renderer": "16.8.1",
+    "@types/styled-components": "4.1.15",
+    "coveralls": "3.0.3",
+    "jest": "24.8.0",
+    "jest-dom": "3.4.0",
+    "npm-run-all": "4.1.5",
+    "react": "16.8.6",
+    "react-test-renderer": "16.8.6",
+    "styled-components": "4.2.1",
+    "ts-jest": "24.0.2",
+    "typedoc": "0.14.2",
+    "typescript": "3.5.1"
+  },
+  "dependencies": {
+    "nanoevents": "^2.0.0",
+    "nanoid": "2.0.3"
+  },
+  "gitHead": "36ec4f93889ad71b26cda3cea8ccc5a52eb6627c"
+}
