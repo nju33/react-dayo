@@ -1,7 +1,8 @@
 import {IDayo} from './interfaces';
 import {ISeed} from '../entities/seed';
+import {DayoSelectorImpl} from './interfaces';
 
-export class DayoSelector implements DayoSelector {
+export class DayoSelector implements DayoSelectorImpl {
   public dayo: IDayo<unknown>;
 
   public constructor(dayo: IDayo<unknown>) {

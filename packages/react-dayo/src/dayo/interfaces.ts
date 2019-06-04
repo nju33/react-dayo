@@ -1,4 +1,4 @@
-import {BlockComponent} from '../entities/seed';
+import {BlockComponent, ISeed} from '../entities/seed';
 
 export interface DayoOptions {
   to: 'top' | 'bottom';
@@ -7,13 +7,6 @@ export interface DayoOptions {
 }
 
 export type DayoProps = DayoOptions;
-
-// export interface DayoStruct<T> {
-//   state: {
-//     queue: T[];
-//   };
-//   render(): JSX.Element;
-// }
 
 export interface DayoImpl<Seed> {
   getOption<Key extends keyof DayoProps>(key: Key): DayoProps[Key];
@@ -29,15 +22,11 @@ export interface DayoState<Seed> {
   queue: Seed[];
 }
 
-export interface DayoOperator<Seed> {
+export interface DayoOperatorImpl<Seed> {
   /**
    * Update target seed state for running re-rendering
    */
   rewriteQueueItem(seed: Seed): void;
-  /**
-   * Return index number in queue by passed `id`
-   */
-  getQueueIndexById(id: string): number;
   /**
    * To add a seed into queue state
    */
@@ -48,9 +37,9 @@ export interface DayoOperator<Seed> {
   skipOverflowSeeds(opts: {maxLength: number}): void;
 }
 
-export interface DayoSelector {
+export interface DayoSelectorImpl {
   getQueueComponentProps(): QueueComponentProps;
-  getBoxComponentProps(): BoxComponentProps;
+  getBoxComponentProps(seed: ISeed): BoxComponentProps;
 }
 
 export interface QueueComponentProps {
