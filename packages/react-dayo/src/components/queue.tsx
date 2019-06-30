@@ -1,9 +1,5 @@
 import React from 'react';
-import styled, {StyledComponentBase} from 'styled-components';
-
-const component = ({} as unknown) as {
-  container: StyledComponentBase<'aside', {}>;
-};
+import {queueStyle, boxStyle} from 'core-dayo';
 
 export interface QueueProps {
   to: 'top' | 'bottom';
@@ -12,47 +8,28 @@ export interface QueueProps {
 
 /* eslint-disable react/prop-types */
 export const Queue: React.FC<QueueProps> = (props): JSX.Element => {
+  React.useEffect(() => {
+    queueStyle.injectStyle();
+    boxStyle.injectStyle();
+    return () => {
+      queueStyle.eliminateStyle();
+      boxStyle.eliminateStyle();
+    };
+  }, []);
+
   return (
-    <component.container
+    <aside
+      data-component="dayo--queue"
       data-to={props.to}
       data-position={props.position}
       data-testid="dayo--queue"
     >
       {props.children}
-    </component.container>
+    </aside>
   );
 };
 /* eslint-enable react/prop-types */
 
-Queue.displayName = 'Dayo(Queue)';
-
-component.container = styled.aside`
-  width: 100%;
-  font-size: 0.8em;
-  display: flex;
-  justify-content: flex-start;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-
-  &[data-to='top'] {
-    flex-direction: column;
-  }
-
-  &[data-to='bottom'] {
-    flex-direction: column-reverse;
-  }
-
-  &[data-position='left'] {
-    align-items: flex-start;
-  }
-
-  &[data-position='center'] {
-    align-items: center;
-  }
-
-  &[data-position='right'] {
-    align-items: flex-end;
-  }
-`;
+Queue.displayName = 'DayoQueue';
 
 export default Queue;

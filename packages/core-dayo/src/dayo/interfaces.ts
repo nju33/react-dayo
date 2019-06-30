@@ -1,8 +1,10 @@
-import {QueueProps} from '../components/queue';
+export type DayoOptionTo = 'top' | 'bottom';
+
+export type DayoOptionPosition = 'left' | 'center' | 'right';
 
 export interface DayoOptions {
-  to: QueueProps['to'];
-  position: QueueProps['position'];
+  to: DayoOptionTo;
+  position: DayoOptionPosition;
   maxLength: number;
 }
 
@@ -27,7 +29,7 @@ export interface DayoState<Seed> {
   queue: Seed[];
 }
 
-export interface DayoOperators<Seed> {
+export interface DayoOperatorsImpl<Seed> {
   /**
    * Update target seed state for running re-rendering
    */

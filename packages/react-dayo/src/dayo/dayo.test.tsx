@@ -1,8 +1,8 @@
 import React from 'react';
+import {DayoOptions} from 'core-dayo';
 import {render, cleanup, wait, waitForElement} from '@testing-library/react';
 import success from '../presets/notifications/success';
 import {createDayo} from './dayo';
-import {DayoOptions} from './interfaces';
 import 'jest-dom/extend-expect';
 
 describe('dayo', () => {

@@ -1,8 +1,14 @@
 import React from 'react';
-import {DayoOptions, IDayo, DayoProps, DayoState} from './interfaces';
-import DayoOperators from './dayo-operators';
-import Dispatcher, {Event as DispatcherEvent} from '../use-cases/dispatcher';
-import {ISeed} from '../entities/seed';
+import {
+  DayoOperators,
+  Dispatcher,
+  Event as DispatcherEvent,
+  DayoOptions,
+  IDayo,
+  DayoProps,
+  DayoState,
+  ISeed,
+} from 'core-dayo';
 import Queue from '../components/queue';
 import Box from '../components/box/box';
 

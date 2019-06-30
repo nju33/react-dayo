@@ -12,7 +12,7 @@
     "prepare": "lerna bootstrap",
     "test": "lerna run test --stream --no-private",
     "rm-dist": "lerna exec --no-private -- rm -rf dist",
-    "dev": "lerna run dev --stream --scope @example/react-dayo",
+    "dev:react": "lerna run dev --stream --scope @example/react-dayo",
     "build": "lerna run build --stream --no-private",
     "publish": "lerna publish",
     "postpublish": "run-s push:*",

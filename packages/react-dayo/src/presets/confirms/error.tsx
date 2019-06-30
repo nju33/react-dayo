@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Seed, {BlockComponentProps} from '../../entities/seed';
+import {Seed, BlockComponentProps} from 'core-dayo';
 import {ConfirmProps} from './interfaces';
 import mixin from './mixin';
 

@@ -1,4 +1,4 @@
-import {BlockComponent} from '../../entities/seed';
+import {BlockComponent} from 'core-dayo';
 
 export type BoxBlockComponent =
   | React.ComponentClass<{}>

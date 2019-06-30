@@ -1,6 +1,10 @@
 {
 	"folders": [
 		{
+			"name": "core-dayo",
+			"path": "./packages/core-dayo"
+		},
+		{
 			"name": "react-dayo",
 			"path": "./packages/react-dayo"
 		},

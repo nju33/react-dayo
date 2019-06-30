@@ -1,0 +1,23 @@
+{
+  "name": "core-dayo",
+  "version": "0.3.2-alpha.0",
+  "author": "nju33 <nju33.ki@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "scripts": {},
+  "peerDependencies": {
+  },
+  "devDependencies": {
+    "@types/nanoevents": "1.0.0",
+    "@types/nanoid": "2.0.0",
+    "typescript": "3.5.1"
+  },
+  "dependencies": {
+    "iryo": "^0.0.2",
+    "nanoevents": "^2.0.0",
+    "nanoid": "2.0.3"
+  },
+  "gitHead": "36ec4f93889ad71b26cda3cea8ccc5a52eb6627c"
+}
