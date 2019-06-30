@@ -19,6 +19,14 @@ export class Seed<
 
   public readonly cycle = new Cycle();
 
+  public isCycleInEnterPhase() {
+    return this.cycle.isEnterPhase();
+  }
+
+  public skipCycle() {
+    return this.cycle.skip();
+  }
+
   public closed = false;
 
   public constructor(

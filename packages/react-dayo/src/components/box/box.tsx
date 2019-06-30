@@ -1,29 +1,14 @@
 import React, {useRef, useEffect} from 'react';
-import {BlockComponent} from 'core-dayo';
+import {BoxComponentProps} from 'core-dayo';
 
 export interface BoxTheme {
   transitionTimingFunction: string;
 }
 
-export interface BoxProps {
-  BlockComponent: BlockComponent | undefined;
-  theme: BoxTheme;
-  additionalProps?: object;
-  to: 'top' | 'bottom';
-  isEnter: boolean;
-  isEntering: boolean;
-  isEntered: boolean;
-  isExit: boolean;
-  isExiting: boolean;
-  isExited: boolean;
-  close(): void;
-  onTransitionEnd(): void;
-}
-
 const init = (refs: {
   container: React.RefObject<HTMLDivElement>;
   middleArea: React.RefObject<HTMLDivElement>;
-}): void => {
+}) => {
   if (refs.container.current !== null && refs.middleArea.current !== null) {
     refs.container.current.style.height = `${
       refs.middleArea.current.clientHeight
@@ -32,7 +17,7 @@ const init = (refs: {
 };
 
 /* eslint-disable react/prop-types */
-export const Box: React.FC<BoxProps> = (props): JSX.Element => {
+export const Box: React.FC<BoxComponentProps> = props => {
   const containerRef = useRef<HTMLDivElement>(null);
   const middleAreaRef = useRef<HTMLDivElement>(null);
 
@@ -58,9 +43,9 @@ export const Box: React.FC<BoxProps> = (props): JSX.Element => {
       data-is-enter={props.isEnter}
       data-is-entering={props.isEntering}
       data-is-entered={props.isEntered}
-      data-is-delete={props.isExit}
-      data-is-deleting={props.isExiting}
-      data-is-deleted={props.isExited}
+      data-is-exit={props.isExit}
+      data-is-exiting={props.isExiting}
+      data-is-exited={props.isExited}
       onTransitionEnd={props.onTransitionEnd}
       data-testid="dayo--box"
     >

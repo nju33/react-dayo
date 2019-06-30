@@ -1,3 +1,5 @@
+import {BlockComponent, ISeed} from '../entities/seed';
+
 export type DayoOptionTo = 'top' | 'bottom';
 
 export type DayoOptionPosition = 'left' | 'center' | 'right';
@@ -18,8 +20,10 @@ export type DayoProps = DayoOptions;
 // }
 
 export interface DayoImpl<Seed> {
+  getOption<Key extends keyof DayoProps>(key: Key): DayoProps[Key];
   getQueue(): Seed[];
   setQueue(queue: Seed[]): void;
+  onTransitionEnd(seed: Seed): () => void;
 }
 
 export type IDayo<Seed> = DayoImpl<Seed>;
@@ -42,4 +46,33 @@ export interface DayoOperatorsImpl<Seed> {
    * To skip a overflowed seeds in queue greater than `maxLength`
    */
   skipOverflowSeeds(opts: {maxLength: number}): void;
+}
+
+export interface DayoSelectorImpl {
+  getQueueComponentProps(): QueueComponentProps;
+  getBoxComponentProps(seed: ISeed): BoxComponentProps;
+}
+
+export interface QueueComponentProps {
+  to: DayoOptions['to'];
+  position: DayoOptions['position'];
+}
+
+export interface BoxComponentThemeParams {
+  transitionTimingFunction: string;
+}
+
+export interface BoxComponentProps {
+  BlockComponent: BlockComponent;
+  theme: BoxComponentThemeParams;
+  additionalProps?: object;
+  to: DayoOptions['to'];
+  isEnter: boolean;
+  isEntering: boolean;
+  isEntered: boolean;
+  isExit: boolean;
+  isExiting: boolean;
+  isExited: boolean;
+  close(): void;
+  onTransitionEnd(): void;
 }

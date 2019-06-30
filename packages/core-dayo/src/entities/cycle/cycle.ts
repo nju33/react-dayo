@@ -46,6 +46,8 @@ export class Cycle implements CycleImpl {
 
   public isSkip = () => this.skiped;
 
+  public isEnterPhase = () => this.isEntering() || this.isEntered();
+
   public getCurrentStep() {
     return this.step;
   }
