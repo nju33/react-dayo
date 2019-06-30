@@ -1,10 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import {BoxComponentProps} from 'core-dayo';
 
-export interface BoxTheme {
-  transitionTimingFunction: string;
-}
-
 const init = (refs: {
   container: React.RefObject<HTMLDivElement>;
   middleArea: React.RefObject<HTMLDivElement>;

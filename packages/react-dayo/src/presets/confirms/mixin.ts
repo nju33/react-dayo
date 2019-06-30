@@ -13,7 +13,6 @@ export const mixin = css`
     props.theme.borderColor || props.theme.backgroundColor};
   margin-top: 0.3em;
   box-sizing: border-box;
-
   .dayo-confirm--body {
     display: flex;
     justify-content: center;
@@ -21,11 +20,9 @@ export const mixin = css`
     white-space: pre;
     padding: 0.5em;
   }
-
   .dayo-confirm--buttons {
     display: flex;
   }
-
   .dayo-confirm--deny,
   .dayo-confirm--confirm {
     flex: 1;
@@ -36,7 +33,6 @@ export const mixin = css`
     overflow: hidden;
     padding: 0.5em 1em;
     cursor: pointer;
-
     &:before {
       content: '';
       position: absolute;
@@ -47,7 +43,6 @@ export const mixin = css`
       background: rgba(0, 0, 0, 0);
       transition: 0.2s;
     }
-
     &:hover:before {
       background: rgba(0, 0, 0, 0.2);
     }

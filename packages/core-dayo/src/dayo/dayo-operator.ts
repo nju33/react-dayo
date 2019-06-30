@@ -1,7 +1,7 @@
 import {IDayo, DayoOperatorsImpl} from './interfaces';
 import {ISeed} from '../entities/seed';
 
-export class DayoOperators<Seed extends ISeed>
+export class DayoOperator<Seed extends ISeed>
   implements DayoOperatorsImpl<Seed> {
   public dayo: IDayo<Seed>;
 
@@ -46,4 +46,4 @@ export class DayoOperators<Seed extends ISeed>
   }
 }
 
-export default DayoOperators;
+export default DayoOperator;

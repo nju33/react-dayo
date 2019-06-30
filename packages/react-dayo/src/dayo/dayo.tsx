@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  DayoOperators,
+  DayoOperator,
   DayoSelector,
   DayoOptions,
   IDayo,
@@ -11,7 +11,7 @@ import {
   ISeed,
 } from 'core-dayo';
 import Queue from '../components/queue';
-import Box from '../components/box/box';
+import Box from '../components/box';
 
 export const defaultOptions = {
   to: 'top' as DayoOptions['to'],
@@ -41,7 +41,7 @@ export const createDayo = <
 
     public dispatcher = dispatcher;
 
-    public operator = new DayoOperators(this);
+    public operator = new DayoOperator(this);
 
     public selector = new DayoSelector(this);
 

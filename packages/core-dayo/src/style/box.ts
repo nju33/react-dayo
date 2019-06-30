@@ -39,7 +39,7 @@ export const injectStyle = () => {
       opacity: 1;
     }
 
-    ${Data.Component}[data-is-deleting='true'] {
+    ${Data.Component}[data-is-exiting='true'] {
       transition-property: transform margin, padding, opacity, height;
       transition-duration: 0.3s;
       will-change: transform, margin, padding, opacity, height;
@@ -51,11 +51,11 @@ export const injectStyle = () => {
       height: 0 !important;
     }
 
-    ${Data.Component}[data-is-deleting='true'][data-to='top'] {
+    ${Data.Component}[data-is-exiting='true'][data-to='top'] {
       transform: translate3d(0, -0.5em, 0);
     }
 
-    ${Data.Component}[data-is-deleting='true'][data-to='bottom'] {
+    ${Data.Component}[data-is-exiting='true'][data-to='bottom'] {
       transform: translate3d(0, 0.5em, 0);
     }
 
