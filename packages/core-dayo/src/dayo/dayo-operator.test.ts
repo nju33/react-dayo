@@ -1,4 +1,4 @@
-import DayoOperator from './dayo-operators';
+import DayoOperator from './dayo-operator';
 import {DayoImpl} from './interfaces';
 import {SeedCycleImpl} from '../entities/seed';
 

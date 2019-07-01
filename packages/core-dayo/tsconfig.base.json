@@ -1,0 +1,15 @@
+{
+  "include": ["src"],
+  "exclude": ["index.mdx", "node_modules", ".cache", "**/*.test.*"],
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es2015", "es2016", "es2017", "dom"],
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}

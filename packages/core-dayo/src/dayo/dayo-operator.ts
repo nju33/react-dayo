@@ -1,17 +1,20 @@
-import {IDayo, DayoOperatorsImpl} from './interfaces';
+import {IDayo, DayoOperatorImpl} from './interfaces';
 import {ISeed} from '../entities/seed';
 
 export class DayoOperator<Seed extends ISeed>
-  implements DayoOperatorsImpl<Seed> {
+  implements DayoOperatorImpl<Seed> {
   public dayo: IDayo<Seed>;
 
   public constructor(dayo: IDayo<Seed>) {
     this.dayo = dayo;
   }
 
+  private get queue() {
+    return this.dayo.getQueue();
+  }
+
   public rewriteQueueItem(seed: Seed) {
-    const queue = this.dayo.getQueue();
-    const targetIndex = queue.findIndex(item => {
+    const targetIndex = this.queue.findIndex(item => {
       return item.id === seed.id;
     });
 
@@ -19,28 +22,27 @@ export class DayoOperator<Seed extends ISeed>
       return;
     }
 
-    queue[targetIndex] = seed;
+    this.queue[targetIndex] = seed;
 
-    this.dayo.setQueue(queue);
+    this.dayo.setQueue(this.queue);
   }
 
   public addSeed(seed: Seed): void {
-    this.dayo.setQueue([...this.dayo.getQueue(), seed]);
+    this.dayo.setQueue([...this.queue, seed]);
   }
 
-  public skipOverflowSeeds(opts: {maxLength: number}) {
-    // const queueMaxLength = this.getOption('maxLength');
-    const enteredItems = this.dayo
-      .getQueue()
-      .filter(item => item.cycle.isEntering() || item.cycle.isEntered());
-
+  public skipOverflowSeeds({maxLength}: {maxLength: number}) {
     const addingItemLength = 1;
-    const overflowLength =
-      enteredItems.length + addingItemLength - opts.maxLength;
+    const enterePhaseItems = this.queue.filter(item =>
+      item.isCycleInEnterPhase(),
+    );
+    const overflowedLength =
+      enterePhaseItems.length + addingItemLength - maxLength;
+    const isOverflowed = overflowedLength > 0;
 
-    if (overflowLength > 0) {
-      enteredItems.slice(0, overflowLength).forEach(seedOnCycle => {
-        seedOnCycle.cycle.skip();
+    if (isOverflowed) {
+      enterePhaseItems.slice(0, overflowedLength).forEach(seed => {
+        seed.skipCycle();
       });
     }
   }

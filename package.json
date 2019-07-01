@@ -10,24 +10,27 @@
   ],
   "scripts": {
     "prepare": "lerna bootstrap",
-    "test": "lerna run test --stream --no-private",
+    "test": "if [ -z \"$CIRCLECI\" ]; then node_modules/.bin/jest; else node_modules/.bin/jest --coverage --coverageReporters=text-lcov | node_modules/.bin/coveralls; fi",
     "rm-dist": "lerna exec --no-private -- rm -rf dist",
     "dev:react": "lerna run dev --stream --scope @example/react-dayo",
     "build": "lerna run build --stream --no-private",
     "publish": "lerna publish",
     "postpublish": "run-s push:*",
-    "push:example": "gh-pages --dist examples/react-dayo --src '{pages/**,*}' --branch @example/react-dayo --dotfiles",
-    "push:docs": "gh-pages --dist packages/react-dayo --src '{src/**,*}' --branch docs --dotfiles"
+    "push:example": "gh-pages --dist examples/react-dayo --src '{.circleci/**,pages/**,*}' --branch @example/react-dayo --dotfiles"
   },
   "devDependencies": {
     "@nju33/eslint-config": "0.0.26",
     "@nju33/prettier": "0.0.26",
+    "@types/jest": "^24.0.15",
+    "coveralls": "^3.0.4",
     "eslint": "5.16.0",
     "gh-pages": "2.0.1",
+    "jest": "^24.8.0",
     "lerna": "3.15.0",
     "npm-run-all": "4.1.5",
     "prettier": "1.18.2",
     "renovate-config-nju33": "0.0.1",
+    "ts-jest": "^24.0.2",
     "typescript": "3.5.2"
   },
   "dependencies": {}

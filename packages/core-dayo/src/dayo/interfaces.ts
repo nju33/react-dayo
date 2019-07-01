@@ -1,23 +1,12 @@
 import {BlockComponent, ISeed} from '../entities/seed';
 
-export type DayoOptionTo = 'top' | 'bottom';
-
-export type DayoOptionPosition = 'left' | 'center' | 'right';
-
 export interface DayoOptions {
-  to: DayoOptionTo;
-  position: DayoOptionPosition;
+  to: 'top' | 'bottom';
+  position: 'left' | 'center' | 'right';
   maxLength: number;
 }
 
 export type DayoProps = DayoOptions;
-
-// export interface DayoStruct<T> {
-//   state: {
-//     queue: T[];
-//   };
-//   render(): JSX.Element;
-// }
 
 export interface DayoImpl<Seed> {
   getOption<Key extends keyof DayoProps>(key: Key): DayoProps[Key];
@@ -33,7 +22,7 @@ export interface DayoState<Seed> {
   queue: Seed[];
 }
 
-export interface DayoOperatorsImpl<Seed> {
+export interface DayoOperatorImpl<Seed> {
   /**
    * Update target seed state for running re-rendering
    */

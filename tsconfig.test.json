@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "lib": ["es2015", "es2016", "es2017", "dom", "esnext.asynciterable"],
+    "typeRoots": ["./node_modules/@types", "../../node_modules/@types"],
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "baseUrl": "packages",
+    "paths": {
+      "core-dayo": ["core-dayo/src/index.ts"],
+      "react-dayo": ["core-dayo/src/index.ts"]
+    }
+  },
+  "include": ["packages/core-dayo/src", "packages/react-dayo/src"]
+}

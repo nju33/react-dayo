@@ -6,12 +6,18 @@
   "files": [
     "dist"
   ],
-  "scripts": {},
-  "peerDependencies": {
+  "scripts": {
+    "prepare": "if [ -z \"$CIRCLECI\" ]; then yarn build; fi",
+    "build:main": "tsc -P tsconfig.main.json",
+    "build:module": "tsc -P tsconfig.module.json",
+    "build:types": "tsc -P tsconfig.types.json --emitDeclarationOnly",
+    "build": "run-p build:*"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.0.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "3.5.1"
   },
   "dependencies": {

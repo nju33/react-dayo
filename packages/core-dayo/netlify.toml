@@ -1,3 +1,0 @@
-[context.docs]
-  publish = 'docs'
-  command = 'yarn docs'
