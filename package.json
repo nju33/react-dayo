@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@example/react-dayo",
-  "version": "0.3.4-alpha.0",
+  "version": "0.3.6-alpha.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -21,7 +21,7 @@
     "core-js": "3.1.3",
     "next": "8.1.0",
     "react": "16.8.6",
-    "react-dayo": "^0.3.4-alpha.0",
+    "react-dayo": "^0.3.6-alpha.0",
     "react-dom": "16.8.6",
     "styled-components": "4.2.1",
     "tsconfig-paths-webpack-plugin": "3.2.0",

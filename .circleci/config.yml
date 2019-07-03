@@ -1,0 +1,8 @@
+# To avoid errors at CircleCI
+version: 2.1
+jobs:
+  build:
+    docker:
+    - image: alpine
+    steps:
+    - run: ':'

@@ -16,6 +16,9 @@
       "react-dayo": [
         "react-dayo/dist/module",
         "react-dayo/src/index.ts"
+      ],
+      "core-dayo": [
+        "core-dayo/src/index.ts"
       ]
     }
   }
