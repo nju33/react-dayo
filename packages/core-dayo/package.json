@@ -1,6 +1,10 @@
 {
   "name": "core-dayo",
   "version": "0.3.5-alpha.0",
+  "main": "dist/main/index.js",
+  "types": "dist/types/index.d.ts",
+  "module": "dist/module/index.js",
+  "source": "src/index.ts",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
   "files": [
@@ -24,5 +28,5 @@
     "nanoevents": "^2.0.0",
     "nanoid": "2.0.3"
   },
-  "gitHead": "36ec4f93889ad71b26cda3cea8ccc5a52eb6627c"
+  "gitHead": "bf1963cbe27f16bcde383e7c390a8a06658d97bb"
 }

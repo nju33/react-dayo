@@ -11,6 +11,10 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "baseUrl": "..",
+    "paths": {
+      "core-dayo": ["core-dayo/src/index.ts"]
+    }
   }
 }
