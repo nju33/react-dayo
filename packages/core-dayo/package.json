@@ -1,6 +1,6 @@
 {
   "name": "core-dayo",
-  "version": "0.3.2-alpha.0",
+  "version": "0.3.5-alpha.0",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
   "files": [
@@ -13,7 +13,6 @@
     "build:types": "tsc -P tsconfig.types.json --emitDeclarationOnly",
     "build": "run-p build:*"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.0.0",
