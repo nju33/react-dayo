@@ -31,7 +31,7 @@
     "prettier": "1.18.2",
     "renovate-config-nju33": "0.0.1",
     "ts-jest": "24.0.2",
-    "typescript": "3.5.3"
+    "typescript": "3.6.2"
   },
   "dependencies": {}
 }
