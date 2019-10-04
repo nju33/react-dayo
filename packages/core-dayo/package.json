@@ -19,14 +19,14 @@
   },
   "devDependencies": {
     "@types/nanoevents": "1.0.0",
-    "@types/nanoid": "2.0.0",
+    "@types/nanoid": "2.1.0",
     "npm-run-all": "4.1.5",
     "typescript": "3.6.3"
   },
   "dependencies": {
     "iryo": "^0.0.2",
     "nanoevents": "^2.0.0",
-    "nanoid": "2.1.1"
+    "nanoid": "2.1.2"
   },
   "gitHead": "bf1963cbe27f16bcde383e7c390a8a06658d97bb"
 }
