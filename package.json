@@ -22,7 +22,7 @@
     "@nju33/eslint-config": "0.0.26",
     "@nju33/prettier": "0.0.26",
     "@types/jest": "24.0.23",
-    "coveralls": "3.0.7",
+    "coveralls": "3.0.8",
     "eslint": "5.16.0",
     "gh-pages": "2.1.1",
     "jest": "24.9.0",
