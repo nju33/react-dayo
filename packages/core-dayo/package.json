@@ -26,7 +26,7 @@
   "dependencies": {
     "iryo": "^0.0.2",
     "nanoevents": "^2.0.0",
-    "nanoid": "2.1.8"
+    "nanoid": "2.1.9"
   },
   "gitHead": "bf1963cbe27f16bcde383e7c390a8a06658d97bb"
 }
