@@ -55,7 +55,7 @@
   "dependencies": {
     "core-dayo": "^0.3.6-alpha.0",
     "iryo": "^0.0.2",
-    "nanoevents": "^2.0.0",
+    "nanoevents": "^5.0.0",
     "nanoid": "2.1.11"
   },
   "resolutions": {

@@ -6882,10 +6882,10 @@ nan@^2.12.1:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
 
-nanoevents@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/nanoevents/-/nanoevents-2.0.0.tgz#5a6051ebbcdfd67efe94cca0e4a03d616e1a4949"
-  integrity sha512-6wRUNwBA07fyeun/xqG1UzmKd3ucgzcxTyaWcqjsNL0PaXy4YAezyHPnMdsPYEsOl/9wyQ85j39rPYF0FNDozQ==
+nanoevents@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/nanoevents/-/nanoevents-5.0.0.tgz#fe100e4a308983ff46a9af6d6303c862e0182366"
+  integrity sha512-NIJlgE1RiwNMK3TZ8xxs/AIFBpYyF7Drx4Cm87JmmGZAkmlMvc7QwxpNF2eptr3LKb+j7lhl3nhHNI4eWLmGrA==
 
 nanoid@2.1.11:
   version "2.1.11"
