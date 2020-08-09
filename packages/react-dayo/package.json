@@ -49,7 +49,7 @@
     "react-test-renderer": "16.8.6",
     "styled-components": "4.4.1",
     "ts-jest": "24.3.0",
-    "typedoc": "0.17.8",
+    "typedoc": "0.18.0",
     "typescript": "3.9.7"
   },
   "dependencies": {
