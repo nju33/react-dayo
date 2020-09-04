@@ -37,7 +37,7 @@
     "@types/jest": "24.9.1",
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.1.0",
-    "@types/react": "16.9.48",
+    "@types/react": "16.9.49",
     "@types/react-dom": "16.9.8",
     "@types/react-test-renderer": "16.9.3",
     "@types/styled-components": "4.4.3",
@@ -59,7 +59,7 @@
     "nanoid": "2.1.11"
   },
   "resolutions": {
-    "@types/react": "16.9.48"
+    "@types/react": "16.9.49"
   },
   "gitHead": "bf1963cbe27f16bcde383e7c390a8a06658d97bb"
 }
