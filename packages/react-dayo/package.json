@@ -50,7 +50,7 @@
     "styled-components": "4.4.1",
     "ts-jest": "24.3.0",
     "typedoc": "0.20.36",
-    "typescript": "3.9.9"
+    "typescript": "3.9.10"
   },
   "dependencies": {
     "core-dayo": "^0.3.6-alpha.0",
