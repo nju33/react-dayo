@@ -21,7 +21,7 @@
   "devDependencies": {
     "@nju33/eslint-config": "0.0.26",
     "@nju33/prettier": "0.0.26",
-    "@types/jest": "24.9.1",
+    "@types/jest": "27.0.1",
     "coveralls": "3.1.1",
     "eslint": "5.16.0",
     "gh-pages": "2.2.0",
